@@ -122,7 +122,7 @@ public class AirplaneController extends Driver
     public double getRot()
     {
         //Finds the normalized rotation value of the controller, and then expos it.
-        double rValue = normalize(_joy.getRawAxis( 5 ), _ROTMIN, _ROTMAX, _ROTCENTER );
+        double rValue = normalize( _joy.getRawAxis( 5 ), _ROTMIN, _ROTMAX, _ROTCENTER );
         rValue = rValue * rValue * rValue;
         
         //Returns the rotation value.
@@ -130,22 +130,26 @@ public class AirplaneController extends Driver
     }
     
     /**
-     * Gets the primary button state.
+     * Gets the primary (Red) button state.
      * 
      * @return Returns the primary button state.
      */
     public boolean getPriButton()
     {
-        return false;
+        //Returns state of red button
+        boolean state = _joy.getRawButton( 1 );
+        return state;
     }
     
     /**
-     * Gets the secondary button state.
+     * Gets the secondary (Black) button state.
      * 
      * @return Returns the secondary button state.
      */
     public boolean getSecButton()
     {
-        return false;
+        //Returns state of black button
+        boolean state = _joy.getRawButton( 4 );
+        return state;
     }   
 }

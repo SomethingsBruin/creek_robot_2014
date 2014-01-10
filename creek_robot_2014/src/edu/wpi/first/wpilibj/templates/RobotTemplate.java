@@ -9,6 +9,8 @@ package edu.wpi.first.wpilibj.templates;
 
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import com.cc.inputs.driver.*;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,13 +21,17 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class RobotTemplate extends IterativeRobot 
 {
+    //robot driver
+    private Driver _driver;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() 
     {
-
+        //gives driver airplane controller.
+        _driver = AirplaneController.getInstance();
+        
     }
 
     /**
@@ -49,7 +55,8 @@ public class RobotTemplate extends IterativeRobot
      */
     public void testPeriodic() 
     {
-    
+        _driver.print();
+        Timer.delay( 0.5f );
     }
     
 }
