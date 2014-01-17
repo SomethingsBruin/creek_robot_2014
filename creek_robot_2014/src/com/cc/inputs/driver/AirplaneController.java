@@ -92,7 +92,7 @@ public class AirplaneController extends Driver
     public  double getX()
     {
         //Finds the normalized x value of the controller, and then expos it.
-        double xValue = normalize( _joy.getRawAxis( 1 ), _XMAX, _XMIN, _XCENTER );
+        double xValue = normalize( _joy.getRawAxis( 1 ), _XMIN, _XMAX, _XCENTER );
         xValue = xValue * xValue * xValue;
         
         //Returns the x value.

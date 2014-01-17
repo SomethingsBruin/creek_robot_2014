@@ -45,7 +45,7 @@ public abstract class Driver
     public abstract double getY();
     
     /**
-     * Gets the rotation value of the contoller.
+     * Gets the rotation value of the controller.
      * 
      * @return Returns the rotation value.
      */
@@ -61,7 +61,7 @@ public abstract class Driver
     /**
      * Gets the secondary button state.
      * 
-     * @return Returns the secondary button se.tat
+     * @return Returns the secondary button state.
      */
     public abstract boolean getSecButton();
     
@@ -70,16 +70,22 @@ public abstract class Driver
      */
     public void print()
     {
-        System.out.printf( "X: %.3f Y: %.3f Rot: %.3f Pri: %b Sec: %b", getX(), getY(), getRot(), getPriButton(), getSecButton() );
+        System.out.println( "X: " + getX() + " Y: " + getY() + " ROT: " + getRot() + " Pri: " + getPriButton() + " Sec: " + getSecButton() );
     }
     
     /**
      * Normalizes a axis value based on its constants.
      * 
+     * @param inValue  The raw value given.
+     * @param minValue Minimum value of joystick.
+     * @param maxValue Maximum value of joystick.
+     * @param cValue   Center value of joystick.
+     * 
      * @return Returns the normalized value.
      */
     public double normalize( double inValue, double minValue, double maxValue, double cValue )
     {
+      
         //Subtracts the center constant from the given value.
         inValue -= cValue;
         

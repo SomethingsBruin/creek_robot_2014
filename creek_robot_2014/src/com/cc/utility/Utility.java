@@ -13,7 +13,7 @@ public class Utility
      * 
      * @param val The value you wish to limit between 1.0 and -1.0.
      * 
-     * @return Returs the limited number.
+     * @return Returns the limited number.
      */
     public static double limitRange( double val )
     {

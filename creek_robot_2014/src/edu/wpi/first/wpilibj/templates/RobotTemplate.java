@@ -9,8 +9,10 @@ package edu.wpi.first.wpilibj.templates;
 
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import com.cc.inputs.driver.*;
 import edu.wpi.first.wpilibj.Timer;
+
+import com.cc.inputs.driver.*;
+import com.cc.systems.Chassis;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,21 +23,36 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class RobotTemplate extends IterativeRobot 
 {
-    //robot driver
+    //The robot driver.
     private Driver _driver;
+    
+    //The robot chassis.
+    private Chassis _chassis;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() 
     {
-        //gives driver airplane controller.
-        _driver = AirplaneController.getInstance();
+        //Gives the driver the type of XBoxController.
+        _driver = XBoxController.getInstance();
         
+        //Get the chassis object.
+        _chassis = Chassis.getInstance();      
+    }
+    
+    /**
+     * This function is called once when robot is disabled.
+     */ 
+    public void disabledInit()
+    {
+        //Prompts that the robot is disabled.
+       System.out.println( "Robot is Disabled" );
     }
 
     /**
-     * This function is called periodically during autonomous
+     * This function is called periodically during autonomous.
      */
     public void autonomousPeriodic() 
     {
@@ -43,7 +60,7 @@ public class RobotTemplate extends IterativeRobot
     }
 
     /**
-     * This function is called periodically during operator control
+     * This function is called periodically during operator control.
      */
     public void teleopPeriodic() 
     {
@@ -51,7 +68,7 @@ public class RobotTemplate extends IterativeRobot
     }
     
     /**
-     * This function is called periodically during test mode
+     * This function is called periodically during test mode.
      */
     public void testPeriodic() 
     {

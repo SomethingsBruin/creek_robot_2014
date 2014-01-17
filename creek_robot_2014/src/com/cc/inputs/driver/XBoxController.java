@@ -1,13 +1,14 @@
 package com.cc.inputs.driver;
 
+
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
- * The class which represents the driver type for the XBox Controller.
+ * Class representing XBox Controller.
  */
-public class AttackThree extends Driver
+public class XBoxController extends Driver
 {
-    //The contoller's X constants.
+   //The contoller's X constants.
     private final double _XMAX = 1.0;
     private final double _XMIN = -1.0;
     private final double _XCENTER = 0.0;
@@ -15,28 +16,26 @@ public class AttackThree extends Driver
     //The contoller's Y constants.
     private final double _YMAX = -1.0;
     private final double _YMIN = 1.0;
-    private final double _YCENTER = 0.0;
+    private final double _YCENTER = -0.0078125;
     
     //The contoller's Rotation constants.
     private final double _ROTMAX = 1.0;
     private final double _ROTMIN = -1.0;
     private final double _ROTCENTER = 0.0;
-
-    //The joysticks of the controller.
-    private Joystick _attackOne; 
-    private Joystick _attackTwo;
+    
+    //The joystick of the controller.
+    private Joystick _joy; 
     
     /**
-     * Creates the joystick driver object.
+     * Creates the XBox Controller driver object.
      */
-    private AttackThree()
+    private XBoxController()
     {
         //Calls the contructor in Dirver.
         super();
         
-        //Initializes the joystick on channel 1 and channel 2.
-        _attackOne = new Joystick( 1 );
-        _attackTwo = new Joystick( 2 );
+        //Initializes the joystick on channel 1.
+        _joy = new Joystick( 1 );
     }
     
     /**
@@ -46,10 +45,10 @@ public class AttackThree extends Driver
      */
     public static Driver getInstance()
     {
-        //If the dirver is not an AttackThree, than make it an AttackThree
-        if( !( _instance instanceof AttackThree ) )
+        //If the dirver is not an XBox Controller, than make it an XBoxController
+        if( !( _instance instanceof XBoxController ) )
         {
-            _instance = new AttackThree();
+            _instance = new XBoxController();
         }
         
         //Return the driver.
@@ -64,8 +63,7 @@ public class AttackThree extends Driver
         //Goes through 12 axis channels on the joystick and prints their current value.
         for( int i = 0; i <= 12; i++ )
         {
-            System.out.print( i + "-One: " + _attackOne.getRawAxis( i ) + " " );
-            System.out.print( i + "-Two: " + _attackTwo.getRawAxis( i ) + " " );
+            System.out.print( i + ": " + _joy.getRawAxis( i ) + " " );
         }
         
         //Moves to a new line.
@@ -80,8 +78,7 @@ public class AttackThree extends Driver
         //Goes through 12 button channels on the joystick and prints their current value.
         for( int i = 0; i <= 12; i++ )
         {
-            System.out.print( i + "-One: " + _attackOne.getRawButton( i ) + " " );
-            System.out.print( i + "-Two: " + _attackTwo.getRawButton( i ) + " " );
+            System.out.print( i + ": " + _joy.getRawButton( i ) + " " );
         }
         
         //Moves to a new line.
@@ -96,7 +93,7 @@ public class AttackThree extends Driver
     public  double getX()
     {
         //Finds the normalized x value of the controller, and then expos it.
-        double xValue = normalize( _attackOne.getRawAxis( 1 ), _XMIN, _XMAX, _XCENTER );
+        double xValue = normalize( _joy.getRawAxis( 4 ), _XMIN, _XMAX, _XCENTER );
         xValue = xValue * xValue * xValue;
         
         //Returns the x value.
@@ -111,7 +108,7 @@ public class AttackThree extends Driver
     public double getY()
     {
         //Finds the normalized y value of the controller, and then expos it.
-        double yValue = normalize( _attackOne.getRawAxis( 2 ), _YMIN, _YMAX, _YCENTER );
+        double yValue = normalize( _joy.getRawAxis( 5 ), _YMIN, _YMAX, _YCENTER );
         yValue = yValue * yValue * yValue;
         
         //Returns the y value.
@@ -126,7 +123,7 @@ public class AttackThree extends Driver
     public double getRot()
     {
         //Finds the normalized rotation value of the controller, and then expos it.
-        double rValue = normalize( _attackTwo.getRawAxis( 1 ), _ROTMIN, _ROTMAX, _ROTCENTER );
+        double rValue = normalize( _joy.getRawAxis( 1 ), _ROTMIN, _ROTMAX, _ROTCENTER );
         rValue = rValue * rValue * rValue;
         
         //Returns the rotation value.
@@ -134,26 +131,26 @@ public class AttackThree extends Driver
     }
     
     /**
-     * Gets the primary (Joystick One Trigger) button state.
+     * Gets the primary (Right Trigger) button state.
      * 
      * @return Returns the primary button state.
      */
     public boolean getPriButton()
     {
-        //Returns state of Joystick One Trigger.
-        boolean state = _attackOne.getRawButton( 1 );
+        //Returns state of right trigger.
+        boolean state = _joy.getRawButton( 6 );
         return state;
     }
     
     /**
-     * Gets the secondary (Joystick Two Trigger) button state.
+     * Gets the secondary (Left Trigger) button state.
      * 
      * @return Returns the secondary button state.
      */
     public boolean getSecButton()
     {
-        //Returns state of Joystick Two Trigger.
-        boolean state = _attackTwo.getRawButton( 1 );
+        //Returns state of left trigger.
+        boolean state = _joy.getRawButton( 5 );
         return state;
-    }   
+    }     
 }
