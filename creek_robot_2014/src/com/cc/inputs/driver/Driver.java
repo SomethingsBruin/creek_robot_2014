@@ -70,7 +70,7 @@ public abstract class Driver
      */
     public void print()
     {
-        System.out.println( "X: " + getX() + " Y: " + getY() + " Rot: " + getRot() + " Pri: " + getPriButton() + " Sec: " + getSecButton() );
+        System.out.printf( "X: %.3f Y: %.3f Rot: %.3f Pri: %b Sec: %b", getX(), getY(), getRot(), getPriButton(), getSecButton() );
     }
     
     /**
