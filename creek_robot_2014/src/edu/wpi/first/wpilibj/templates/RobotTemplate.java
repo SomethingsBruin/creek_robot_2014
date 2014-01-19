@@ -7,9 +7,7 @@
 
 package edu.wpi.first.wpilibj.templates;
 
-
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 
 import com.cc.inputs.driver.*;
 import com.cc.systems.Chassis;
@@ -29,6 +27,9 @@ public class RobotTemplate extends IterativeRobot
     //The robot chassis.
     private Chassis _chassis;
     
+    //A flag that insure autonomous only goes once.
+    private boolean autoFlag = true;    
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -36,10 +37,10 @@ public class RobotTemplate extends IterativeRobot
     public void robotInit() 
     {
         //Gives the driver the type of XBoxController.
-        _driver = XBoxController.getInstance();
-        
+        _driver = AirplaneController.getInstance();
+
         //Get the chassis object.
-        _chassis = Chassis.getInstance();      
+        _chassis = Chassis.getInstance();    
     }
     
     /**
@@ -48,7 +49,10 @@ public class RobotTemplate extends IterativeRobot
     public void disabledInit()
     {
         //Prompts that the robot is disabled.
-       System.out.println( "Robot is Disabled" );
+        System.out.println( "Robot is Disabled" );
+        
+        //Sets the automous flag to be false.
+        autoFlag =  false;
     }
 
     /**
@@ -64,7 +68,8 @@ public class RobotTemplate extends IterativeRobot
      */
     public void teleopPeriodic() 
     {
-        
+        //Drives the chassis relative to the driver.
+        _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
     }
     
     /**
@@ -72,8 +77,12 @@ public class RobotTemplate extends IterativeRobot
      */
     public void testPeriodic() 
     {
-        _driver.print();
-        Timer.delay( 0.5f );
+        //If the flag hasn't been raised.
+        if( !autoFlag )
+        { 
+            //Turn the robot 90 degrees and raise the flag.
+            _chassis.turn( 90 );
+            autoFlag = true;
+        }
     }
-    
 }

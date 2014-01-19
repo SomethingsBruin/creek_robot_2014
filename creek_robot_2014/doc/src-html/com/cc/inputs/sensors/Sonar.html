@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package com.cc.inputs.sensors;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>import edu.wpi.first.wpilibj.AnalogChannel;<a name="line.3"></a>
+<span class="sourceLineNo">004</span><a name="line.4"></a>
+<span class="sourceLineNo">005</span>/**<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * A class which represents a sonar sensor.<a name="line.6"></a>
+<span class="sourceLineNo">007</span> */<a name="line.7"></a>
+<span class="sourceLineNo">008</span>public class Sonar<a name="line.8"></a>
+<span class="sourceLineNo">009</span>{<a name="line.9"></a>
+<span class="sourceLineNo">010</span>    //The raw analog input.<a name="line.10"></a>
+<span class="sourceLineNo">011</span>    private AnalogChannel _sonar;<a name="line.11"></a>
+<span class="sourceLineNo">012</span>    <a name="line.12"></a>
+<span class="sourceLineNo">013</span>    //The constant which represents how many ticks are in an inch for the sensor.<a name="line.13"></a>
+<span class="sourceLineNo">014</span>    private final double _TICKSPERINCH = 4.722;<a name="line.14"></a>
+<span class="sourceLineNo">015</span>    <a name="line.15"></a>
+<span class="sourceLineNo">016</span>    /**<a name="line.16"></a>
+<span class="sourceLineNo">017</span>     * A constructor which creates the sonar object. <a name="line.17"></a>
+<span class="sourceLineNo">018</span>     * <a name="line.18"></a>
+<span class="sourceLineNo">019</span>     * @param channel The channel the sonar is plugged into on the analog module.<a name="line.19"></a>
+<span class="sourceLineNo">020</span>     */<a name="line.20"></a>
+<span class="sourceLineNo">021</span>    public Sonar( int channel )<a name="line.21"></a>
+<span class="sourceLineNo">022</span>    {<a name="line.22"></a>
+<span class="sourceLineNo">023</span>        //Gets the analog input from the given channel.<a name="line.23"></a>
+<span class="sourceLineNo">024</span>        _sonar = new AnalogChannel( channel ); <a name="line.24"></a>
+<span class="sourceLineNo">025</span>    }<a name="line.25"></a>
+<span class="sourceLineNo">026</span>    <a name="line.26"></a>
+<span class="sourceLineNo">027</span>    /**<a name="line.27"></a>
+<span class="sourceLineNo">028</span>     * Gets the distance from an object in front of the sensor in inches.<a name="line.28"></a>
+<span class="sourceLineNo">029</span>     * <a name="line.29"></a>
+<span class="sourceLineNo">030</span>     * @return Returns the distance from an object in inches.<a name="line.30"></a>
+<span class="sourceLineNo">031</span>     */<a name="line.31"></a>
+<span class="sourceLineNo">032</span>    public double getDistance()<a name="line.32"></a>
+<span class="sourceLineNo">033</span>    {<a name="line.33"></a>
+<span class="sourceLineNo">034</span>        //Finds the raw sonar value and converts it into inches.<a name="line.34"></a>
+<span class="sourceLineNo">035</span>        double distance = _sonar.getValue();<a name="line.35"></a>
+<span class="sourceLineNo">036</span>        distance /= _TICKSPERINCH;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>        <a name="line.37"></a>
+<span class="sourceLineNo">038</span>        //Returns the inches from an object.<a name="line.38"></a>
+<span class="sourceLineNo">039</span>        return distance;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>    }<a name="line.40"></a>
+<span class="sourceLineNo">041</span>}<a name="line.41"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

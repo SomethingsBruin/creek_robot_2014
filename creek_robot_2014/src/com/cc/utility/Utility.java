@@ -4,7 +4,6 @@ package com.cc.utility;
  * This class is used for all math that limits a number between to numbers.
  * The most common instance of this is when you are limiting a number between
  * 1 and -1.
- * 
  */
 public class Utility
 {

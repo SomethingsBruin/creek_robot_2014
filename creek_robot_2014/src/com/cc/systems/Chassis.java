@@ -1,6 +1,8 @@
 package com.cc.systems;
 
+import com.cc.inputs.sensors.Sonar;
 import com.cc.outputs.motors.CCTalon;
+import com.cc.utility.Utility;
 
 import edu.wpi.first.wpilibj.Gyro;
 
@@ -22,6 +24,9 @@ public class Chassis
     //The gyro which gives the angle of the robot.
     private Gyro _gyro;
     
+    //The sonar which determines the distance of the robot from an object in front of it.
+    private Sonar _sonar;
+    
     private Chassis()
     {
         //Initializes each talon speed controler.
@@ -31,7 +36,11 @@ public class Chassis
         _rightRear = new CCTalon( 4, true );
         
         //Initializes the gyro of the robot.
-        _gyro = new Gyro( 1 );
+        _gyro = new Gyro( 2 );
+        _gyro.reset();
+        
+        //Initializes the sonar of the robot.
+        _sonar = new Sonar( 1 );
     }
     
     /**
@@ -148,12 +157,106 @@ public class Chassis
     }
     
     /**
-     * Prints the angle of gyro.
+     * Moves the robot a given distance at a given speed autonomously.
+     * 
+     * @param distance The distance in inches for the robot to travel.
+     * @param speed The speed the robot will travel.
      */
-    public void printGyro()
+    public void move( double distance , double speed )
     {
-        //Prints the angle of gyro.
-        System.out.println( _gyro.getAngle() );
+        //Gets the inital distance from an object in front of the robot.
+        double initialDistance = _sonar.getDistance();
+        
+        //Makes sure that the speed is limited to 1 and -1.
+        speed = Utility.limitRange( speed );
+        
+        //While the distance traveled is less than distance wanted...
+        while( _sonar.getDistance() > initialDistance - distance )
+        {
+            //Drive the robot forward at the given speed.
+            holoDrive( speed , 0.0 ,0.0 );
+        }
+        
+        //When the robot is done moving forward, stop the motors.
+        stop();
+    }
+    
+    /**
+     * Turns the robot at a given angle.
+     * 
+     * @param angle The angle that the robot will turn.
+     */
+    public void turn( double angle )
+    {
+        //The flag which represents if the turn is done.
+        boolean done = false;
+        
+        //The three constants for the PID loop.
+        final double KP = 0.4;
+        final double KI = 0.004;
+        final double KD = 0.04;
+        
+        //The error, the previous error, and the sum of all errors that are used in the PID loop.
+        double error = 0.0;
+        double preError = 0.0;
+        double errorSum = 0.0;
+        
+        //The variables which represents the separate parts to the PID loop.
+        double p = 0.0;
+        double i = 0.0;
+        double d = 0.0;
+        
+        //The sum of the p, i, and d parts which is inputed into the motors.
+        double output = 0.0;
+        
+        //While the turn is not done...
+        while( !done )
+        {
+            //Sets the previous error to the error of the last interation of the loop.
+            preError = error;
+            
+            //Finds the current error between the given angle and the current angle of the robot.
+            error = ( angle - Math.toDegrees( getGyro() ) ) / 100;
+            error = Utility.limitRange( error );
+            
+            //Adds the new error to the error sum of the robot.
+            errorSum += error;
+            
+            //Calculates the p, i, and d parts of the PID loop.
+            p = error * KP;
+            i = errorSum * KI;
+            d = ( preError - error ) * KD;
+            
+            //Adds the p, i, and d parts of the loop together, limits it between 1 and -1, then gives it to output.
+            output = Utility.limitRange( p + i + d );
+            
+            //Turns the robot based on the output of the PID loop.
+            holoDrive( 0, 0, output );
+            
+            //If the error is below 5 percent, then end the loop.
+            if( Math.abs( error ) < 0.05 )
+            {
+                //Raise the flag to end the loop.
+                done = true;
+            }
+        }
+        
+        //Stop the motors.
+        stop();
+        
+    }
+    
+    /**
+     * Stops all the motors on the chassis.
+     */
+    public void stop()
+    {
+        //Stops each motor individually.
+        _leftFront.stopMotor();
+        _leftRear.stopMotor();
+        _rightFront.stopMotor();
+        _rightRear.stopMotor();
+        
     }
     
 }

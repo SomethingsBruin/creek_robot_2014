@@ -36,6 +36,7 @@ public class CCTalon extends Talon
         //If the motor is reversed, then inverse the speed to make it go the right direction.
         if( _isReversed )
         {
+            //Inverse the speed.
             speed *= -1;
         }
         

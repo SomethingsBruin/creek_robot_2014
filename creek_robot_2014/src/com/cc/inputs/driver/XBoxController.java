@@ -94,7 +94,7 @@ public class XBoxController extends Driver
     {
         //Finds the normalized x value of the controller, and then expos it.
         double xValue = normalize( _joy.getRawAxis( 4 ), _XMIN, _XMAX, _XCENTER );
-        xValue = xValue * xValue * xValue;
+      //  xValue = xValue * xValue * xValue;
         
         //Returns the x value.
         return xValue;
@@ -109,7 +109,7 @@ public class XBoxController extends Driver
     {
         //Finds the normalized y value of the controller, and then expos it.
         double yValue = normalize( _joy.getRawAxis( 5 ), _YMIN, _YMAX, _YCENTER );
-        yValue = yValue * yValue * yValue;
+       // yValue = yValue * yValue * yValue;
         
         //Returns the y value.
         return yValue;
@@ -124,7 +124,7 @@ public class XBoxController extends Driver
     {
         //Finds the normalized rotation value of the controller, and then expos it.
         double rValue = normalize( _joy.getRawAxis( 1 ), _ROTMIN, _ROTMAX, _ROTCENTER );
-        rValue = rValue * rValue * rValue;
+        //rValue = rValue * rValue * rValue;
         
         //Returns the rotation value.
         return rValue;
