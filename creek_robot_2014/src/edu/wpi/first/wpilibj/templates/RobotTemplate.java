@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 
 import com.cc.inputs.driver.*;
 import com.cc.systems.Chassis;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -40,7 +41,8 @@ public class RobotTemplate extends IterativeRobot
         _driver = AirplaneController.getInstance();
 
         //Get the chassis object.
-        _chassis = Chassis.getInstance();    
+        _chassis = Chassis.getInstance();   
+
     }
     
     /**
@@ -60,7 +62,13 @@ public class RobotTemplate extends IterativeRobot
      */
     public void autonomousPeriodic() 
     {
-
+        //If the flag hasn't been raised...
+        if( !autoFlag )
+        {
+            //Turn the robot 20 degrees right and raise the flag.
+            _chassis.turn( -20, 0.8 );
+            autoFlag = true;
+        }
     }
 
     /**
@@ -70,6 +78,13 @@ public class RobotTemplate extends IterativeRobot
     {
         //Drives the chassis relative to the driver.
         _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
+        
+        //If the primary button is pressed...
+        if( _driver.getPriButton() )
+        {
+            //Square the robot back to the wall.
+            _chassis.square( 0.8 );
+        }
     }
     
     /**
@@ -77,12 +92,6 @@ public class RobotTemplate extends IterativeRobot
      */
     public void testPeriodic() 
     {
-        //If the flag hasn't been raised.
-        if( !autoFlag )
-        { 
-            //Turn the robot 90 degrees and raise the flag.
-            _chassis.turn( 90 );
-            autoFlag = true;
-        }
+        
     }
 }

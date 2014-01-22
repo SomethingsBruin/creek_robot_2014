@@ -78,22 +78,22 @@ public class Chassis
         double rr = fwd + sld - rot;
         
         //Makes the max value equal to the left motor.
-        double maxVal = Math.abs(lf);
+        double maxVal = Math.abs( lf );
         
         //If any motor value is greater than the max value, make the max value equal to that motor value.
-        if ( Math.abs(rf) > maxVal)
+        if ( Math.abs( rf ) > maxVal )
         {
-            maxVal = Math.abs(rf);
+            maxVal = Math.abs( rf );
         }
         
-        if ( Math.abs(lr) > maxVal)
+        if ( Math.abs( lr ) > maxVal )
         {
-            maxVal = Math.abs(lr);
+            maxVal = Math.abs( lr );
         }
         
-        if ( Math.abs(rr) > maxVal)
+        if ( Math.abs( rr ) > maxVal )
         {
-            maxVal = Math.abs(rr);
+            maxVal = Math.abs( rr );
         }
         
         //If the max value was greater than one or less than negative one...
@@ -129,6 +129,33 @@ public class Chassis
         
         //Inputs the calculated values into the normal holoDrive function.
         holoDrive( fwdTemp, sldTemp, rot );     
+    }
+    
+     /**
+     * Line the Robot up with the wall.
+     * 
+     * @param speed The speed at which to square the robot.
+     */
+    public void square( double speed )
+    {
+        //Finds the original angle of the robot (which is the negative of the angle needed to turn).
+        double angle = Math.toDegrees( getGyro() );
+        
+        //If the angle is above 180...
+        if( angle >= 180 )
+        {
+            //Then change the angle to turn to turn more efficently.
+            angle = -( 360 - angle );
+        }
+        else if ( angle <= -180 )//Else if the angle is below -180...
+        {
+            //Then change the angle to turn to turn more efficently.
+            angle += 360;     
+        }
+        
+        //Turn the angle found to square the robot back to 0 degrees.
+        turn( -angle , speed );
+        
     }
     
     /**
@@ -186,20 +213,24 @@ public class Chassis
      * 
      * @param angle The angle that the robot will turn.
      */
-    public void turn( double angle )
+    public void turn( double angle, double speed )
     {
         //The flag which represents if the turn is done.
         boolean done = false;
         
+        //Finds the angle that the robot needs to turn to.
+        angle += Math.toDegrees( getGyro() );
+        
         //The three constants for the PID loop.
-        final double KP = 0.4;
-        final double KI = 0.004;
+        final double KP = 0.7;
+        final double KI = 0.006;
         final double KD = 0.04;
         
-        //The error, the previous error, and the sum of all errors that are used in the PID loop.
+        //The error, the previous error, the sum of all errors, and the sum's limit that are used in the PID loop.
         double error = 0.0;
         double preError = 0.0;
         double errorSum = 0.0;
+        final double sumLimit = 20.0;
         
         //The variables which represents the separate parts to the PID loop.
         double p = 0.0;
@@ -221,6 +252,7 @@ public class Chassis
             
             //Adds the new error to the error sum of the robot.
             errorSum += error;
+            errorSum = Utility.limitRange( errorSum, sumLimit, -sumLimit );
             
             //Calculates the p, i, and d parts of the PID loop.
             p = error * KP;
@@ -228,22 +260,21 @@ public class Chassis
             d = ( preError - error ) * KD;
             
             //Adds the p, i, and d parts of the loop together, limits it between 1 and -1, then gives it to output.
-            output = Utility.limitRange( p + i + d );
+            output = Utility.limitRange( p + i + d, speed, -speed );
             
             //Turns the robot based on the output of the PID loop.
             holoDrive( 0, 0, output );
             
             //If the error is below 5 percent, then end the loop.
-            if( Math.abs( error ) < 0.05 )
+            if( Math.abs( error ) < 0.01 )
             {
                 //Raise the flag to end the loop.
-                done = true;
+                done = true;       
             }
         }
         
         //Stop the motors.
         stop();
-        
     }
     
     /**
@@ -258,5 +289,4 @@ public class Chassis
         _rightRear.stopMotor();
         
     }
-    
 }
