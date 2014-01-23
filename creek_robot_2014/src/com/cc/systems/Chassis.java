@@ -130,34 +130,7 @@ public class Chassis
         //Inputs the calculated values into the normal holoDrive function.
         holoDrive( fwdTemp, sldTemp, rot );     
     }
-    
-     /**
-     * Line the Robot up with the wall.
-     * 
-     * @param speed The speed at which to square the robot.
-     */
-    public void square( double speed )
-    {
-        //Finds the original angle of the robot (which is the negative of the angle needed to turn).
-        double angle = Math.toDegrees( getGyro() );
         
-        //If the angle is above 180...
-        if( angle >= 180 )
-        {
-            //Then change the angle to turn to turn more efficently.
-            angle = -( 360 - angle );
-        }
-        else if ( angle <= -180 )//Else if the angle is below -180...
-        {
-            //Then change the angle to turn to turn more efficently.
-            angle += 360;     
-        }
-        
-        //Turn the angle found to square the robot back to 0 degrees.
-        turn( -angle , speed );
-        
-    }
-    
     /**
      * Returns the angle of the gyro on the chassis.
      * 
@@ -188,11 +161,20 @@ public class Chassis
      * 
      * @param distance The distance in inches for the robot to travel.
      * @param speed The speed the robot will travel.
+     * 
+     * @return Returns whether the function moved or not.
      */
-    public void move( double distance , double speed )
+    public boolean move( double distance , double speed )
     {
         //Gets the inital distance from an object in front of the robot.
         double initialDistance = _sonar.getDistance();
+        
+        //Chekcs if it can move the given distance, if not...
+        if( initialDistance - distance <= 0 )
+        {
+            //End the function and return false.
+            return false;
+        }
         
         //Makes sure that the speed is limited to 1 and -1.
         speed = Utility.limitRange( speed );
@@ -202,10 +184,14 @@ public class Chassis
         {
             //Drive the robot forward at the given speed.
             holoDrive( speed , 0.0 ,0.0 );
+            System.out.println( initialDistance + " " + _sonar.getDistance() );
         }
         
         //When the robot is done moving forward, stop the motors.
         stop();
+        
+        //Return true if the robot moves.
+        return true;
     }
     
     /**
@@ -276,6 +262,32 @@ public class Chassis
         //Stop the motors.
         stop();
     }
+        
+    /**
+     * Line the Robot up with the wall.
+     * 
+     * @param speed The speed at which to square the robot.
+     */
+    public void square( double speed )
+    {
+        //Finds the original angle of the robot (which is the negative of the angle needed to turn).
+        double angle = Math.toDegrees( getGyro() );
+        
+        //If the angle is above 180...
+        if( angle >= 180 )
+        {
+            //Then change the angle to turn to turn more efficently.
+            angle = -( 360 - angle );
+        }
+        else if ( angle <= -180 )//Else if the angle is below -180...
+        {
+            //Then change the angle to turn to turn more efficently.
+            angle += 360;     
+        }
+        
+        //Turn the angle found to square the robot back to 0 degrees.
+        turn( -angle , speed );   
+    }
     
     /**
      * Stops all the motors on the chassis.
@@ -286,7 +298,6 @@ public class Chassis
         _leftFront.stopMotor();
         _leftRear.stopMotor();
         _rightFront.stopMotor();
-        _rightRear.stopMotor();
-        
+        _rightRear.stopMotor();    
     }
 }

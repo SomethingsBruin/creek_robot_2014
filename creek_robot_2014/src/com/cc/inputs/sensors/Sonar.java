@@ -11,7 +11,7 @@ public class Sonar
     private AnalogChannel _sonar;
     
     //The constant which represents how many ticks are in an inch for the sensor.
-    private final double _TICKSPERINCH = 4.722;
+    private final double _TICKSPERINCH = 4.840;
     
     /**
      * A constructor which creates the sonar object. 

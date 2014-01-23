@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 
 import com.cc.inputs.driver.*;
 import com.cc.systems.Chassis;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -42,7 +41,6 @@ public class RobotTemplate extends IterativeRobot
 
         //Get the chassis object.
         _chassis = Chassis.getInstance();   
-
     }
     
     /**
@@ -65,8 +63,8 @@ public class RobotTemplate extends IterativeRobot
         //If the flag hasn't been raised...
         if( !autoFlag )
         {
-            //Turn the robot 20 degrees right and raise the flag.
-            _chassis.turn( -20, 0.8 );
+            //Moves the 48 inches and raise the flag.
+            _chassis.move( 48, 0.5 );
             autoFlag = true;
         }
     }
@@ -92,6 +90,6 @@ public class RobotTemplate extends IterativeRobot
      */
     public void testPeriodic() 
     {
-        
+
     }
 }
