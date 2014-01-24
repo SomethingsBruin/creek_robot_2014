@@ -30,7 +30,7 @@ public class AirplaneController extends Driver
      */
     private AirplaneController()
     {
-        //Calls the contructor in Dirver.
+        //Calls the contructor in Driver.
         super();
         
         //Initializes the joystick on channel 1.

@@ -1,6 +1,5 @@
 package com.cc.inputs.driver;
 
-
 import edu.wpi.first.wpilibj.Joystick;
 
 /**

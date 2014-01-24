@@ -7,10 +7,12 @@
 
 package edu.wpi.first.wpilibj.templates;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-
 import com.cc.inputs.driver.*;
 import com.cc.systems.Chassis;
+
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,6 +29,9 @@ public class RobotTemplate extends IterativeRobot
     //The robot chassis.
     private Chassis _chassis;
     
+    //Declares the Smart Dashboard device which chooses the Driver.
+    private SendableChooser _driverChooser;
+    
     //A flag that insure autonomous only goes once.
     private boolean autoFlag = true;    
     
@@ -36,15 +41,24 @@ public class RobotTemplate extends IterativeRobot
      */
     public void robotInit() 
     {
-        //Gives the driver the type of XBoxController.
-        _driver = AirplaneController.getInstance();
-
         //Get the chassis object.
         _chassis = Chassis.getInstance();   
+        
+        //Initializes the driver chooser device.
+        _driverChooser = new SendableChooser();
+        
+        //Assigns a index number to each Driver type. The Airplane Controller is the default selection.
+        _driverChooser.addDefault( "Airplane Controller" , new Integer( 0 ) );//0 for the Airplane Controller.
+        _driverChooser.addObject( "Attack Three" , new Integer( 1 ) );//1 for the Attack Three joysticks.
+        _driverChooser.addObject( "XBox Controller" , new Integer( 2 ) );//2 for the XBox Controller.
+        
+        //Puts the driver chooser device on the Smart Dashboard.
+        SmartDashboard.putData( "Driver", _driverChooser );      
     }
     
     /**
-     * This function is called once when robot is disabled.
+     * This function is called once when robot is disabled and prompts the user
+     * that the robot is disabled.
      */ 
     public void disabledInit()
     {
@@ -56,21 +70,54 @@ public class RobotTemplate extends IterativeRobot
     }
 
     /**
-     * This function is called periodically during autonomous.
+     * This function is called periodically during autonomous and the robot will
+     * turn 90 degrees to the right once.
      */
     public void autonomousPeriodic() 
     {
         //If the flag hasn't been raised...
         if( !autoFlag )
         {
-            //Moves the 48 inches and raise the flag.
-            _chassis.move( 48, 0.5 );
+            //Turn the robot 90 degrees to the right and raise the flag.
+            _chassis.turn( 90, 0.8 );
             autoFlag = true;
+        }
+    }
+    
+    /**
+     * A function which is called once at the beginning of Tele-Op and finds which
+     * driver type is wanted.
+     */
+    public void teleopInit()
+    {
+        //Finds the assigned index value of the driver type choosen
+        int index = ( (Integer) _driverChooser.getSelected() ).intValue();
+        
+        //The type of the driver will be choosen from the given index value from the Smart Dashboard
+        switch( index )
+        {
+            //The XBox Controller if the index is 2.
+            case 2:
+                _driver = XBoxController.getInstance();
+                break;
+                
+            //The Attack Three joysticks if the index is 1.
+            case 1:
+                _driver = AttackThree.getInstance();
+                break;
+            
+            //The Airplane Controller if the index is 0 (or anything else).
+            default:
+            case 0:
+                _driver = AirplaneController.getInstance();
+                break;
         }
     }
 
     /**
-     * This function is called periodically during operator control.
+     * This function is called periodically during operator control and it will
+     * drive the robot relative to the driver, not its starting position. The robot
+     * will square itself to the wall on command.
      */
     public void teleopPeriodic() 
     {

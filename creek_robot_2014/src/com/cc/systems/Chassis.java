@@ -5,6 +5,7 @@ import com.cc.outputs.motors.CCTalon;
 import com.cc.utility.Utility;
 
 import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class represents the chassis of the robot and is responsible for moving
@@ -27,6 +28,11 @@ public class Chassis
     //The sonar which determines the distance of the robot from an object in front of it.
     private Sonar _sonar;
     
+    //Initializes the original PID constants for the chassis. These are dynamically changable in the Smart Dashboard.
+    private final double _KP = 0.7;
+    private final double _KI = 0.006;
+    private final double _KD = 0.04;
+    
     private Chassis()
     {
         //Initializes each talon speed controler.
@@ -41,6 +47,11 @@ public class Chassis
         
         //Initializes the sonar of the robot.
         _sonar = new Sonar( 1 );
+        
+        //Puts the PID constants into the Smart Dashboard so they are dynamicly changable.
+        SmartDashboard.putNumber( "P-Constant: ", _KP );
+        SmartDashboard.putNumber( "I-Constant: ", _KI );
+        SmartDashboard.putNumber( "D-Constant: ", _KD );
     }
     
     /**
@@ -132,9 +143,9 @@ public class Chassis
     }
         
     /**
-     * Returns the angle of the gyro on the chassis.
+     * Returns the angle of the gyro in radians on the chassis.
      * 
-     * @return The angle of the gyro.
+     * @return The angle of the gyro in radians.
      */
     public double getGyro()
     {
@@ -197,7 +208,7 @@ public class Chassis
     /**
      * Turns the robot at a given angle.
      * 
-     * @param angle The angle that the robot will turn.
+     * @param angle The angle that the robot will turn in degrees.
      */
     public void turn( double angle, double speed )
     {
@@ -207,10 +218,10 @@ public class Chassis
         //Finds the angle that the robot needs to turn to.
         angle += Math.toDegrees( getGyro() );
         
-        //The three constants for the PID loop.
-        final double KP = 0.7;
-        final double KI = 0.006;
-        final double KD = 0.04;
+        //Gets the three constants for the PID loop from the Smart Dashboard.
+        final double KP = SmartDashboard.getNumber( "P-Constant" );
+        final double KI = SmartDashboard.getNumber( "I-Constant" );
+        final double KD = SmartDashboard.getNumber( "D-Constant" );
         
         //The error, the previous error, the sum of all errors, and the sum's limit that are used in the PID loop.
         double error = 0.0;
