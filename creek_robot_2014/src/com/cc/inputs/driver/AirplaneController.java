@@ -8,19 +8,19 @@ import edu.wpi.first.wpilibj.Joystick;
 public class AirplaneController extends Driver
 {
     //The contoller's X constants.
-    private final double _XMAX = 0.80315;
-    private final double _XMIN = -0.71875;
-    private final double _XCENTER = 0.0;
+    private final double _XMAX = 0.81102;
+    private final double _XMIN = -0.69531;
+    private final double _XCENTER = 0.00787;
     
-    //The contoller's Y constants.
-    private final double _YMAX = -0.59375;
-    private final double _YMIN = 0.69291;
-    private final double _YCENTER = 0.00787;
+    //The contoller's Y constants. Y Max and Min are switched for normalization process.
+    private final double _YMAX = 0.66926;
+    private final double _YMIN = -0.56250;
+    private final double _YCENTER = 0.01575;
     
     //The contoller's Rotation constants.
-    private final double _ROTMAX = 0.84252;
-    private final double _ROTMIN = -0.67188;
-    private final double _ROTCENTER = 0.03937;
+    private final double _ROTMAX = 0.81890;
+    private final double _ROTMIN = -0.68750;
+    private final double _ROTCENTER = 0.02756;
     
     //The joystick of the controller.
     private Joystick _joy; 
@@ -57,7 +57,7 @@ public class AirplaneController extends Driver
     /**
      * Prints all the axes in the controller.
      */
-    public void getAxes()
+    public void printAxes()
     {
         //Goes through 12 axis channels on the joystick and prints their current value.
         for( int i = 0; i <= 12; i++ )
@@ -72,7 +72,7 @@ public class AirplaneController extends Driver
     /**
      * Prints all the buttons in the controller.
      */
-    public  void getButtons()
+    public  void printButtons()
     {
         //Goes through 12 button channels on the joystick and prints their current value.
         for( int i = 0; i <= 12; i++ )
@@ -107,7 +107,7 @@ public class AirplaneController extends Driver
     public double getY()
     {
         //Finds the normalized y value of the controller, and then expos it.
-        double yValue = normalize( _joy.getRawAxis( 2 ), _YMIN, _YMAX, _YCENTER );
+        double yValue = -1 * normalize( _joy.getRawAxis( 2 ), _YMIN, _YMAX, _YCENTER );//Multiplies by -1 because the y-axis is inverted.
         yValue = yValue * yValue * yValue;
         
         //Returns the y value.

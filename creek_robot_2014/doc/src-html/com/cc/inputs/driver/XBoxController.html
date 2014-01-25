@@ -20,9 +20,9 @@
 <span class="sourceLineNo">012</span>    private final double _XMIN = -1.0;<a name="line.12"></a>
 <span class="sourceLineNo">013</span>    private final double _XCENTER = 0.0;<a name="line.13"></a>
 <span class="sourceLineNo">014</span>    <a name="line.14"></a>
-<span class="sourceLineNo">015</span>    //The contoller's Y constants.<a name="line.15"></a>
-<span class="sourceLineNo">016</span>    private final double _YMAX = -1.0;<a name="line.16"></a>
-<span class="sourceLineNo">017</span>    private final double _YMIN = 1.0;<a name="line.17"></a>
+<span class="sourceLineNo">015</span>    //The contoller's Y constants. Y Max and Min are switched for normalization process.<a name="line.15"></a>
+<span class="sourceLineNo">016</span>    private final double _YMAX = 1.0;<a name="line.16"></a>
+<span class="sourceLineNo">017</span>    private final double _YMIN = -1.0;<a name="line.17"></a>
 <span class="sourceLineNo">018</span>    private final double _YCENTER = -0.0078125;<a name="line.18"></a>
 <span class="sourceLineNo">019</span>    <a name="line.19"></a>
 <span class="sourceLineNo">020</span>    //The contoller's Rotation constants.<a name="line.20"></a>
@@ -65,7 +65,7 @@
 <span class="sourceLineNo">057</span>    /**<a name="line.57"></a>
 <span class="sourceLineNo">058</span>     * Prints all the axes in the controller.<a name="line.58"></a>
 <span class="sourceLineNo">059</span>     */<a name="line.59"></a>
-<span class="sourceLineNo">060</span>    public void getAxes()<a name="line.60"></a>
+<span class="sourceLineNo">060</span>    public void printAxes()<a name="line.60"></a>
 <span class="sourceLineNo">061</span>    {<a name="line.61"></a>
 <span class="sourceLineNo">062</span>        //Goes through 12 axis channels on the joystick and prints their current value.<a name="line.62"></a>
 <span class="sourceLineNo">063</span>        for( int i = 0; i &lt;= 12; i++ )<a name="line.63"></a>
@@ -80,7 +80,7 @@
 <span class="sourceLineNo">072</span>    /**<a name="line.72"></a>
 <span class="sourceLineNo">073</span>     * Prints all the buttons in the controller.<a name="line.73"></a>
 <span class="sourceLineNo">074</span>     */<a name="line.74"></a>
-<span class="sourceLineNo">075</span>    public  void getButtons()<a name="line.75"></a>
+<span class="sourceLineNo">075</span>    public  void printButtons()<a name="line.75"></a>
 <span class="sourceLineNo">076</span>    {<a name="line.76"></a>
 <span class="sourceLineNo">077</span>        //Goes through 12 button channels on the joystick and prints their current value.<a name="line.77"></a>
 <span class="sourceLineNo">078</span>        for( int i = 0; i &lt;= 12; i++ )<a name="line.78"></a>
@@ -115,7 +115,7 @@
 <span class="sourceLineNo">107</span>    public double getY()<a name="line.107"></a>
 <span class="sourceLineNo">108</span>    {<a name="line.108"></a>
 <span class="sourceLineNo">109</span>        //Finds the normalized y value of the controller, and then expos it.<a name="line.109"></a>
-<span class="sourceLineNo">110</span>        double yValue = normalize( _joy.getRawAxis( 5 ), _YMIN, _YMAX, _YCENTER );<a name="line.110"></a>
+<span class="sourceLineNo">110</span>        double yValue = -1 * normalize( _joy.getRawAxis( 5 ), _YMIN, _YMAX, _YCENTER );//Multiplies by -1 because the y-axis is inverted.<a name="line.110"></a>
 <span class="sourceLineNo">111</span>       // yValue = yValue * yValue * yValue;<a name="line.111"></a>
 <span class="sourceLineNo">112</span>        <a name="line.112"></a>
 <span class="sourceLineNo">113</span>        //Returns the y value.<a name="line.113"></a>

@@ -12,9 +12,9 @@ public class XBoxController extends Driver
     private final double _XMIN = -1.0;
     private final double _XCENTER = 0.0;
     
-    //The contoller's Y constants.
-    private final double _YMAX = -1.0;
-    private final double _YMIN = 1.0;
+    //The contoller's Y constants. Y Max and Min are switched for normalization process.
+    private final double _YMAX = 1.0;
+    private final double _YMIN = -1.0;
     private final double _YCENTER = -0.0078125;
     
     //The contoller's Rotation constants.
@@ -57,7 +57,7 @@ public class XBoxController extends Driver
     /**
      * Prints all the axes in the controller.
      */
-    public void getAxes()
+    public void printAxes()
     {
         //Goes through 12 axis channels on the joystick and prints their current value.
         for( int i = 0; i <= 12; i++ )
@@ -72,7 +72,7 @@ public class XBoxController extends Driver
     /**
      * Prints all the buttons in the controller.
      */
-    public  void getButtons()
+    public  void printButtons()
     {
         //Goes through 12 button channels on the joystick and prints their current value.
         for( int i = 0; i <= 12; i++ )
@@ -107,7 +107,7 @@ public class XBoxController extends Driver
     public double getY()
     {
         //Finds the normalized y value of the controller, and then expos it.
-        double yValue = normalize( _joy.getRawAxis( 5 ), _YMIN, _YMAX, _YCENTER );
+        double yValue = -1 * normalize( _joy.getRawAxis( 5 ), _YMIN, _YMAX, _YCENTER );//Multiplies by -1 because the y-axis is inverted.
        // yValue = yValue * yValue * yValue;
         
         //Returns the y value.

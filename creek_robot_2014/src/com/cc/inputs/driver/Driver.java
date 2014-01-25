@@ -23,12 +23,12 @@ public abstract class Driver
     /**
      * Prints all the axes in the controller.
      */
-    public abstract void getAxes();
+    public abstract void printAxes();
   
     /**
      * Prints all the buttons in the controller.
      */
-    public abstract void getButtons();
+    public abstract void printButtons();
     
     /**
      * Gets the x value of the controller.

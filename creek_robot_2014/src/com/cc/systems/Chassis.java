@@ -49,9 +49,9 @@ public class Chassis
         _sonar = new Sonar( 1 );
         
         //Puts the PID constants into the Smart Dashboard so they are dynamicly changable.
-        SmartDashboard.putNumber( "P-Constant: ", _KP );
-        SmartDashboard.putNumber( "I-Constant: ", _KI );
-        SmartDashboard.putNumber( "D-Constant: ", _KD );
+        SmartDashboard.putNumber( " P-Constant: ", _KP );
+        SmartDashboard.putNumber( " I-Constant: ", _KI );
+        SmartDashboard.putNumber( " D-Constant: ", _KD );
     }
     
     /**
@@ -219,9 +219,9 @@ public class Chassis
         angle += Math.toDegrees( getGyro() );
         
         //Gets the three constants for the PID loop from the Smart Dashboard.
-        final double KP = SmartDashboard.getNumber( "P-Constant" );
-        final double KI = SmartDashboard.getNumber( "I-Constant" );
-        final double KD = SmartDashboard.getNumber( "D-Constant" );
+        final double KP = SmartDashboard.getNumber( " P-Constant: " );
+        final double KI = SmartDashboard.getNumber( " I-Constant: " );
+        final double KD = SmartDashboard.getNumber( " D-Constant: " );
         
         //The error, the previous error, the sum of all errors, and the sum's limit that are used in the PID loop.
         double error = 0.0;
@@ -297,7 +297,7 @@ public class Chassis
         }
         
         //Turn the angle found to square the robot back to 0 degrees.
-        turn( -angle , speed );   
+        turn( -angle , speed ); 
     }
     
     /**

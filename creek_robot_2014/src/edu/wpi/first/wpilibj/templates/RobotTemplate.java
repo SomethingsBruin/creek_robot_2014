@@ -11,6 +11,8 @@ import com.cc.inputs.driver.*;
 import com.cc.systems.Chassis;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -133,10 +135,40 @@ public class RobotTemplate extends IterativeRobot
     }
     
     /**
+     * A function which is called once at the beginning of Test and finds which
+     * driver type is wanted.
+     */
+    public void testInit()
+    {
+        //Finds the assigned index value of the driver type choosen
+        int index = ( (Integer) _driverChooser.getSelected() ).intValue();
+        
+        //The type of the driver will be choosen from the given index value from the Smart Dashboard
+        switch( index )
+        {
+            //The XBox Controller if the index is 2.
+            case 2:
+                _driver = XBoxController.getInstance();
+                break;
+                
+            //The Attack Three joysticks if the index is 1.
+            case 1:
+                _driver = AttackThree.getInstance();
+                break;
+            
+            //The Airplane Controller if the index is 0 (or anything else).
+            default:
+            case 0:
+                _driver = AirplaneController.getInstance();
+                break;
+        }
+    }
+    
+    /**
      * This function is called periodically during test mode.
      */
     public void testPeriodic() 
     {
-
+        
     }
 }
