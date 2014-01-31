@@ -33,7 +33,7 @@ public class RobotTemplate extends IterativeRobot
     private SendableChooser _driverChooser;
     
     //A flag that insure autonomous only goes once.
-    private boolean autoFlag = true;    
+    private boolean _autoFlag = true;    
     
     /**
      * This function is run when the robot is first started up and should be
@@ -53,12 +53,12 @@ public class RobotTemplate extends IterativeRobot
         _driverChooser.addObject( "XBox Controller" , new Integer( 2 ) );//2 for the XBox Controller.
         
         //Puts the driver chooser device on the Smart Dashboard.
-        SmartDashboard.putData( "Driver", _driverChooser );      
+        SmartDashboard.putData( "Driver", _driverChooser ); 
     }
     
     /**
      * This function is called once when robot is disabled and prompts the user
-     * that the robot is disabled.
+     * that the robot is disabled. Also resets the gyro on the robot to 0 degrees.
      */ 
     public void disabledInit()
     {
@@ -66,7 +66,10 @@ public class RobotTemplate extends IterativeRobot
         System.out.println( "Robot is Disabled" );
         
         //Sets the automous flag to be false.
-        autoFlag =  false;
+        _autoFlag =  false;
+        
+        //Resets the gyro to 0 degrees.
+        _chassis.resetGyro();
     }
     
     /**
@@ -101,16 +104,16 @@ public class RobotTemplate extends IterativeRobot
 
     /**
      * This function is called periodically during autonomous and the robot will
-     * turn 90 degrees to the right once.
+     * move 24 inches forward.
      */
     public void autonomousPeriodic() 
     {
         //If the flag hasn't been raised...
-        if( !autoFlag )
+        if( !_autoFlag )
         {
-            //Turn the robot 90 degrees to the right and raise the flag.
-            _chassis.turn( 90, 0.8 );
-            autoFlag = true;
+            //Moves the chassis forward 168 inches and raises the auto flag.
+            _chassis.move( 168, 0.7 );
+            _autoFlag = true;
         }
     }
     
@@ -152,7 +155,7 @@ public class RobotTemplate extends IterativeRobot
     public void teleopPeriodic() 
     {
         //Drives the chassis relative to the driver.
-        _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
+        _chassis.holoDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
         
         //If the primary button is pressed...
         if( _driver.getPriButton() )

@@ -1,8 +1,8 @@
 package com.cc.systems;
 
-import com.cc.inputs.sensors.Sonar;
 import com.cc.outputs.motors.CCTalon;
 import com.cc.utility.Utility;
+import edu.wpi.first.wpilibj.Encoder;
 
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,8 +25,11 @@ public class Chassis
     //The gyro which gives the angle of the robot.
     private Gyro _gyro;
     
-    //The sonar which determines the distance of the robot from an object in front of it.
-    private Sonar _sonar;
+    //The encoder which determines the distance traveled by the robot.
+    private Encoder _encoder;
+    
+    //The ticks per inch of the encoder
+    private final double TICKS_PER_INCH = 46.443;
     
     //Initializes the original PID constants for the chassis. These are dynamically changable in the Smart Dashboard.
     private final double _KP = 0.7;
@@ -45,8 +48,9 @@ public class Chassis
         _gyro = new Gyro( 2 );
         _gyro.reset();
         
-        //Initializes the sonar of the robot.
-        _sonar = new Sonar( 1 );
+        //Initializes the encoder of the robot.
+        _encoder = new Encoder( 1, 2, true );
+        _encoder.reset();
         
         //Puts the PID constants into the Smart Dashboard so they are dynamicly changable.
         SmartDashboard.putNumber( " P-Constant: ", _KP );
@@ -168,41 +172,43 @@ public class Chassis
     }
     
     /**
+     * Resets the gyro on the robot to 0 degrees.
+     */
+    public void resetGyro()
+    {
+        //Resets the gyro on the robot to 0 degrees.
+        _gyro.reset();
+    }
+    
+    /**
      * Moves the robot a given distance at a given speed autonomously.
      * 
      * @param distance The distance in inches for the robot to travel.
      * @param speed The speed the robot will travel.
-     * 
-     * @return Returns whether the function moved or not.
      */
-    public boolean move( double distance , double speed )
+    public void move( double distance , double speed )
     {
-        //Gets the inital distance from an object in front of the robot.
-        double initialDistance = _sonar.getDistance();
+        //Finds the amount of ticks the robot encoder needs to read before the robot stops.
+        distance *= TICKS_PER_INCH;
         
-        //Chekcs if it can move the given distance, if not...
-        if( initialDistance - distance <= 0 )
-        {
-            //End the function and return false.
-            return false;
+        //Starts the encoder reading.
+        _encoder.start();
+        
+        //Tells the robot to move forward at the given speed.
+        holoDrive( speed, 0.0, 0.0 );
+        
+        //While the encoder reading is less than the calculated distance...
+        while( _encoder.get() < distance )
+        {    
+            //Waits until the encoder reads the appropriate distance.
         }
         
-        //Makes sure that the speed is limited to 1 and -1.
-        speed = Utility.limitRange( speed );
-        
-        //While the distance traveled is less than distance wanted...
-        while( _sonar.getDistance() > initialDistance - distance )
-        {
-            //Drive the robot forward at the given speed.
-            holoDrive( speed , 0.0 ,0.0 );
-            System.out.println( initialDistance + " " + _sonar.getDistance() );
-        }
-        
-        //When the robot is done moving forward, stop the motors.
+        //After the robot has moved the appropriate distance, stop the robot.
         stop();
         
-        //Return true if the robot moves.
-        return true;
+        //Finally, stop and reset the encoder reading.
+        _encoder.stop();
+        _encoder.reset();
     }
     
     /**
