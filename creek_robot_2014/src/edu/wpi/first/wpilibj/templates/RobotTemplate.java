@@ -100,6 +100,9 @@ public class RobotTemplate extends IterativeRobot
                 _driver = AirplaneController.getInstance();
                 break;
         }
+        
+        //Resets the gyro
+        _chassis.resetGyro();
     }
 
     /**
@@ -145,6 +148,9 @@ public class RobotTemplate extends IterativeRobot
                 _driver = AirplaneController.getInstance();
                 break;
         }
+        
+        //Reset the gyro.
+        _chassis.resetGyro();
     }
 
     /**
@@ -155,7 +161,7 @@ public class RobotTemplate extends IterativeRobot
     public void teleopPeriodic() 
     {
         //Drives the chassis relative to the driver.
-        _chassis.holoDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
+        _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
         
         //If the primary button is pressed...
         if( _driver.getPriButton() )

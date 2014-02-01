@@ -1,25 +1,25 @@
 package com.cc.outputs.motors;
 
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 
 /**
- * A convenience for the talon speed controller which stores the orientation of
+ * A convenience for the victor speed controller which stores the orientation of
  * the motor on the chassis.
  */
-public class CCTalon extends Talon
-{
-    //A flag which represents the orientation of the motor.
+public class CCVictor extends Victor
+{ 
+     //A flag which represents the orientation of the motor.
     private boolean _isReversed;
     
     /**
-     * The constructor for the CCTalon object.
+     * The constructor for the CCVictor object.
      * 
-     * @param port The port that the talon is plugged into on the chassis.
+     * @param port The port that the victor is plugged into on the chassis.
      * @param isReversed The flag which represents the orientation of the robot.
      */
-    public CCTalon( int port, boolean isReversed )
+    public CCVictor( int port, boolean isReversed )
     {
-        //Creates a normal talon plugged into the correct port.
+        //Creates a normal victor plugged into the correct port.
         super( port );
         
         //Sets the flag which represents the orientation of the robot.
@@ -40,7 +40,7 @@ public class CCTalon extends Talon
             speed *= -1;
         }
         
-        //Set the speed of the motor through the talon class.
+        //Set the speed of the motor through the victor class.
         super.set( speed );
     }
 }

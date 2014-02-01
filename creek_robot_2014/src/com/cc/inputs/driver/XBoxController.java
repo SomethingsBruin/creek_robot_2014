@@ -1,5 +1,6 @@
 package com.cc.inputs.driver;
 
+import com.cc.utility.Utility;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -108,7 +109,7 @@ public class XBoxController extends Driver
     {
         //Finds the normalized y value of the controller, and then expos it.
         double yValue = -1 * normalize( _joy.getRawAxis( 5 ), _YMIN, _YMAX, _YCENTER );//Multiplies by -1 because the y-axis is inverted.
-       // yValue = yValue * yValue * yValue;
+        // yValue = yValue * yValue * yValue;
         
         //Returns the y value.
         return yValue;
@@ -124,6 +125,8 @@ public class XBoxController extends Driver
         //Finds the normalized rotation value of the controller, and then expos it.
         double rValue = normalize( _joy.getRawAxis( 1 ), _ROTMIN, _ROTMAX, _ROTCENTER );
         //rValue = rValue * rValue * rValue;
+        
+        rValue = Utility.limitRange( rValue, 0.5, -0.5 );
         
         //Returns the rotation value.
         return rValue;

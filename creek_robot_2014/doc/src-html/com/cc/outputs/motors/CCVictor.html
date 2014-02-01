@@ -8,26 +8,26 @@
 <div class="sourceContainer">
 <pre><span class="sourceLineNo">001</span>package com.cc.outputs.motors;<a name="line.1"></a>
 <span class="sourceLineNo">002</span><a name="line.2"></a>
-<span class="sourceLineNo">003</span>import edu.wpi.first.wpilibj.Talon;<a name="line.3"></a>
+<span class="sourceLineNo">003</span>import edu.wpi.first.wpilibj.Victor;<a name="line.3"></a>
 <span class="sourceLineNo">004</span><a name="line.4"></a>
 <span class="sourceLineNo">005</span>/**<a name="line.5"></a>
-<span class="sourceLineNo">006</span> * A convenience for the talon speed controller which stores the orientation of<a name="line.6"></a>
+<span class="sourceLineNo">006</span> * A convenience for the victor speed controller which stores the orientation of<a name="line.6"></a>
 <span class="sourceLineNo">007</span> * the motor on the chassis.<a name="line.7"></a>
 <span class="sourceLineNo">008</span> */<a name="line.8"></a>
-<span class="sourceLineNo">009</span>public class CCTalon extends Talon<a name="line.9"></a>
-<span class="sourceLineNo">010</span>{<a name="line.10"></a>
-<span class="sourceLineNo">011</span>    //A flag which represents the orientation of the motor.<a name="line.11"></a>
+<span class="sourceLineNo">009</span>public class CCVictor extends Victor<a name="line.9"></a>
+<span class="sourceLineNo">010</span>{ <a name="line.10"></a>
+<span class="sourceLineNo">011</span>     //A flag which represents the orientation of the motor.<a name="line.11"></a>
 <span class="sourceLineNo">012</span>    private boolean _isReversed;<a name="line.12"></a>
 <span class="sourceLineNo">013</span>    <a name="line.13"></a>
 <span class="sourceLineNo">014</span>    /**<a name="line.14"></a>
-<span class="sourceLineNo">015</span>     * The constructor for the CCTalon object.<a name="line.15"></a>
+<span class="sourceLineNo">015</span>     * The constructor for the CCVictor object.<a name="line.15"></a>
 <span class="sourceLineNo">016</span>     * <a name="line.16"></a>
-<span class="sourceLineNo">017</span>     * @param port The port that the talon is plugged into on the chassis.<a name="line.17"></a>
+<span class="sourceLineNo">017</span>     * @param port The port that the victor is plugged into on the chassis.<a name="line.17"></a>
 <span class="sourceLineNo">018</span>     * @param isReversed The flag which represents the orientation of the robot.<a name="line.18"></a>
 <span class="sourceLineNo">019</span>     */<a name="line.19"></a>
-<span class="sourceLineNo">020</span>    public CCTalon( int port, boolean isReversed )<a name="line.20"></a>
+<span class="sourceLineNo">020</span>    public CCVictor( int port, boolean isReversed )<a name="line.20"></a>
 <span class="sourceLineNo">021</span>    {<a name="line.21"></a>
-<span class="sourceLineNo">022</span>        //Creates a normal talon plugged into the correct port.<a name="line.22"></a>
+<span class="sourceLineNo">022</span>        //Creates a normal victor plugged into the correct port.<a name="line.22"></a>
 <span class="sourceLineNo">023</span>        super( port );<a name="line.23"></a>
 <span class="sourceLineNo">024</span>        <a name="line.24"></a>
 <span class="sourceLineNo">025</span>        //Sets the flag which represents the orientation of the robot.<a name="line.25"></a>
@@ -48,7 +48,7 @@
 <span class="sourceLineNo">040</span>            speed *= -1;<a name="line.40"></a>
 <span class="sourceLineNo">041</span>        }<a name="line.41"></a>
 <span class="sourceLineNo">042</span>        <a name="line.42"></a>
-<span class="sourceLineNo">043</span>        //Set the speed of the motor through the talon class.<a name="line.43"></a>
+<span class="sourceLineNo">043</span>        //Set the speed of the motor through the victor class.<a name="line.43"></a>
 <span class="sourceLineNo">044</span>        super.set( speed );<a name="line.44"></a>
 <span class="sourceLineNo">045</span>    }<a name="line.45"></a>
 <span class="sourceLineNo">046</span>}<a name="line.46"></a>
