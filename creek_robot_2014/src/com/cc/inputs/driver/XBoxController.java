@@ -126,6 +126,7 @@ public class XBoxController extends Driver
         double rValue = normalize( _joy.getRawAxis( 1 ), _ROTMIN, _ROTMAX, _ROTCENTER );
         //rValue = rValue * rValue * rValue;
         
+        //Limits the turn of the robot with this controller to only half.
         rValue = Utility.limitRange( rValue, 0.5, -0.5 );
         
         //Returns the rotation value.

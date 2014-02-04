@@ -33,8 +33,8 @@ public class RobotTemplate extends IterativeRobot
     private SendableChooser _driverChooser;
     
     //A flag that insure autonomous only goes once.
-    private boolean _autoFlag = true;    
-    
+    private boolean _autoFlag = true;   
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -53,7 +53,7 @@ public class RobotTemplate extends IterativeRobot
         _driverChooser.addObject( "XBox Controller" , new Integer( 2 ) );//2 for the XBox Controller.
         
         //Puts the driver chooser device on the Smart Dashboard.
-        SmartDashboard.putData( "Driver", _driverChooser ); 
+        SmartDashboard.putData( "Driver", _driverChooser );
     }
     
     /**
@@ -161,7 +161,7 @@ public class RobotTemplate extends IterativeRobot
     public void teleopPeriodic() 
     {
         //Drives the chassis relative to the driver.
-        _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
+        _chassis.holoDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
         
         //If the primary button is pressed...
         if( _driver.getPriButton() )
@@ -199,6 +199,9 @@ public class RobotTemplate extends IterativeRobot
                 _driver = AirplaneController.getInstance();
                 break;
         }
+        
+        //Resets the gyro on the chassis
+        _chassis.resetGyro();
     }
     
     /**
@@ -206,6 +209,6 @@ public class RobotTemplate extends IterativeRobot
      */
     public void testPeriodic() 
     {
-        
+
     }
 }
