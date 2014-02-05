@@ -2,8 +2,8 @@ package com.cc.systems;
 
 import com.cc.outputs.motors.CCTalon;
 import com.cc.utility.Utility;
-import edu.wpi.first.wpilibj.Encoder;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

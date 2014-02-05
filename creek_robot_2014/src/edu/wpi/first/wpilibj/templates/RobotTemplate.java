@@ -8,9 +8,12 @@
 package edu.wpi.first.wpilibj.templates;
 
 import com.cc.inputs.driver.*;
+import com.cc.inputs.sensors.CCAccelerometer;
 import com.cc.systems.Chassis;
+import com.cc.systems.Mechanism;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -29,11 +32,16 @@ public class RobotTemplate extends IterativeRobot
     //The robot chassis.
     private Chassis _chassis;
     
+    //The robot mechanism.
+    private Mechanism _mechanism;
+    
     //Declares the Smart Dashboard device which chooses the Driver.
     private SendableChooser _driverChooser;
     
     //A flag that insure autonomous only goes once.
-    private boolean _autoFlag = true;   
+    private boolean _autoFlag = true;
+    
+    private CCAccelerometer _accel;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -42,7 +50,10 @@ public class RobotTemplate extends IterativeRobot
     public void robotInit() 
     {
         //Get the chassis object.
-        _chassis = Chassis.getInstance();   
+        _chassis = Chassis.getInstance();
+        
+        //Get the mechanism object.
+        _mechanism = Mechanism.getInstance();
         
         //Initializes the driver chooser device.
         _driverChooser = new SendableChooser();
@@ -54,6 +65,8 @@ public class RobotTemplate extends IterativeRobot
         
         //Puts the driver chooser device on the Smart Dashboard.
         SmartDashboard.putData( "Driver", _driverChooser );
+        
+        _accel = new CCAccelerometer();
     }
     
     /**
@@ -161,7 +174,7 @@ public class RobotTemplate extends IterativeRobot
     public void teleopPeriodic() 
     {
         //Drives the chassis relative to the driver.
-        _chassis.holoDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
+        _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
         
         //If the primary button is pressed...
         if( _driver.getPriButton() )
@@ -209,6 +222,6 @@ public class RobotTemplate extends IterativeRobot
      */
     public void testPeriodic() 
     {
-
+        System.out.println( "Z: " + _accel.getZAccel() );
     }
 }
