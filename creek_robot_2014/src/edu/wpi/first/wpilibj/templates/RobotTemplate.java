@@ -40,8 +40,6 @@ public class RobotTemplate extends IterativeRobot
     
     //A flag that insure autonomous only goes once.
     private boolean _autoFlag = true;
-    
-    private CCAccelerometer _accel;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -65,8 +63,6 @@ public class RobotTemplate extends IterativeRobot
         
         //Puts the driver chooser device on the Smart Dashboard.
         SmartDashboard.putData( "Driver", _driverChooser );
-        
-        _accel = new CCAccelerometer();
     }
     
     /**
@@ -222,6 +218,6 @@ public class RobotTemplate extends IterativeRobot
      */
     public void testPeriodic() 
     {
-        System.out.println( "Z: " + _accel.getZAccel() );
+        
     }
 }

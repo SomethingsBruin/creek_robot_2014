@@ -11,6 +11,10 @@ public class CCAccelerometer
     //The accelerometer of the robot which gives us acceleration in either the X, Y, or Z axis.
     private ADXL345_I2C _accelerometer;
     
+    private final double X_ZERO = 0.0;
+    private final double Y_ZERO = 0.0;
+    private final double Z_ZERO = 0.0;
+    
     /**
      * Initializes the accelerometer for the robot.
      */
@@ -25,10 +29,13 @@ public class CCAccelerometer
      * 
      * @return The acceleration on the x-axis relative to the robot in Gs.
      */
-    public double getXAccel()
+    public double getXAcceleration()
     {
         //Finds the x-axis acceleration in Gs.
         double xAccel = _accelerometer.getAcceleration( ADXL345_I2C.Axes.kY );
+        
+        //Corrects for the inital error of the x-axis.
+        xAccel -= X_ZERO;
         
         //Returns the acceleration.
         return xAccel;
@@ -39,11 +46,14 @@ public class CCAccelerometer
      * 
      * @return The acceleration on the y-axis relative to the robot in Gs.
      */
-    public double getYAccel()
+    public double getYAcceleration()
     {
         //Finds the x-axis acceleration in Gs and inverts the axis to be relative to the robot.
         double yAccel = _accelerometer.getAcceleration( ADXL345_I2C.Axes.kX );
         yAccel *= -1;
+        
+        //Corrects for the inital error of the y-axis.
+        yAccel -= Y_ZERO;
         
         //Returns the acceleration.
         return yAccel;
@@ -54,10 +64,13 @@ public class CCAccelerometer
      * 
      * @return The acceleration on the z-axis relative to the robot in Gs.
      */
-    public double getZAccel()
+    public double getZAcceleration()
     {
         //Finds the z-axis acceleration in Gs.
         double zAccel = _accelerometer.getAcceleration( ADXL345_I2C.Axes.kZ );
+        
+        //Corrects for the intial error of the z-axis.
+        zAccel -= Z_ZERO;
         
         //Returns the acceleration.
         return zAccel;
