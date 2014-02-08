@@ -7,13 +7,11 @@
 
 package edu.wpi.first.wpilibj.templates;
 
+import com.cc.autonomous.*;
 import com.cc.inputs.driver.*;
-import com.cc.inputs.sensors.CCAccelerometer;
-import com.cc.systems.Chassis;
-import com.cc.systems.Mechanism;
+import com.cc.systems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -35,15 +33,22 @@ public class RobotTemplate extends IterativeRobot
     //The robot mechanism.
     private Mechanism _mechanism;
     
-    //Declares the Smart Dashboard device which chooses the Driver.
+    //The AutoCommand to be run in autonomous.
+    private AutoCommand _autoCommand;
+    
+    //Declares the Smart Dashboard device which chooses the Driver and the drive type.
     private SendableChooser _driverChooser;
+    private SendableChooser _driveTypeChooser;
+    
+    //Declares the Smart Dashboard device which chooses which AutoCommand to run.
+    private SendableChooser _autoCommandChooser;
     
     //A flag that insure autonomous only goes once.
     private boolean _autoFlag = true;
 
     /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
+     * This function is run when the robot is first started up and initializes
+     * the mechanism and chassis, and does all the Smart Dashboard initialization.
      */
     public void robotInit() 
     {
@@ -53,16 +58,29 @@ public class RobotTemplate extends IterativeRobot
         //Get the mechanism object.
         _mechanism = Mechanism.getInstance();
         
-        //Initializes the driver chooser device.
+        //Initializes the chooser devices.
         _driverChooser = new SendableChooser();
+        _driveTypeChooser = new SendableChooser();
+        _autoCommandChooser = new SendableChooser();
         
         //Assigns a index number to each Driver type. The Airplane Controller is the default selection.
         _driverChooser.addDefault( "Airplane Controller" , new Integer( 0 ) );//0 for the Airplane Controller.
         _driverChooser.addObject( "Attack Three" , new Integer( 1 ) );//1 for the Attack Three joysticks.
         _driverChooser.addObject( "XBox Controller" , new Integer( 2 ) );//2 for the XBox Controller.
         
-        //Puts the driver chooser device on the Smart Dashboard.
-        SmartDashboard.putData( "Driver", _driverChooser );
+        //Assigns a index number to each drive type. The Relative Holo Drive is the default selection.
+        _driveTypeChooser.addDefault( "Relative Holo Drive" , new Integer( 0 ) );//0 for the Relative Holo Drive.
+        _driveTypeChooser.addObject( "Normal Holo Driver" , new Integer( 1 ) );//1 for the Normal Holo Dirve.
+        
+        //Adds each AutoCommand into the Smart Dashboard.
+        _autoCommandChooser.addDefault( "Do Nothing" , new AutoNothing() );
+        _autoCommandChooser.addObject( "Center Auto Command" , new AutoCenter() );
+        _autoCommandChooser.addObject( "Side Auto Command" , new AutoSide() );
+        
+        //Puts the chooser devices into the Smart Dashboard.
+        SmartDashboard.putData( "Driver Controller" , _driverChooser );
+        SmartDashboard.putData( "Drive Type" , _driveTypeChooser );
+        SmartDashboard.putData( "Auto Command" , _autoCommandChooser );
     }
     
     /**
@@ -83,48 +101,28 @@ public class RobotTemplate extends IterativeRobot
     
     /**
      * A function which is called once at the beginning of Autonomous and finds which
-     * driver type is wanted.
+     * AutoCommand will be run.
      */
     public void autonomousInit()
     {
-        //Finds the assigned index value of the driver type choosen
-        int index = ( (Integer) _driverChooser.getSelected() ).intValue();
-        
-        //The type of the driver will be choosen from the given index value from the Smart Dashboard
-        switch( index )
-        {
-            //The XBox Controller if the index is 2.
-            case 2:
-                _driver = XBoxController.getInstance();
-                break;
-                
-            //The Attack Three joysticks if the index is 1.
-            case 1:
-                _driver = AttackThree.getInstance();
-                break;
-            
-            //The Airplane Controller if the index is 0 (or anything else).
-            default:
-            case 0:
-                _driver = AirplaneController.getInstance();
-                break;
-        }
+        //Finds the selected AutoCommand.
+        _autoCommand = (AutoCommand) _autoCommandChooser.getSelected(); 
         
         //Resets the gyro
         _chassis.resetGyro();
     }
 
     /**
-     * This function is called periodically during autonomous and the robot will
-     * move 24 inches forward.
+     * This function is called periodically during autonomous and runs the given
+     * AutoCommand once.
      */
     public void autonomousPeriodic() 
     {
         //If the flag hasn't been raised...
         if( !_autoFlag )
         {
-            //Moves the chassis forward 168 inches and raises the auto flag.
-            _chassis.move( 168, 0.7 );
+            //Runs the given AutoCommand and set the auto flag to be true.
+            _autoCommand.runAutoCommand();
             _autoFlag = true;
         }
     }
@@ -138,7 +136,7 @@ public class RobotTemplate extends IterativeRobot
         //Finds the assigned index value of the driver type choosen
         int index = ( (Integer) _driverChooser.getSelected() ).intValue();
         
-        //The type of the driver will be choosen from the given index value from the Smart Dashboard
+        //The type of the driver will be choosen from the given index value from the Smart Dashboard.
         switch( index )
         {
             //The XBox Controller if the index is 2.
@@ -169,8 +167,25 @@ public class RobotTemplate extends IterativeRobot
      */
     public void teleopPeriodic() 
     {
-        //Drives the chassis relative to the driver.
-        _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
+        //Finds which drive type is wanted from the SmartDashBoard.
+        int index = ( (Integer) _driveTypeChooser.getSelected() ).intValue();
+        
+        //Based on the selection above, choose and run the selected drive type.
+        switch( index )
+        {
+            //1 is Normal Holo Drive.
+            case 1:
+                //Drives the chassis not relative to the driver.
+                _chassis.holoDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
+                break;
+            
+            //0 and default is Relative Holo Drive.
+            default:
+            case 0:
+                //Drives the chassis relative to the driver.
+                _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
+                break;
+        }      
         
         //If the primary button is pressed...
         if( _driver.getPriButton() )
@@ -181,8 +196,8 @@ public class RobotTemplate extends IterativeRobot
     }
     
     /**
-     * A function which is called once at the beginning of Test and finds which
-     * driver type is wanted.
+     * A function which is called once at the beginning of test and finds which
+     * driver type is wanted and resets the gyro to 0.
      */
     public void testInit()
     {

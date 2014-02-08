@@ -104,7 +104,6 @@ public abstract class Driver
         inValue = Utility.limitRange( inValue );
         
         //Returns the normalized value.
-        return inValue;
-        
+        return inValue;       
     }
 }

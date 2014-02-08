@@ -1,6 +1,8 @@
+com.cc.autonomous
 com.cc.inputs.driver
 com.cc.inputs.sensors
 com.cc.outputs.motors
+com.cc.shooter
 com.cc.systems
 com.cc.utility
 edu.wpi.first.wpilibj.templates
