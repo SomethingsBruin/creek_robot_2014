@@ -110,6 +110,9 @@ public class RobotTemplate extends IterativeRobot
         
         //Resets the gyro
         _chassis.resetGyro();
+        
+        //Initially cocks the mechanism shooter.
+        _mechanism.shoot();
     }
 
     /**
@@ -192,6 +195,13 @@ public class RobotTemplate extends IterativeRobot
         {
             //Square the robot back to the wall.
             _chassis.square( 0.8 );
+        }
+        
+        //If the secondary button is pressed...
+        if( _driver.getSecButton() )
+        {
+            //Shoot the mechanism.
+            _mechanism.shoot();
         }
     }
     

@@ -1,5 +1,7 @@
 package com.cc.autonomous;
 
+import edu.wpi.first.wpilibj.Timer;
+
 /**
  * The class which represents the AutoCommand which starts in the center position
  * figures out which goal is the hot goal, moves forward into position, turns towards
@@ -22,15 +24,19 @@ public class AutoCenter extends AutoCommand
      */
     public void runAutoCommand()
     {
-        //Moves the chassis forward 12 feet at 0.75 degrees.
+        //Moves the chassis forward 12 feet at 0.75 speed.
         _chassis.move( 144, 0.75 );
         
-        //Tunrs the robot 20 degrees at 0.75 degrees.
+        //Tunrs the robot 20 degrees at 0.75 speed.
         _chassis.turn( 20, 0.75 );
         
         //Shoots the mechanism.
+        _mechanism.shoot();
         
-        //Turns the robot back 20 degrees at 0.75 degrees.
+        // Delays the program. 
+        Timer.delay( 1.0 );
+        
+        //Turns the robot back 20 degrees at 0.75 speed.
         _chassis.square( 0.75 );
     }
 }

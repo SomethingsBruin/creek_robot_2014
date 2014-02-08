@@ -24,5 +24,6 @@ public class AutoSide extends AutoCommand
         _chassis.move( 144, 0.75 );
         
         //Shoots the mechanism.
+        _mechanism.shoot();
     }
 }

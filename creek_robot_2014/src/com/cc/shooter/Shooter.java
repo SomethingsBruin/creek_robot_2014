@@ -24,7 +24,7 @@ public class Shooter
         _shooterRelay.setDirection( Relay.Direction.kForward );
         
         //Sets the limit switch to channel 1.
-        _limitSwitch = new DigitalInput( 1 );
+        _limitSwitch = new DigitalInput( 8 );
     }
     
     /**

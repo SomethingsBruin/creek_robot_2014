@@ -33,7 +33,7 @@ public class ShooterReset extends Thread
         while ( _shooter.getLimit() == false )
         {
             //Do nothing.
-            yield();
+            ShooterReset.yield();
         }
         
         //Turn off the shooter when the limit switch is pressed.

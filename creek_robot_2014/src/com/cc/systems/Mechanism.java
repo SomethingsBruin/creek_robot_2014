@@ -69,4 +69,25 @@ public class Mechanism
             _shooterReset.start();
         }
     }
+    
+    public void intake()
+    {
+        _intakeOne.set( 1.0 );
+        _intakeTwo.set( 1.0 );
+        
+    }
+    
+    public void eject()
+    {
+        _intakeOne.set( -1.0 );
+        _intakeTwo.set( -1.0 );
+        
+    }
+    
+    public void stopIntake()
+    {
+        _intakeOne.set( 0.0 );
+        _intakeTwo.set( 0.0 );
+        
+    }
 }
