@@ -66,6 +66,34 @@ public abstract class Driver
     public abstract boolean getSecButton();
     
     /**
+     * Gets the third button state.
+     * 
+     * @return Returns the third button state.
+     */
+    public abstract boolean getThirdButton();
+    
+    /**
+     * Gets the fourth button state.
+     * 
+     * @return Returns the fourth button state.
+     */
+    public abstract boolean getFourthButton();
+    
+    /**
+     * Gets the fifth button state.
+     * 
+     * @return Returns the fifth button state.
+     */
+    public abstract boolean getFifthButton();
+    
+    /**
+     * Gets the sixth button state.
+     * 
+     * @return Returns the sixth button state.
+     */
+    public abstract boolean getSixthButton();
+    
+    /**
      * Prints the x, y, rotation, primary button, and secondary button values.
      */
     public void print()

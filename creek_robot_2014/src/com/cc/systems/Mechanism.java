@@ -70,24 +70,55 @@ public class Mechanism
         }
     }
     
+    /**
+     * Sets the motors on the mechanism to intake the ball.
+     */
     public void intake()
     {
+        //Sets both motors to full forward to intake the ball.
         _intakeOne.set( 1.0 );
-        _intakeTwo.set( 1.0 );
-        
+        _intakeTwo.set( 1.0 );       
     }
     
+    /**
+     * Sets the motors on the mechanism to eject the ball.
+     */
     public void eject()
     {
+        //Set both motors to full reverse to eject the ball.
         _intakeOne.set( -1.0 );
-        _intakeTwo.set( -1.0 );
-        
+        _intakeTwo.set( -1.0 );      
     }
     
+    /**
+     * Stops the intake motors on the mechanism.
+     */
     public void stopIntake()
     {
+        //Stops both motors.
         _intakeOne.set( 0.0 );
-        _intakeTwo.set( 0.0 );
-        
+        _intakeTwo.set( 0.0 );       
+    }
+    
+    /**
+     * Raises the arm on the mechanism at the given speed.
+     * 
+     * @param speed The speed at which to raise the arm.
+     */
+    public void raiseArm( double speed )
+    {
+        //Raises the arm at the given speed.
+        _pivot.set( speed );
+    }
+    
+    /**
+     * Lowers the arm on the mechanism at the given speed.
+     * 
+     * @param speed The speed at which to lower the arm.
+     */
+    public void lowerArm( double speed )
+    {
+        //Lowers the arm at the given speed.
+        _pivot.set( -speed );
     }
 }

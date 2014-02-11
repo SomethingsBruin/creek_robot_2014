@@ -33,7 +33,7 @@
 <span class="sourceLineNo">025</span>    private final double _ROTCENTER = 0.0;<a name="line.25"></a>
 <span class="sourceLineNo">026</span>    <a name="line.26"></a>
 <span class="sourceLineNo">027</span>    //The joystick of the controller.<a name="line.27"></a>
-<span class="sourceLineNo">028</span>    private Joystick _joy; <a name="line.28"></a>
+<span class="sourceLineNo">028</span>    private Joystick _joy;<a name="line.28"></a>
 <span class="sourceLineNo">029</span>    <a name="line.29"></a>
 <span class="sourceLineNo">030</span>    /**<a name="line.30"></a>
 <span class="sourceLineNo">031</span>     * Creates the XBox Controller driver object.<a name="line.31"></a>
@@ -43,7 +43,7 @@
 <span class="sourceLineNo">035</span>        //Calls the contructor in Dirver.<a name="line.35"></a>
 <span class="sourceLineNo">036</span>        super();<a name="line.36"></a>
 <span class="sourceLineNo">037</span>        <a name="line.37"></a>
-<span class="sourceLineNo">038</span>        //Initializes the joystick on channel 1.<a name="line.38"></a>
+<span class="sourceLineNo">038</span>        //Initializes the joysticks on channel 1 and 2.<a name="line.38"></a>
 <span class="sourceLineNo">039</span>        _joy = new Joystick( 1 );<a name="line.39"></a>
 <span class="sourceLineNo">040</span>    }<a name="line.40"></a>
 <span class="sourceLineNo">041</span>    <a name="line.41"></a>
@@ -72,7 +72,7 @@
 <span class="sourceLineNo">064</span>        //Goes through 12 axis channels on the joystick and prints their current value.<a name="line.64"></a>
 <span class="sourceLineNo">065</span>        for( int i = 0; i &lt;= 12; i++ )<a name="line.65"></a>
 <span class="sourceLineNo">066</span>        {<a name="line.66"></a>
-<span class="sourceLineNo">067</span>            System.out.print( i + ": " + _joy.getRawAxis( i ) + " " );<a name="line.67"></a>
+<span class="sourceLineNo">067</span>            System.out.print( i + " One: " + _joy.getRawAxis( i ) + " " );<a name="line.67"></a>
 <span class="sourceLineNo">068</span>        }<a name="line.68"></a>
 <span class="sourceLineNo">069</span>        <a name="line.69"></a>
 <span class="sourceLineNo">070</span>        //Moves to a new line.<a name="line.70"></a>
@@ -87,7 +87,7 @@
 <span class="sourceLineNo">079</span>        //Goes through 12 button channels on the joystick and prints their current value.<a name="line.79"></a>
 <span class="sourceLineNo">080</span>        for( int i = 0; i &lt;= 12; i++ )<a name="line.80"></a>
 <span class="sourceLineNo">081</span>        {<a name="line.81"></a>
-<span class="sourceLineNo">082</span>            System.out.print( i + ": " + _joy.getRawButton( i ) + " " );<a name="line.82"></a>
+<span class="sourceLineNo">082</span>            System.out.print( i + " One: " + _joy.getRawButton( i ) + " " );<a name="line.82"></a>
 <span class="sourceLineNo">083</span>        }<a name="line.83"></a>
 <span class="sourceLineNo">084</span>        <a name="line.84"></a>
 <span class="sourceLineNo">085</span>        //Moves to a new line.<a name="line.85"></a>
@@ -165,7 +165,55 @@
 <span class="sourceLineNo">157</span>        boolean state = _joy.getRawButton( 5 );<a name="line.157"></a>
 <span class="sourceLineNo">158</span>        return state;<a name="line.158"></a>
 <span class="sourceLineNo">159</span>    }     <a name="line.159"></a>
-<span class="sourceLineNo">160</span>}<a name="line.160"></a>
+<span class="sourceLineNo">160</span><a name="line.160"></a>
+<span class="sourceLineNo">161</span>    /**<a name="line.161"></a>
+<span class="sourceLineNo">162</span>     * Gets the third (green) button state.<a name="line.162"></a>
+<span class="sourceLineNo">163</span>     * <a name="line.163"></a>
+<span class="sourceLineNo">164</span>     * @return Returns the third button state.<a name="line.164"></a>
+<span class="sourceLineNo">165</span>     */<a name="line.165"></a>
+<span class="sourceLineNo">166</span>    public boolean getThirdButton()<a name="line.166"></a>
+<span class="sourceLineNo">167</span>    {<a name="line.167"></a>
+<span class="sourceLineNo">168</span>        //Returns state of the green button.<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        boolean state = _joy.getRawButton( 1 );<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        return state;<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    }<a name="line.171"></a>
+<span class="sourceLineNo">172</span><a name="line.172"></a>
+<span class="sourceLineNo">173</span>    /**<a name="line.173"></a>
+<span class="sourceLineNo">174</span>     * Gets the fourth (red) button state.<a name="line.174"></a>
+<span class="sourceLineNo">175</span>     * <a name="line.175"></a>
+<span class="sourceLineNo">176</span>     * @return Returns the fourth button state.<a name="line.176"></a>
+<span class="sourceLineNo">177</span>     */<a name="line.177"></a>
+<span class="sourceLineNo">178</span>    public boolean getFourthButton()<a name="line.178"></a>
+<span class="sourceLineNo">179</span>    {<a name="line.179"></a>
+<span class="sourceLineNo">180</span>        //Returns state of the red button.<a name="line.180"></a>
+<span class="sourceLineNo">181</span>        boolean state = _joy.getRawButton( 2 );<a name="line.181"></a>
+<span class="sourceLineNo">182</span>        return state;<a name="line.182"></a>
+<span class="sourceLineNo">183</span>    }<a name="line.183"></a>
+<span class="sourceLineNo">184</span><a name="line.184"></a>
+<span class="sourceLineNo">185</span>    /**<a name="line.185"></a>
+<span class="sourceLineNo">186</span>     * Gets the fifth (blue) button state.<a name="line.186"></a>
+<span class="sourceLineNo">187</span>     * <a name="line.187"></a>
+<span class="sourceLineNo">188</span>     * @return Returns the fifth button state.<a name="line.188"></a>
+<span class="sourceLineNo">189</span>     */<a name="line.189"></a>
+<span class="sourceLineNo">190</span>    public boolean getFifthButton()<a name="line.190"></a>
+<span class="sourceLineNo">191</span>    {<a name="line.191"></a>
+<span class="sourceLineNo">192</span>        //Returns state of the blue button.<a name="line.192"></a>
+<span class="sourceLineNo">193</span>        boolean state = _joy.getRawButton( 3 );<a name="line.193"></a>
+<span class="sourceLineNo">194</span>        return state;<a name="line.194"></a>
+<span class="sourceLineNo">195</span>    }<a name="line.195"></a>
+<span class="sourceLineNo">196</span><a name="line.196"></a>
+<span class="sourceLineNo">197</span>    /**<a name="line.197"></a>
+<span class="sourceLineNo">198</span>     * Gets the sixth (yellow) button state.<a name="line.198"></a>
+<span class="sourceLineNo">199</span>     * <a name="line.199"></a>
+<span class="sourceLineNo">200</span>     * @return Returns the sixth button state.<a name="line.200"></a>
+<span class="sourceLineNo">201</span>     */<a name="line.201"></a>
+<span class="sourceLineNo">202</span>    public boolean getSixthButton()<a name="line.202"></a>
+<span class="sourceLineNo">203</span>    {<a name="line.203"></a>
+<span class="sourceLineNo">204</span>        //Returns state of the yellow button.<a name="line.204"></a>
+<span class="sourceLineNo">205</span>        boolean state = _joy.getRawButton( 4 );<a name="line.205"></a>
+<span class="sourceLineNo">206</span>        return state;<a name="line.206"></a>
+<span class="sourceLineNo">207</span>    }<a name="line.207"></a>
+<span class="sourceLineNo">208</span>}<a name="line.208"></a>
 
 
 

@@ -101,7 +101,7 @@ public class RobotTemplate extends IterativeRobot
     
     /**
      * A function which is called once at the beginning of Autonomous and finds which
-     * AutoCommand will be run.
+     * AutoCommand that will be run, resets the gyro, and cocks the mechanism.
      */
     public void autonomousInit()
     {
@@ -132,7 +132,7 @@ public class RobotTemplate extends IterativeRobot
     
     /**
      * A function which is called once at the beginning of Tele-Op and finds which
-     * driver type is wanted.
+     * driver type is wanted, resets the gyro, and cocks the mechanism.
      */
     public void teleopInit()
     {
@@ -161,6 +161,9 @@ public class RobotTemplate extends IterativeRobot
         
         //Reset the gyro.
         _chassis.resetGyro();
+        
+        //Initially cocks the mechanism.
+        _mechanism.shoot();
     }
 
     /**
@@ -202,6 +205,34 @@ public class RobotTemplate extends IterativeRobot
         {
             //Shoot the mechanism.
             _mechanism.shoot();
+        }
+        
+        //If the third button is pressed...
+        if( _driver.getThirdButton() )
+        {
+            //The arm on the mechanism will raise at 0.8 speed.
+            _mechanism.raiseArm( 0.8 );
+        }
+        else if( _driver.getFourthButton() )//Else if the fourth button is pressed...
+        {
+            //The arm on the mechanism will lower at 0.8 speed.
+            _mechanism.lowerArm( 0.8 );
+        }
+        
+        //If the fifth button is pressed...
+        if( _driver.getFifthButton() )
+        {
+            //The mechanism will eject the ball.
+            _mechanism.eject();
+        }
+        else if( _driver.getSixthButton() )//Else if the sixth button is pressed...
+        {
+            //The mechanism will intake the ball.
+            _mechanism.intake();
+        }
+        else//Else the intake motors on the mechanism will stop.
+        {
+            _mechanism.stopIntake();
         }
     }
     

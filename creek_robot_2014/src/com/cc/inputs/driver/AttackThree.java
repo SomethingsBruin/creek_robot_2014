@@ -155,5 +155,53 @@ public class AttackThree extends Driver
         //Returns state of Joystick Two Trigger.
         boolean state = _attackTwo.getRawButton( 1 );
         return state;
-    }   
+    }
+    
+    /**
+     * Gets the third (green) button state.
+     * 
+     * @return Returns the third button state.
+     */
+    public boolean getThirdButton()
+    {
+        //Returns state of the third button.
+        boolean state = _attackOne.getRawButton( 2 );
+        return state;
+    }
+
+    /**
+     * Gets the fourth (red) button state.
+     * 
+     * @return Returns the fourth button state.
+     */
+    public boolean getFourthButton()
+    {
+        //Returns state of the fourth button.
+        boolean state = _attackTwo.getRawButton( 2 );
+        return state;
+    }
+
+    /**
+     * Gets the fifth button state.
+     * 
+     * @return Returns the fifth button state.
+     */
+    public boolean getFifthButton()
+    {
+        //Returns state of the fifth button.
+        boolean state = _attackOne.getRawButton( 3 );
+        return state;
+    }
+
+    /**
+     * Gets the sixth button state.
+     * 
+     * @return Returns the sixth button state.
+     */
+    public boolean getSixthButton()
+    {
+        //Returns state of the sixth button.
+        boolean state = _attackTwo.getRawButton( 3 );
+        return state;
+    }
 }

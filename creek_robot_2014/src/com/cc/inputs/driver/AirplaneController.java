@@ -22,8 +22,9 @@ public class AirplaneController extends Driver
     private final double _ROTMIN = -0.68750;
     private final double _ROTCENTER = 0.02756;
     
-    //The joystick of the controller.
-    private Joystick _joy; 
+    //The joysticks of the controller.
+    private Joystick _joyOne;
+    private Joystick _joyTwo;
     
     /**
      * Creates the airplane controller driver object.
@@ -33,8 +34,9 @@ public class AirplaneController extends Driver
         //Calls the contructor in Driver.
         super();
         
-        //Initializes the joystick on channel 1.
-        _joy = new Joystick( 1 );
+        //Initializes the joysticks on channel 1 and 2.
+        _joyOne = new Joystick( 1 );
+        _joyTwo = new Joystick( 2 );
     }
     
     /**
@@ -62,7 +64,8 @@ public class AirplaneController extends Driver
         //Goes through 12 axis channels on the joystick and prints their current value.
         for( int i = 0; i <= 12; i++ )
         {
-            System.out.print( i + ": " + _joy.getRawAxis( i ) + " " );
+            System.out.print( i + " One: " + _joyOne.getRawAxis( i ) + " " );
+            System.out.print( i + " Two: " + _joyTwo.getRawAxis( i ) + " " );
         }
         
         //Moves to a new line.
@@ -77,7 +80,8 @@ public class AirplaneController extends Driver
         //Goes through 12 button channels on the joystick and prints their current value.
         for( int i = 0; i <= 12; i++ )
         {
-            System.out.print( i + ": " + _joy.getRawButton( i ) + " " );
+            System.out.print( i + " One: " + _joyOne.getRawButton( i ) + " " );
+            System.out.print( i + " Two: " + _joyTwo.getRawButton( i ) + " " );
         }
         
         //Moves to a new line.
@@ -92,7 +96,7 @@ public class AirplaneController extends Driver
     public  double getX()
     {
         //Finds the normalized x value of the controller, and then expos it.
-        double xValue = normalize( _joy.getRawAxis( 1 ), _XMIN, _XMAX, _XCENTER );
+        double xValue = normalize( _joyOne.getRawAxis( 1 ), _XMIN, _XMAX, _XCENTER );
         xValue = xValue * xValue * xValue;
         
         //Returns the x value.
@@ -107,7 +111,7 @@ public class AirplaneController extends Driver
     public double getY()
     {
         //Finds the normalized y value of the controller, and then expos it.
-        double yValue = -1 * normalize( _joy.getRawAxis( 2 ), _YMIN, _YMAX, _YCENTER );//Multiplies by -1 because the y-axis is inverted.
+        double yValue = -1 * normalize( _joyOne.getRawAxis( 2 ), _YMIN, _YMAX, _YCENTER );//Multiplies by -1 because the y-axis is inverted.
         yValue = yValue * yValue * yValue;
         
         //Returns the y value.
@@ -122,7 +126,7 @@ public class AirplaneController extends Driver
     public double getRot()
     {
         //Finds the normalized rotation value of the controller, and then expos it.
-        double rValue = normalize( _joy.getRawAxis( 5 ), _ROTMIN, _ROTMAX, _ROTCENTER );
+        double rValue = normalize( _joyOne.getRawAxis( 5 ), _ROTMIN, _ROTMAX, _ROTCENTER );
         rValue = rValue * rValue * rValue;
         
         //Returns the rotation value.
@@ -130,26 +134,74 @@ public class AirplaneController extends Driver
     }
     
     /**
-     * Gets the primary (Red) button state.
+     * Gets the primary (Red) button state on the airplane controller.
      * 
      * @return Returns the primary button state.
      */
     public boolean getPriButton()
     {
         //Returns state of red button
-        boolean state = _joy.getRawButton( 1 );
+        boolean state = _joyOne.getRawButton( 1 );
         return state;
     }
     
     /**
-     * Gets the secondary (Black) button state.
+     * Gets the secondary (blue) button state on the x-box controller.
      * 
      * @return Returns the secondary button state.
      */
     public boolean getSecButton()
     {
-        //Returns state of black button
-        boolean state = _joy.getRawButton( 4 );
+        //Returns state of the blue button.
+        boolean state = _joyTwo.getRawButton( 3 );
         return state;
-    }   
+    }
+    
+    /**
+     * Gets the third (yellow) button state on the x-box controller.
+     * 
+     * @return Returns the third button state.
+     */
+    public boolean getThirdButton()
+    {
+        //Returns state of the yellow button.
+        boolean state = _joyTwo.getRawButton( 4 );
+        return state;
+    }
+
+    /**
+     * Gets the fourth (green) button state on the x-box controller.
+     * 
+     * @return Returns the fourth button state.
+     */
+    public boolean getFourthButton()
+    {
+        //Returns state of the red button.
+        boolean state = _joyTwo.getRawButton( 1 );
+        return state;
+    }
+
+    /**
+     * Gets the fifth (right) button state on the x-box controller.
+     * 
+     * @return Returns the fifth button state.
+     */
+    public boolean getFifthButton()
+    {
+        //Returns state of the right button.
+        boolean state = _joyTwo.getRawButton( 6 );
+        return state;
+    }
+
+    /**
+     * Gets the sixth (left) button state on the x-box controller.
+     * 
+     * @return Returns the sixth button state.
+     */
+    public boolean getSixthButton()
+    {
+        //Returns state of the left button.
+        boolean state = _joyTwo.getRawButton( 5 );
+        return state;
+    }
 }

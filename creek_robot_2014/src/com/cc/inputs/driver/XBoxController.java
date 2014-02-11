@@ -25,7 +25,7 @@ public class XBoxController extends Driver
     private final double _ROTCENTER = 0.0;
     
     //The joystick of the controller.
-    private Joystick _joy; 
+    private Joystick _joy;
     
     /**
      * Creates the XBox Controller driver object.
@@ -35,7 +35,7 @@ public class XBoxController extends Driver
         //Calls the contructor in Dirver.
         super();
         
-        //Initializes the joystick on channel 1.
+        //Initializes the joysticks on channel 1 and 2.
         _joy = new Joystick( 1 );
     }
     
@@ -64,7 +64,7 @@ public class XBoxController extends Driver
         //Goes through 12 axis channels on the joystick and prints their current value.
         for( int i = 0; i <= 12; i++ )
         {
-            System.out.print( i + ": " + _joy.getRawAxis( i ) + " " );
+            System.out.print( i + " One: " + _joy.getRawAxis( i ) + " " );
         }
         
         //Moves to a new line.
@@ -79,7 +79,7 @@ public class XBoxController extends Driver
         //Goes through 12 button channels on the joystick and prints their current value.
         for( int i = 0; i <= 12; i++ )
         {
-            System.out.print( i + ": " + _joy.getRawButton( i ) + " " );
+            System.out.print( i + " One: " + _joy.getRawButton( i ) + " " );
         }
         
         //Moves to a new line.
@@ -157,4 +157,52 @@ public class XBoxController extends Driver
         boolean state = _joy.getRawButton( 5 );
         return state;
     }     
+
+    /**
+     * Gets the third (green) button state.
+     * 
+     * @return Returns the third button state.
+     */
+    public boolean getThirdButton()
+    {
+        //Returns state of the green button.
+        boolean state = _joy.getRawButton( 1 );
+        return state;
+    }
+
+    /**
+     * Gets the fourth (red) button state.
+     * 
+     * @return Returns the fourth button state.
+     */
+    public boolean getFourthButton()
+    {
+        //Returns state of the red button.
+        boolean state = _joy.getRawButton( 2 );
+        return state;
+    }
+
+    /**
+     * Gets the fifth (blue) button state.
+     * 
+     * @return Returns the fifth button state.
+     */
+    public boolean getFifthButton()
+    {
+        //Returns state of the blue button.
+        boolean state = _joy.getRawButton( 3 );
+        return state;
+    }
+
+    /**
+     * Gets the sixth (yellow) button state.
+     * 
+     * @return Returns the sixth button state.
+     */
+    public boolean getSixthButton()
+    {
+        //Returns state of the yellow button.
+        boolean state = _joy.getRawButton( 4 );
+        return state;
+    }
 }
