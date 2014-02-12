@@ -218,6 +218,10 @@ public class RobotTemplate extends IterativeRobot
             //The arm on the mechanism will lower at 0.8 speed.
             _mechanism.lowerArm( 0.8 );
         }
+        else//Else stop the arm.
+        {
+            _mechanism.stopArm();
+        }
         
         //If the fifth button is pressed...
         if( _driver.getFifthButton() )

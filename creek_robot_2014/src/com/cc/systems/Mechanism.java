@@ -61,10 +61,17 @@ public class Mechanism
      */
     public void shoot() 
     {
+        //If the thread has not been created...
+        if( _shooterReset == null )
+        {
+            //Create a new thread.
+            _shooterReset = new ShooterReset( _shooter );
+        }
+        
         //If we are not already shooting...
         if ( !_shooterReset.isAlive() ) 
         {
-            //Create a new shooter thread and then run that thread.
+            //Create a new thread and then run that thread.
             _shooterReset = new ShooterReset( _shooter );
             _shooterReset.start();
         }
@@ -120,5 +127,13 @@ public class Mechanism
     {
         //Lowers the arm at the given speed.
         _pivot.set( -speed );
+    }
+    
+    /**
+     * Stops the arm on the mechanism were it is.
+     */
+    public void stopArm()
+    {
+        _pivot.set( 0.0 );
     }
 }

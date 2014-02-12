@@ -35,8 +35,8 @@ public class AirplaneController extends Driver
         super();
         
         //Initializes the joysticks on channel 1 and 2.
-        _joyOne = new Joystick( 1 );
-        _joyTwo = new Joystick( 2 );
+        _joyOne = new Joystick( 2 );
+        _joyTwo = new Joystick( 1 );
     }
     
     /**
