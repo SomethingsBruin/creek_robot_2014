@@ -165,14 +165,14 @@ public class AirplaneController extends Driver
     }
     
     /**
-     * Gets the secondary (blue) button state on the x-box controller.
+     * Gets the secondary (green) button state on the x-box controller.
      * 
      * @return Returns the secondary button state.
      */
     public boolean getSecButton()
     {
-        //Returns state of the blue button.
-        boolean state = _joyTwo.getRawButton( 3 );
+        //Returns state of the green button.
+        boolean state = _joyTwo.getRawButton( 1 );
         return state;
     }
     
@@ -189,14 +189,14 @@ public class AirplaneController extends Driver
     }
 
     /**
-     * Gets the fourth (green) button state on the x-box controller.
+     * Gets the fourth (red) button state on the x-box controller.
      * 
      * @return Returns the fourth button state.
      */
     public boolean getFourthButton()
     {
         //Returns state of the red button.
-        boolean state = _joyTwo.getRawButton( 1 );
+        boolean state = _joyTwo.getRawButton( 2 );
         return state;
     }
 

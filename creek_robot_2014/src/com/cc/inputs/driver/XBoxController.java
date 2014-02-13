@@ -124,7 +124,7 @@ public class XBoxController extends Driver
     /**
      * Gets the rotation value of the controller.
      * 
-     * Returns the rotation value.
+     * @return Returns the rotation value.
      */
     public double getRot()
     {
@@ -154,43 +154,43 @@ public class XBoxController extends Driver
     }
     
     /**
-     * Gets the primary (Right Trigger) button state.
+     * Gets the primary (Blue) button state.
      * 
      * @return Returns the primary button state.
      */
     public boolean getPriButton()
     {
-        //Returns state of right trigger.
-        boolean state = _joy.getRawButton( 6 );
+        //Returns state of the blue button.
+        boolean state = _joy.getRawButton( 3 );
         return state;
     }
     
     /**
-     * Gets the secondary (Left Trigger) button state.
+     * Gets the secondary (Green) button state.
      * 
      * @return Returns the secondary button state.
      */
     public boolean getSecButton()
     {
-        //Returns state of left trigger.
-        boolean state = _joy.getRawButton( 5 );
+        //Returns state of the green button.
+        boolean state = _joy.getRawButton( 1 );
         return state;
     }     
 
     /**
-     * Gets the third (green) button state.
+     * Gets the third (Yellow) button state.
      * 
      * @return Returns the third button state.
      */
     public boolean getThirdButton()
     {
-        //Returns state of the green button.
-        boolean state = _joy.getRawButton( 1 );
+        //Returns state of the yellow button.
+        boolean state = _joy.getRawButton( 4 );
         return state;
     }
 
     /**
-     * Gets the fourth (red) button state.
+     * Gets the fourth (Red) button state.
      * 
      * @return Returns the fourth button state.
      */
@@ -202,26 +202,26 @@ public class XBoxController extends Driver
     }
 
     /**
-     * Gets the fifth (blue) button state.
+     * Gets the fifth (Right Trigger) button state.
      * 
      * @return Returns the fifth button state.
      */
     public boolean getFifthButton()
     {
-        //Returns state of the blue button.
-        boolean state = _joy.getRawButton( 3 );
+        //Returns state of the right trigger.
+        boolean state = _joy.getRawButton( 6 );
         return state;
     }
 
     /**
-     * Gets the sixth (yellow) button state.
+     * Gets the sixth (Left Trigger) button state.
      * 
      * @return Returns the sixth button state.
      */
     public boolean getSixthButton()
     {
-        //Returns state of the yellow button.
-        boolean state = _joy.getRawButton( 4 );
+        //Returns state of the left trigger.
+        boolean state = _joy.getRawButton( 5 );
         return state;
     }
 }
