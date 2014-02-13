@@ -22,6 +22,11 @@ public class AirplaneController extends Driver
     private final double _ROTMIN = -0.68750;
     private final double _ROTCENTER = 0.02756;
     
+    //The contoller's Arm constants.
+    private final double _ARMMAX = -1.0;
+    private final double _ARMMIN = 1.0;
+    private final double _ARMCENTER = 0.0;
+    
     //The joysticks of the controller.
     private Joystick _joyOne;
     private Joystick _joyTwo;
@@ -121,7 +126,7 @@ public class AirplaneController extends Driver
     /**
      * Gets the rotation value of the controller.
      * 
-     * Returns the rotation value.
+     * @return Returns the rotation value.
      */
     public double getRot()
     {
@@ -131,6 +136,20 @@ public class AirplaneController extends Driver
         
         //Returns the rotation value.
         return rValue;
+    }
+    
+    /**
+     * Gets the arm value of the controller.
+     * 
+     * @return Returns the arm value.
+     */
+    public double getArm()
+    {
+        //Finds the normalized arm value of the controller.
+        double aValue = normalize( _joyTwo.getRawAxis( 3 ), _ARMMIN, _ARMMAX, _ARMCENTER );
+        
+        //Returns the arm value.
+        return aValue;
     }
     
     /**

@@ -21,6 +21,11 @@ public class AttackThree extends Driver
     private final double _ROTMAX = 1.0;
     private final double _ROTMIN = -1.0;
     private final double _ROTCENTER = 0.0;
+    
+    //The contoller's Arm constants.
+    private final double _ARMMAX = 1.0;
+    private final double _ARMMIN = -1.0;
+    private final double _ARMCENTER = 0.0;
 
     //The joysticks of the controller.
     private Joystick _attackOne; 
@@ -131,6 +136,20 @@ public class AttackThree extends Driver
         
         //Returns the rotation value.
         return rValue;
+    }
+    
+    /**
+     * Gets the arm value of the controller.
+     * 
+     * @return Returns the arm value.
+     */
+    public double getArm()
+    {
+        //Finds the normalized arm value of the controller.
+        double aValue = normalize( _attackTwo.getRawAxis( 2 ), _ARMMIN, _ARMMAX, _ARMCENTER );
+        
+        //Returns the arm value.
+        return aValue;
     }
     
     /**

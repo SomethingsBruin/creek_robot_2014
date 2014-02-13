@@ -52,6 +52,13 @@ public abstract class Driver
     public abstract double getRot();
     
     /**
+     * Gets the arm value from the controller.
+     * 
+     * @return Returns the arm value.
+     */
+    public abstract double getArm();
+    
+    /**
      * Gets the primary button state.
      * 
      * @return Returns the primary button state.

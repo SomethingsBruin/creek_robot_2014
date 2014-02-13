@@ -12,6 +12,7 @@ import com.cc.inputs.driver.*;
 import com.cc.systems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -110,9 +111,6 @@ public class RobotTemplate extends IterativeRobot
         
         //Resets the gyro
         _chassis.resetGyro();
-        
-        //Initially cocks the mechanism shooter.
-        _mechanism.shoot();
     }
 
     /**
@@ -161,9 +159,6 @@ public class RobotTemplate extends IterativeRobot
         
         //Reset the gyro.
         _chassis.resetGyro();
-        
-        //Initially cocks the mechanism.
-        _mechanism.shoot();
     }
 
     /**
@@ -207,16 +202,16 @@ public class RobotTemplate extends IterativeRobot
             _mechanism.shoot();
         }
         
-        //If the third button is pressed...
-        if( _driver.getThirdButton() )
+        //If the analog button's sum is negative...
+        if( _driver.getArm() < 0.0 )
         {
-            //The arm on the mechanism will raise at 0.8 speed.
-            _mechanism.raiseArm( 0.8 );
+            //The arm on the mechanism will raise at the analog speed.
+            _mechanism.raiseArm( _driver.getArm() );
         }
-        else if( _driver.getFourthButton() )//Else if the fourth button is pressed...
+        else if( _driver.getArm() > 0.0 )//Else if the analog button's sum is positive...
         {
-            //The arm on the mechanism will lower at 0.8 speed.
-            _mechanism.lowerArm( 0.8 );
+            //The arm on the mechanism will lower at analog speed.
+            _mechanism.lowerArm( -1 * _driver.getArm() );
         }
         else//Else stop the arm.
         {
@@ -241,36 +236,11 @@ public class RobotTemplate extends IterativeRobot
     }
     
     /**
-     * A function which is called once at the beginning of test and finds which
-     * driver type is wanted and resets the gyro to 0.
+     * A function which is called once at the beginning of test.
      */
     public void testInit()
     {
-        //Finds the assigned index value of the driver type choosen
-        int index = ( (Integer) _driverChooser.getSelected() ).intValue();
-        
-        //The type of the driver will be choosen from the given index value from the Smart Dashboard
-        switch( index )
-        {
-            //The XBox Controller if the index is 2.
-            case 2:
-                _driver = XBoxController.getInstance();
-                break;
-                
-            //The Attack Three joysticks if the index is 1.
-            case 1:
-                _driver = AttackThree.getInstance();
-                break;
-            
-            //The Airplane Controller if the index is 0 (or anything else).
-            default:
-            case 0:
-                _driver = AirplaneController.getInstance();
-                break;
-        }
-        
-        //Resets the gyro on the chassis
-        _chassis.resetGyro();
+        //Does nothing in test.
     }
     
     /**
@@ -278,6 +248,6 @@ public class RobotTemplate extends IterativeRobot
      */
     public void testPeriodic() 
     {
-        
+        //Does nothing in test.
     }
 }
