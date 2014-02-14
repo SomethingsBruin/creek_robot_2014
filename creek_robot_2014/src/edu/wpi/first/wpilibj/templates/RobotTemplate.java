@@ -12,7 +12,6 @@ import com.cc.inputs.driver.*;
 import com.cc.systems.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -94,7 +93,7 @@ public class RobotTemplate extends IterativeRobot
         System.out.println( "Robot is Disabled" );
         
         //Sets the automous flag to be false.
-        _autoFlag =  false;
+        _autoFlag = false;
         
         //Resets the gyro to 0 degrees.
         _chassis.resetGyro();

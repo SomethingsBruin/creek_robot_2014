@@ -105,7 +105,7 @@ public abstract class Driver
      */
     public void print()
     {
-        System.out.println( "X: " + getX() + " Y: " + getY() + " ROT: " + getRot() + " Pri: " + getPriButton() + " Sec: " + getSecButton() );
+        System.out.println( "X: " + getX() + " Y: " + getY() + " ROT: " + getRot() + " ARM: " + getArm() + " Pri: " + getPriButton() + " Sec: " + getSecButton() + " 5: " + getFifthButton() + " 6: " + getSixthButton() );
     }
     
     /**

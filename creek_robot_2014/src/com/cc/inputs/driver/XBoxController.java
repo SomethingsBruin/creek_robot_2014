@@ -146,8 +146,9 @@ public class XBoxController extends Driver
      */
     public double getArm()
     {
-        //Finds the normalized arm value of the controller.
+        //Finds the normalized arm value of the controller and limit range between 0.5 and -0.4.
         double aValue = normalize( _joy.getRawAxis( 3 ), _ARMMIN, _ARMMAX, _ARMCENTER );
+        aValue = Utility.limitRange( aValue, 0.5, -0.4 );
         
         //Returns the arm value.
         return aValue;
