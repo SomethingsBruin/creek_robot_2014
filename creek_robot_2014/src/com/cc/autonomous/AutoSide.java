@@ -23,6 +23,9 @@ public class AutoSide extends AutoCommand
         //Moves the chassis forward 12 feet and 75% speed.
         _chassis.move( 144, 0.75 );
         
+        //Set the arm to the correct orientation.
+        setArm();
+        
         //Shoots the mechanism.
         _mechanism.shoot();
     }

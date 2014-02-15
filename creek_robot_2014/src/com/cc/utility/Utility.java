@@ -53,5 +53,4 @@ public class Utility
         //Returns the limited number.
         return val;
     } 
-    
 }

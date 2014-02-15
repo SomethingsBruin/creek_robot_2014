@@ -30,6 +30,9 @@ public class AutoCenter extends AutoCommand
         //Tunrs the robot 20 degrees at 0.75 speed.
         _chassis.turn( 20, 0.75 );
         
+        //Set the arm to the correct orientation.
+        setArm();
+        
         //Shoots the mechanism.
         _mechanism.shoot();
         

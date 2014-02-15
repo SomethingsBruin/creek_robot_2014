@@ -38,16 +38,19 @@
 <span class="sourceLineNo">030</span>        //Tunrs the robot 20 degrees at 0.75 speed.<a name="line.30"></a>
 <span class="sourceLineNo">031</span>        _chassis.turn( 20, 0.75 );<a name="line.31"></a>
 <span class="sourceLineNo">032</span>        <a name="line.32"></a>
-<span class="sourceLineNo">033</span>        //Shoots the mechanism.<a name="line.33"></a>
-<span class="sourceLineNo">034</span>        _mechanism.shoot();<a name="line.34"></a>
+<span class="sourceLineNo">033</span>        //Set the arm to the correct orientation.<a name="line.33"></a>
+<span class="sourceLineNo">034</span>        setArm();<a name="line.34"></a>
 <span class="sourceLineNo">035</span>        <a name="line.35"></a>
-<span class="sourceLineNo">036</span>        // Delays the program. <a name="line.36"></a>
-<span class="sourceLineNo">037</span>        Timer.delay( 1.0 );<a name="line.37"></a>
+<span class="sourceLineNo">036</span>        //Shoots the mechanism.<a name="line.36"></a>
+<span class="sourceLineNo">037</span>        _mechanism.shoot();<a name="line.37"></a>
 <span class="sourceLineNo">038</span>        <a name="line.38"></a>
-<span class="sourceLineNo">039</span>        //Turns the robot back 20 degrees at 0.75 speed.<a name="line.39"></a>
-<span class="sourceLineNo">040</span>        _chassis.square( 0.75 );<a name="line.40"></a>
-<span class="sourceLineNo">041</span>    }<a name="line.41"></a>
-<span class="sourceLineNo">042</span>}<a name="line.42"></a>
+<span class="sourceLineNo">039</span>        // Delays the program. <a name="line.39"></a>
+<span class="sourceLineNo">040</span>        Timer.delay( 1.0 );<a name="line.40"></a>
+<span class="sourceLineNo">041</span>        <a name="line.41"></a>
+<span class="sourceLineNo">042</span>        //Turns the robot back 20 degrees at 0.75 speed.<a name="line.42"></a>
+<span class="sourceLineNo">043</span>        _chassis.square( 0.75 );<a name="line.43"></a>
+<span class="sourceLineNo">044</span>    }<a name="line.44"></a>
+<span class="sourceLineNo">045</span>}<a name="line.45"></a>
 
 
 

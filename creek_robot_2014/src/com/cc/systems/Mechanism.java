@@ -10,7 +10,6 @@ import com.cc.shooter.*;
  */
 public class Mechanism 
 {
-
     //The singleton object of the Mechanism class.
     private static Mechanism _instance = null;
 
