@@ -4,7 +4,7 @@ import com.cc.utility.Utility;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-/**
+/**                                                                                                                               
  * Class representing XBox Controller.
  */
 public class XBoxController extends Driver
@@ -100,7 +100,10 @@ public class XBoxController extends Driver
     {
         //Finds the normalized x value of the controller, and then expos it.
         double xValue = normalize( _joy.getRawAxis( 4 ), _XMIN, _XMAX, _XCENTER );
-      //  xValue = xValue * xValue * xValue;
+        xValue = xValue * xValue * xValue;
+        
+        //Limits the speed between 0.5 and -0.5.
+        xValue = Utility.limitRange( xValue, 0.5, -0.5 );
         
         //Returns the x value.
         return xValue;
@@ -115,7 +118,10 @@ public class XBoxController extends Driver
     {
         //Finds the normalized y value of the controller, and then expos it.
         double yValue = -1 * normalize( _joy.getRawAxis( 5 ), _YMIN, _YMAX, _YCENTER );//Multiplies by -1 because the y-axis is inverted.
-        // yValue = yValue * yValue * yValue;
+        yValue = yValue * yValue * yValue;
+        
+        //Limits the speed between 0.5 and -0.5.
+        yValue = Utility.limitRange( yValue, 0.5 , -0.5 );
         
         //Returns the y value.
         return yValue;
