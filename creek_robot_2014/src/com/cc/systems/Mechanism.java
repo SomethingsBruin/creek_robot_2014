@@ -45,7 +45,7 @@ public class Mechanism
     public static Mechanism getInstance() 
     {
         //If the instance of the mechanism has not been initialized yet then...
-        if ( _instance == null ) 
+        if( _instance == null ) 
         {
             //Initialize the singletone Mechanism object.
             _instance = new Mechanism();
@@ -64,14 +64,14 @@ public class Mechanism
         if( _shooterReset == null )
         {
             //Create a new thread.
-            _shooterReset = new ShooterReset( _shooter );
+            _shooterReset = new ShooterReset( _shooter, this );
         }
         
         //If we are not already shooting...
-        if ( !_shooterReset.isAlive() ) 
+        if( !_shooterReset.isAlive() ) 
         {
             //Create a new thread and then run that thread.
-            _shooterReset = new ShooterReset( _shooter );
+            _shooterReset = new ShooterReset( _shooter, this );
             _shooterReset.start();
         }
     }
