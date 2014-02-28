@@ -14,7 +14,8 @@ public class Mechanism
     private static Mechanism _instance = null;
 
     //The talon which represents the pivot of the mechanism arm.
-    private CCTalon _pivot;
+    //private CCTalon _pivot;
+    private CCVictor _pivot;
 
     //The victors which represent the motors which intake the balls into the mechanism.
     private CCVictor _intakeOne;
@@ -27,7 +28,8 @@ public class Mechanism
     private Mechanism() 
     {
         //Initializes the pivot talon.
-        _pivot = new CCTalon( 5, false );
+        //_pivot = new CCTalon( 5, false );
+        _pivot = new CCVictor( 5, false );
 
         //Initializes the victors for the intake.
         _intakeOne = new CCVictor( 6, false );

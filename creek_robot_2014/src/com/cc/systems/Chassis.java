@@ -49,7 +49,7 @@ public class Chassis
         _gyro.reset();
         
         //Initializes the encoder of the robot.
-        _encoder = new Encoder( 1, 2, true );
+        _encoder = new Encoder( 4, 5, true );
         _encoder.reset();
         
         //Puts the PID constants into the Smart Dashboard so they are dynamicly changable.

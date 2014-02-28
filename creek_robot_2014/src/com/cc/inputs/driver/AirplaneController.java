@@ -9,19 +9,19 @@ import edu.wpi.first.wpilibj.Joystick;
 public class AirplaneController extends Driver
 {
     //The contoller's X constants.
-    private final double _XMAX = 0.81102;
+    private final double _XMAX = 0.84252;
     private final double _XMIN = -0.69531;
-    private final double _XCENTER = 0.00787;
+    private final double _XCENTER = 0.0;
     
     //The contoller's Y constants. Y Max and Min are switched for normalization process.
-    private final double _YMAX = 0.66926;
-    private final double _YMIN = -0.56250;
+    private final double _YMAX = 0.65345;
+    private final double _YMIN = -0.57031;
     private final double _YCENTER = 0.01575;
     
     //The contoller's Rotation constants.
-    private final double _ROTMAX = 0.81890;
-    private final double _ROTMIN = -0.68750;
-    private final double _ROTCENTER = 0.02756;
+    private final double _ROTMAX = 0.84252;
+    private final double _ROTMIN = -0.72656;
+    private final double _ROTCENTER = 0.03149;
     
     //The contoller's Arm constants.
     private final double _ARMMAX = -1.0;

@@ -185,7 +185,7 @@ public class RobotTemplate extends IterativeRobot
                 //Drives the chassis relative to the driver.
                 _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
                 break;
-        }      
+        }
         
         //If the primary button is pressed...
         if( _driver.getPriButton() )
