@@ -228,8 +228,9 @@ public class RobotTemplate extends IterativeRobot
             //The mechanism will intake the ball.
             _mechanism.intake();
         }
-        else//Else the intake motors on the mechanism will stop.
+        else if( !_mechanism.isShooting() )//Else if the mechanism is not shooting...
         {
+            //The intake motors on the mechanism will stop.
             _mechanism.stopIntake();
         }
     }

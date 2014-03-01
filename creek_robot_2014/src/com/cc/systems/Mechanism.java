@@ -66,14 +66,14 @@ public class Mechanism
         if( _shooterReset == null )
         {
             //Create a new thread.
-            _shooterReset = new ShooterReset( _shooter, this );
+            _shooterReset = new ShooterReset( _shooter );
         }
         
         //If we are not already shooting...
         if( !_shooterReset.isAlive() ) 
         {
             //Create a new thread and then run that thread.
-            _shooterReset = new ShooterReset( _shooter, this );
+            _shooterReset = new ShooterReset( _shooter );
             _shooterReset.start();
         }
     }
@@ -137,4 +137,16 @@ public class Mechanism
     {
         _pivot.set( 0.0 );
     }
+    
+    /**
+     * Returns whether the mechanism is shooting.
+     * 
+     * @return Whether the mechanism is shooting or not.
+     */
+    public boolean isShooting()
+    {
+        //Gets whether the mechanism is shooting and returns it.
+        boolean isAlive = _shooterReset != null && _shooterReset.isAlive();
+        return isAlive;
+    }   
 }

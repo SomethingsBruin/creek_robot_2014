@@ -1,6 +1,7 @@
 package com.cc.inputs.driver;
 
 import com.cc.utility.Utility;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** 
  * Driver provides an interface for the three controller types to implement.
@@ -11,13 +12,19 @@ public abstract class Driver
 {
     //The object where the singleton is stored.
     protected static Driver _instance = null;
+    
+    //The maximum up and down speed of the arm.
+    protected final double _armUpSpeed = 0.7;
+    protected final double _armDownSpeed = -0.6;
    
     /**
      * A default constructor that does nothing but makes it protected.
      */
     protected Driver()
-    {
-        //Does nothing, just makes the default constructor protected.
+    {                            
+        //Puts the arm speeds into the Smart Dashboard so they are dynamicly changable.
+        SmartDashboard.putNumber( " Arm Up-Speed: " , _armUpSpeed );
+        SmartDashboard.putNumber( " Arm Down-Speed: " , _armDownSpeed );
     }
     
     /**

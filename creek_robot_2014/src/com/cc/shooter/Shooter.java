@@ -12,7 +12,7 @@ public class Shooter
     private static Shooter _instance = null;
     
     //The relay which controlls the shooter piston.
-    Relay _shooterRelay = null;
+        Relay _shooterRelay = null;
     
     //Represents the limit switch for the shooter.
     DigitalInput _limitSwitch = null;
@@ -76,4 +76,4 @@ public class Shooter
         //Returns the state.
         return state;
     }
-}  
+}
