@@ -3,6 +3,7 @@ package com.cc.systems;
 import com.cc.outputs.motors.CCTalon;
 import com.cc.outputs.motors.CCVictor;
 import com.cc.shooter.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class represents the Mechanism on the robot and is responsible for
@@ -24,6 +25,9 @@ public class Mechanism
     //The actual shooter mechanism and the thread which cocks the shooter.
     private Shooter _shooter;
     private ShooterReset _shooterReset;
+    
+    //The delay between ejecting the ball and shooting the ball.
+    private final double _delay = 0.1;
 
     private Mechanism() 
     {
@@ -37,6 +41,9 @@ public class Mechanism
         
         //Gets singleton of the shooter obejct.
         _shooter = Shooter.getInstance();
+        
+        //Puts the arm shooting delay into the smartdashboard.
+        SmartDashboard.putNumber( " Arm Shooting Delay: " , _delay );
     }
 
     /**
@@ -66,14 +73,14 @@ public class Mechanism
         if( _shooterReset == null )
         {
             //Create a new thread.
-            _shooterReset = new ShooterReset( _shooter );
+            _shooterReset = new ShooterReset( _shooter, SmartDashboard.getNumber(  " Arm Shooting Delay: " ) );
         }
         
         //If we are not already shooting...
         if( !_shooterReset.isAlive() ) 
         {
             //Create a new thread and then run that thread.
-            _shooterReset = new ShooterReset( _shooter );
+            _shooterReset = new ShooterReset( _shooter, SmartDashboard.getNumber( " Arm Shooting Delay: " ) );
             _shooterReset.start();
         }
     }

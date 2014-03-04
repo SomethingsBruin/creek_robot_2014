@@ -14,16 +14,21 @@ public class ShooterReset extends Thread
     //The mechanism object in the thread.
     Mechanism _mechanism;
     
+    double _delay;
+    
     /**
      * Creates the thread which shoots the shooter and then resets the shooter.
      * 
      * @param shooter The object which the thread will shoot and reset.
      */
-    public ShooterReset( Shooter shooter )
+    public ShooterReset( Shooter shooter, double delay )
     {
         //Initializes the shooter and mechanism object in the class.
         _shooter = shooter;
         _mechanism = Mechanism.getInstance();
+        
+        //Sets the delay between the ejection and the shooting.
+        _delay = delay;
     }
     
     public void run()
@@ -31,8 +36,8 @@ public class ShooterReset extends Thread
         //Start ejecting the ball and wait one second to shoot the ball.
         _mechanism.eject();
         
-        //Wait 0.2 seconds to shoot the mechanism.
-        Timer.delay( 0.1 );
+        //Wait 0.1 seconds to shoot the mechanism.
+        Timer.delay( _delay );
         
         //Run the shooter until limit switch is released
         _shooter.turnOn();

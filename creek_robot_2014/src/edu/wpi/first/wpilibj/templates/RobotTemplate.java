@@ -10,6 +10,7 @@ package edu.wpi.first.wpilibj.templates;
 import com.cc.autonomous.*;
 import com.cc.inputs.driver.*;
 import com.cc.systems.*;
+import com.cc.utility.Utility;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -183,7 +184,7 @@ public class RobotTemplate extends IterativeRobot
             default:
             case 0:
                 //Drives the chassis relative to the driver.
-                _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , _driver.getRot() );
+                _chassis.relativeHoloDrive( _driver.getY() , _driver.getX() , Utility.limitRange( _driver.getRot(), 0.75, -0.75 ) );
                 break;
         }
         
