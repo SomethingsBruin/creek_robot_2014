@@ -2,6 +2,7 @@ package com.cc.inputs.driver;
 
 import com.cc.utility.Utility;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The class which represents the driver type for the XBox Controller.
@@ -148,7 +149,7 @@ public class AttackThree extends Driver
     {
         //Finds the normalized arm value of the controller and limit the range between 0.5 and -0.4.
         double aValue = normalize( _attackTwo.getRawAxis( 2 ), _ARMMIN, _ARMMAX, _ARMCENTER );
-        aValue = Utility.limitRange( aValue, 0.5, -0.4 );
+        aValue = Utility.limitRange( aValue, SmartDashboard.getNumber( " Arm Up-Speed: " ) , SmartDashboard.getNumber( " Arm Dowm-Speed: " ) );
         
         //Returns the arm value.
         return aValue;

@@ -14,8 +14,8 @@ public abstract class Driver
     protected static Driver _instance = null;
     
     //The maximum up and down speed of the arm.
-    protected final double _armUpSpeed = 0.7;
-    protected final double _armDownSpeed = -0.6;
+    protected final double _ARM_UP_SPEED = 0.7;
+    protected final double _ARM_DOWN_SPEED = -0.6;
    
     /**
      * A default constructor that does nothing but makes it protected.
@@ -23,8 +23,8 @@ public abstract class Driver
     protected Driver()
     {                            
         //Puts the arm speeds into the Smart Dashboard so they are dynamicly changable.
-        SmartDashboard.putNumber( " Arm Up-Speed: " , _armUpSpeed );
-        SmartDashboard.putNumber( " Arm Down-Speed: " , _armDownSpeed );
+        SmartDashboard.putNumber( " Arm Up-Speed: " , _ARM_UP_SPEED );
+        SmartDashboard.putNumber( " Arm Down-Speed: " , _ARM_DOWN_SPEED );
     }
     
     /**

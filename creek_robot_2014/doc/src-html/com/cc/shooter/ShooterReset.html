@@ -22,46 +22,51 @@
 <span class="sourceLineNo">014</span>    //The mechanism object in the thread.<a name="line.14"></a>
 <span class="sourceLineNo">015</span>    Mechanism _mechanism;<a name="line.15"></a>
 <span class="sourceLineNo">016</span>    <a name="line.16"></a>
-<span class="sourceLineNo">017</span>    /**<a name="line.17"></a>
-<span class="sourceLineNo">018</span>     * Creates the thread which shoots the shooter and then resets the shooter.<a name="line.18"></a>
-<span class="sourceLineNo">019</span>     * <a name="line.19"></a>
-<span class="sourceLineNo">020</span>     * @param shooter The object which the thread will shoot and reset.<a name="line.20"></a>
-<span class="sourceLineNo">021</span>     */<a name="line.21"></a>
-<span class="sourceLineNo">022</span>    public ShooterReset( Shooter shooter )<a name="line.22"></a>
-<span class="sourceLineNo">023</span>    {<a name="line.23"></a>
-<span class="sourceLineNo">024</span>        //Initializes the shooter and mechanism object in the class.<a name="line.24"></a>
-<span class="sourceLineNo">025</span>        _shooter = shooter;<a name="line.25"></a>
-<span class="sourceLineNo">026</span>        _mechanism = Mechanism.getInstance();<a name="line.26"></a>
-<span class="sourceLineNo">027</span>    }<a name="line.27"></a>
-<span class="sourceLineNo">028</span>    <a name="line.28"></a>
-<span class="sourceLineNo">029</span>    public void run()<a name="line.29"></a>
-<span class="sourceLineNo">030</span>    {<a name="line.30"></a>
-<span class="sourceLineNo">031</span>        //Start ejecting the ball and wait one second to shoot the ball.<a name="line.31"></a>
-<span class="sourceLineNo">032</span>        _mechanism.eject();<a name="line.32"></a>
-<span class="sourceLineNo">033</span>        <a name="line.33"></a>
-<span class="sourceLineNo">034</span>        //Wait 0.2 seconds to shoot the mechanism.<a name="line.34"></a>
-<span class="sourceLineNo">035</span>        Timer.delay( 0.1 );<a name="line.35"></a>
-<span class="sourceLineNo">036</span>        <a name="line.36"></a>
-<span class="sourceLineNo">037</span>        //Run the shooter until limit switch is released<a name="line.37"></a>
-<span class="sourceLineNo">038</span>        _shooter.turnOn();<a name="line.38"></a>
-<span class="sourceLineNo">039</span><a name="line.39"></a>
-<span class="sourceLineNo">040</span>        //Wait one second so it can clear the switch before monitoring the limit switch again.<a name="line.40"></a>
-<span class="sourceLineNo">041</span>        Timer.delay( 1.0 );<a name="line.41"></a>
-<span class="sourceLineNo">042</span>        <a name="line.42"></a>
-<span class="sourceLineNo">043</span>        //Turn off the ejection.<a name="line.43"></a>
-<span class="sourceLineNo">044</span>        _mechanism.stopIntake();<a name="line.44"></a>
-<span class="sourceLineNo">045</span>        <a name="line.45"></a>
-<span class="sourceLineNo">046</span>        //Run motor until limit switch is pressed<a name="line.46"></a>
-<span class="sourceLineNo">047</span>        while ( _shooter.getLimit() == false )<a name="line.47"></a>
-<span class="sourceLineNo">048</span>        {<a name="line.48"></a>
-<span class="sourceLineNo">049</span>            //Do nothing.<a name="line.49"></a>
-<span class="sourceLineNo">050</span>            ShooterReset.yield();<a name="line.50"></a>
-<span class="sourceLineNo">051</span>        }<a name="line.51"></a>
-<span class="sourceLineNo">052</span>        <a name="line.52"></a>
-<span class="sourceLineNo">053</span>        //Turn off the shooter when the limit switch is pressed.<a name="line.53"></a>
-<span class="sourceLineNo">054</span>        _shooter.turnOff();<a name="line.54"></a>
-<span class="sourceLineNo">055</span>    }<a name="line.55"></a>
-<span class="sourceLineNo">056</span>}<a name="line.56"></a>
+<span class="sourceLineNo">017</span>    double _delay;<a name="line.17"></a>
+<span class="sourceLineNo">018</span>    <a name="line.18"></a>
+<span class="sourceLineNo">019</span>    /**<a name="line.19"></a>
+<span class="sourceLineNo">020</span>     * Creates the thread which shoots the shooter and then resets the shooter.<a name="line.20"></a>
+<span class="sourceLineNo">021</span>     * <a name="line.21"></a>
+<span class="sourceLineNo">022</span>     * @param shooter The object which the thread will shoot and reset.<a name="line.22"></a>
+<span class="sourceLineNo">023</span>     */<a name="line.23"></a>
+<span class="sourceLineNo">024</span>    public ShooterReset( Shooter shooter, double delay )<a name="line.24"></a>
+<span class="sourceLineNo">025</span>    {<a name="line.25"></a>
+<span class="sourceLineNo">026</span>        //Initializes the shooter and mechanism object in the class.<a name="line.26"></a>
+<span class="sourceLineNo">027</span>        _shooter = shooter;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>        _mechanism = Mechanism.getInstance();<a name="line.28"></a>
+<span class="sourceLineNo">029</span>        <a name="line.29"></a>
+<span class="sourceLineNo">030</span>        //Sets the delay between the ejection and the shooting.<a name="line.30"></a>
+<span class="sourceLineNo">031</span>        _delay = delay;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>    }<a name="line.32"></a>
+<span class="sourceLineNo">033</span>    <a name="line.33"></a>
+<span class="sourceLineNo">034</span>    public void run()<a name="line.34"></a>
+<span class="sourceLineNo">035</span>    {<a name="line.35"></a>
+<span class="sourceLineNo">036</span>        //Start ejecting the ball and wait one second to shoot the ball.<a name="line.36"></a>
+<span class="sourceLineNo">037</span>        _mechanism.eject();<a name="line.37"></a>
+<span class="sourceLineNo">038</span>        <a name="line.38"></a>
+<span class="sourceLineNo">039</span>        //Wait 0.1 seconds to shoot the mechanism.<a name="line.39"></a>
+<span class="sourceLineNo">040</span>        Timer.delay( _delay );<a name="line.40"></a>
+<span class="sourceLineNo">041</span>        <a name="line.41"></a>
+<span class="sourceLineNo">042</span>        //Run the shooter until limit switch is released<a name="line.42"></a>
+<span class="sourceLineNo">043</span>        _shooter.turnOn();<a name="line.43"></a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span>        //Wait one second so it can clear the switch before monitoring the limit switch again.<a name="line.45"></a>
+<span class="sourceLineNo">046</span>        Timer.delay( 1.0 );<a name="line.46"></a>
+<span class="sourceLineNo">047</span>        <a name="line.47"></a>
+<span class="sourceLineNo">048</span>        //Turn off the ejection.<a name="line.48"></a>
+<span class="sourceLineNo">049</span>        _mechanism.stopIntake();<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        <a name="line.50"></a>
+<span class="sourceLineNo">051</span>        //Run motor until limit switch is pressed<a name="line.51"></a>
+<span class="sourceLineNo">052</span>        while ( _shooter.getLimit() == false )<a name="line.52"></a>
+<span class="sourceLineNo">053</span>        {<a name="line.53"></a>
+<span class="sourceLineNo">054</span>            //Do nothing.<a name="line.54"></a>
+<span class="sourceLineNo">055</span>            ShooterReset.yield();<a name="line.55"></a>
+<span class="sourceLineNo">056</span>        }<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        <a name="line.57"></a>
+<span class="sourceLineNo">058</span>        //Turn off the shooter when the limit switch is pressed.<a name="line.58"></a>
+<span class="sourceLineNo">059</span>        _shooter.turnOff();<a name="line.59"></a>
+<span class="sourceLineNo">060</span>    }<a name="line.60"></a>
+<span class="sourceLineNo">061</span>}<a name="line.61"></a>
 
 
 

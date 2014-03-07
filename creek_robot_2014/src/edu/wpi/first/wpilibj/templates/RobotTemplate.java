@@ -34,6 +34,10 @@ public class RobotTemplate extends IterativeRobot
     //The robot mechanism.
     private Mechanism _mechanism;
     
+    //The maximum and minimum extremes for the position of the arm
+    private final double _MAX_ARM_EXTREME = 450.0;
+    private final double _MIN_ARM_EXTREME = 980.0;
+    
     //The AutoCommand to be run in autonomous.
     private AutoCommand _autoCommand;
     
@@ -58,6 +62,9 @@ public class RobotTemplate extends IterativeRobot
         
         //Get the mechanism object.
         _mechanism = Mechanism.getInstance();
+        
+        SmartDashboard.putNumber( " Arm Maximum Extreme: " , _MAX_ARM_EXTREME );
+        SmartDashboard.putNumber( " Arm Minimum Extreme: " , _MIN_ARM_EXTREME );
         
         //Initializes the chooser devices.
         _driverChooser = new SendableChooser();
@@ -202,16 +209,16 @@ public class RobotTemplate extends IterativeRobot
             _mechanism.shoot();
         }
         
-        //If the analog button's sum is negative...
-        if( _driver.getArm() < 0.0 )
+        //If the analog button's sum is negative and the arm is below the minimum extreme...
+        if( _driver.getArm() < 0.0 && _mechanism.getPotentValue() < SmartDashboard.getNumber( " Arm Minimum Extreme: " ) )
         {
             //The arm on the mechanism will raise at the analog speed.
-            _mechanism.raiseArm( _driver.getArm() );
+            _mechanism.lowerArm( _driver.getArm() );
         }
-        else if( _driver.getArm() > 0.0 )//Else if the analog button's sum is positive...
+        else if( _driver.getArm() > 0.0 && _mechanism.getPotentValue() > SmartDashboard.getNumber( " Arm Maximum Extreme: " ) )//Else if the analog button's sum is positive and the arm is above the minimum extreme...
         {
             //The arm on the mechanism will lower at analog speed.
-            _mechanism.lowerArm( -1 * _driver.getArm() );
+            _mechanism.raiseArm( -1 * _driver.getArm() );
         }
         else//Else stop the arm.
         {
@@ -250,5 +257,6 @@ public class RobotTemplate extends IterativeRobot
     public void testPeriodic() 
     {
         //Does nothing in test.
+        System.out.println( _mechanism.getPotentValue() );
     }
 }

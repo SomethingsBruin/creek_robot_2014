@@ -3,6 +3,7 @@ package com.cc.inputs.driver;
 import com.cc.utility.Utility;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**                                                                                                                               
  * Class representing XBox Controller.
@@ -102,9 +103,6 @@ public class XBoxController extends Driver
         double xValue = normalize( _joy.getRawAxis( 4 ), _XMIN, _XMAX, _XCENTER );
         xValue = xValue * xValue * xValue;
         
-        //Limits the speed between 0.5 and -0.5.
-        xValue = Utility.limitRange( xValue, 0.5, -0.5 );
-        
         //Returns the x value.
         return xValue;
     }
@@ -119,9 +117,6 @@ public class XBoxController extends Driver
         //Finds the normalized y value of the controller, and then expos it.
         double yValue = -1 * normalize( _joy.getRawAxis( 5 ), _YMIN, _YMAX, _YCENTER );//Multiplies by -1 because the y-axis is inverted.
         yValue = yValue * yValue * yValue;
-        
-        //Limits the speed between 0.5 and -0.5.
-        yValue = Utility.limitRange( yValue, 0.5 , -0.5 );
         
         //Returns the y value.
         return yValue;
@@ -138,9 +133,6 @@ public class XBoxController extends Driver
         double rValue = normalize( _joy.getRawAxis( 1 ), _ROTMIN, _ROTMAX, _ROTCENTER );
         //rValue = rValue * rValue * rValue;
         
-        //Limits the turn of the robot with this controller to only half.
-        rValue = Utility.limitRange( rValue, 0.5, -0.5 );
-        
         //Returns the rotation value.
         return rValue;
     }
@@ -154,7 +146,7 @@ public class XBoxController extends Driver
     {
         //Finds the normalized arm value of the controller and limit range between 0.5 and -0.4.
         double aValue = normalize( _joy.getRawAxis( 3 ), _ARMMIN, _ARMMAX, _ARMCENTER );
-        aValue = Utility.limitRange( aValue, 0.5, -0.4 );
+        aValue = Utility.limitRange( aValue, SmartDashboard.getNumber( " Arm Up-Speed: " ), SmartDashboard.getNumber( " Arm Down-Speed: " ) );
         
         //Returns the arm value.
         return aValue;

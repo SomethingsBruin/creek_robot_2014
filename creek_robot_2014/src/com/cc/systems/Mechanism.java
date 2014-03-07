@@ -3,6 +3,8 @@ package com.cc.systems;
 import com.cc.outputs.motors.CCTalon;
 import com.cc.outputs.motors.CCVictor;
 import com.cc.shooter.*;
+
+import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -26,8 +28,11 @@ public class Mechanism
     private Shooter _shooter;
     private ShooterReset _shooterReset;
     
+    //The potentiometer object of the mechanism. 
+    private AnalogChannel _potent;
+    
     //The delay between ejecting the ball and shooting the ball.
-    private final double _delay = 0.1;
+    private final double _DELAY = 0.1;
 
     private Mechanism() 
     {
@@ -42,8 +47,11 @@ public class Mechanism
         //Gets singleton of the shooter obejct.
         _shooter = Shooter.getInstance();
         
+        //Initializes the potentiometer on channel 1.
+        _potent = new AnalogChannel( 1 );
+        
         //Puts the arm shooting delay into the smartdashboard.
-        SmartDashboard.putNumber( " Arm Shooting Delay: " , _delay );
+        SmartDashboard.putNumber( " Arm Shooting Delay: " , _DELAY );
     }
 
     /**
@@ -116,22 +124,22 @@ public class Mechanism
     }
     
     /**
-     * Raises the arm on the mechanism at the given speed.
+     * Lowers the arm on the mechanism at the given speed.
      * 
-     * @param speed The speed at which to raise the arm.
+     * @param speed The speed at which to lower the arm.
      */
-    public void raiseArm( double speed )
+    public void lowerArm( double speed )
     {
         //Raises the arm at the given speed.
         _pivot.set( speed );
     }
     
     /**
-     * Lowers the arm on the mechanism at the given speed.
+     * Raises the arm on the mechanism at the given speed.
      * 
-     * @param speed The speed at which to lower the arm.
+     * @param speed The speed at which to raise the arm.
      */
-    public void lowerArm( double speed )
+    public void raiseArm( double speed )
     {
         //Lowers the arm at the given speed.
         _pivot.set( -speed );
@@ -155,5 +163,17 @@ public class Mechanism
         //Gets whether the mechanism is shooting and returns it.
         boolean isAlive = _shooterReset != null && _shooterReset.isAlive();
         return isAlive;
-    }   
+    }
+    
+    /**
+     * Gets the current value of the potentiometer on the arm.
+     * 
+     * @return The value of the potentiometer.
+     */
+    public double getPotentValue()
+    {
+        //Finds the potentiometer value and returns it.
+        double value = _potent.getValue();
+        return value;
+    }
 }
