@@ -10,49 +10,57 @@
 <span class="sourceLineNo">002</span><a name="line.2"></a>
 <span class="sourceLineNo">003</span>import com.cc.systems.Chassis;<a name="line.3"></a>
 <span class="sourceLineNo">004</span>import com.cc.systems.Mechanism;<a name="line.4"></a>
-<span class="sourceLineNo">005</span>import edu.wpi.first.wpilibj.Timer;<a name="line.5"></a>
-<span class="sourceLineNo">006</span><a name="line.6"></a>
-<span class="sourceLineNo">007</span>/**<a name="line.7"></a>
-<span class="sourceLineNo">008</span> * The abstract class which represents any command that is called for Autonomous<a name="line.8"></a>
-<span class="sourceLineNo">009</span> * but does not define any particular auto command.<a name="line.9"></a>
-<span class="sourceLineNo">010</span> */<a name="line.10"></a>
-<span class="sourceLineNo">011</span>public abstract class AutoCommand <a name="line.11"></a>
-<span class="sourceLineNo">012</span>{<a name="line.12"></a>
-<span class="sourceLineNo">013</span>    //The chassis that is used in autonomous.<a name="line.13"></a>
-<span class="sourceLineNo">014</span>    protected Chassis _chassis;<a name="line.14"></a>
-<span class="sourceLineNo">015</span>    <a name="line.15"></a>
-<span class="sourceLineNo">016</span>    //The mechanism that is used in autonomous.<a name="line.16"></a>
-<span class="sourceLineNo">017</span>    protected Mechanism _mechanism;<a name="line.17"></a>
-<span class="sourceLineNo">018</span>    <a name="line.18"></a>
-<span class="sourceLineNo">019</span>    /**<a name="line.19"></a>
-<span class="sourceLineNo">020</span>     * Default constructor for an AutoCommand that will get the singleton objects<a name="line.20"></a>
-<span class="sourceLineNo">021</span>     * of the chassis and the mechanism.<a name="line.21"></a>
-<span class="sourceLineNo">022</span>     */<a name="line.22"></a>
-<span class="sourceLineNo">023</span>    public AutoCommand()<a name="line.23"></a>
-<span class="sourceLineNo">024</span>    {<a name="line.24"></a>
-<span class="sourceLineNo">025</span>        //Gets the singleton of the chassis and the mechanism.<a name="line.25"></a>
-<span class="sourceLineNo">026</span>        _chassis = Chassis.getInstance();<a name="line.26"></a>
-<span class="sourceLineNo">027</span>        _mechanism = Mechanism.getInstance();<a name="line.27"></a>
-<span class="sourceLineNo">028</span>    }<a name="line.28"></a>
-<span class="sourceLineNo">029</span>    <a name="line.29"></a>
-<span class="sourceLineNo">030</span>    /**<a name="line.30"></a>
-<span class="sourceLineNo">031</span>     * The method which runs the given AutoCommand.<a name="line.31"></a>
-<span class="sourceLineNo">032</span>     */<a name="line.32"></a>
-<span class="sourceLineNo">033</span>    public abstract void runAutoCommand();<a name="line.33"></a>
-<span class="sourceLineNo">034</span>    <a name="line.34"></a>
-<span class="sourceLineNo">035</span>    /**<a name="line.35"></a>
-<span class="sourceLineNo">036</span>     * Raises the arm to the correct orientation to shoot in autonomous.<a name="line.36"></a>
-<span class="sourceLineNo">037</span>     */<a name="line.37"></a>
-<span class="sourceLineNo">038</span>    protected void setArm()<a name="line.38"></a>
-<span class="sourceLineNo">039</span>    {<a name="line.39"></a>
-<span class="sourceLineNo">040</span>        //Raise the arm at 0.5 speed for 1.5 seconds.<a name="line.40"></a>
-<span class="sourceLineNo">041</span>        _mechanism.raiseArm( 0.5 );      <a name="line.41"></a>
-<span class="sourceLineNo">042</span>        Timer.delay( 1.5 );<a name="line.42"></a>
-<span class="sourceLineNo">043</span>        <a name="line.43"></a>
-<span class="sourceLineNo">044</span>        //Stop raising the arm.<a name="line.44"></a>
-<span class="sourceLineNo">045</span>        _mechanism.stopArm();<a name="line.45"></a>
-<span class="sourceLineNo">046</span>    }<a name="line.46"></a>
-<span class="sourceLineNo">047</span>}<a name="line.47"></a>
+<span class="sourceLineNo">005</span><a name="line.5"></a>
+<span class="sourceLineNo">006</span>import edu.wpi.first.wpilibj.networktables.NetworkTable;<a name="line.6"></a>
+<span class="sourceLineNo">007</span><a name="line.7"></a>
+<span class="sourceLineNo">008</span>/**<a name="line.8"></a>
+<span class="sourceLineNo">009</span> * The abstract class which represents any command that is called for Autonomous<a name="line.9"></a>
+<span class="sourceLineNo">010</span> * but does not define any particular auto command.<a name="line.10"></a>
+<span class="sourceLineNo">011</span> */<a name="line.11"></a>
+<span class="sourceLineNo">012</span>public abstract class AutoCommand <a name="line.12"></a>
+<span class="sourceLineNo">013</span>{<a name="line.13"></a>
+<span class="sourceLineNo">014</span>    //The chassis that is used in autonomous.<a name="line.14"></a>
+<span class="sourceLineNo">015</span>    protected Chassis _chassis;<a name="line.15"></a>
+<span class="sourceLineNo">016</span>    <a name="line.16"></a>
+<span class="sourceLineNo">017</span>    //The mechanism that is used in autonomous.<a name="line.17"></a>
+<span class="sourceLineNo">018</span>    protected Mechanism _mechanism;<a name="line.18"></a>
+<span class="sourceLineNo">019</span>    <a name="line.19"></a>
+<span class="sourceLineNo">020</span>    //The network table to get the number of blobs from the camera.<a name="line.20"></a>
+<span class="sourceLineNo">021</span>    protected NetworkTable _table;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>    <a name="line.22"></a>
+<span class="sourceLineNo">023</span>    /**<a name="line.23"></a>
+<span class="sourceLineNo">024</span>     * Default constructor for an AutoCommand that will get the singleton objects<a name="line.24"></a>
+<span class="sourceLineNo">025</span>     * of the chassis and the mechanism.<a name="line.25"></a>
+<span class="sourceLineNo">026</span>     */<a name="line.26"></a>
+<span class="sourceLineNo">027</span>    public AutoCommand()<a name="line.27"></a>
+<span class="sourceLineNo">028</span>    {<a name="line.28"></a>
+<span class="sourceLineNo">029</span>        //Gets the singleton of the chassis and the mechanism.<a name="line.29"></a>
+<span class="sourceLineNo">030</span>        _chassis = Chassis.getInstance();<a name="line.30"></a>
+<span class="sourceLineNo">031</span>        _mechanism = Mechanism.getInstance();<a name="line.31"></a>
+<span class="sourceLineNo">032</span>        <a name="line.32"></a>
+<span class="sourceLineNo">033</span>        //Sets the network table to the one from RoboRealm.<a name="line.33"></a>
+<span class="sourceLineNo">034</span>        _table = NetworkTable.getTable( "" );<a name="line.34"></a>
+<span class="sourceLineNo">035</span>    }<a name="line.35"></a>
+<span class="sourceLineNo">036</span>    <a name="line.36"></a>
+<span class="sourceLineNo">037</span>    /**<a name="line.37"></a>
+<span class="sourceLineNo">038</span>     * The method which runs the given AutoCommand.<a name="line.38"></a>
+<span class="sourceLineNo">039</span>     */<a name="line.39"></a>
+<span class="sourceLineNo">040</span>    public abstract void runAutoCommand();<a name="line.40"></a>
+<span class="sourceLineNo">041</span>    <a name="line.41"></a>
+<span class="sourceLineNo">042</span>    /**<a name="line.42"></a>
+<span class="sourceLineNo">043</span>     * Finds the number of blobs from the camera.<a name="line.43"></a>
+<span class="sourceLineNo">044</span>     * <a name="line.44"></a>
+<span class="sourceLineNo">045</span>     * @return The number of blobs from RoboRealm.<a name="line.45"></a>
+<span class="sourceLineNo">046</span>     */<a name="line.46"></a>
+<span class="sourceLineNo">047</span>    protected double getNumBlobs()<a name="line.47"></a>
+<span class="sourceLineNo">048</span>    {<a name="line.48"></a>
+<span class="sourceLineNo">049</span>        //The number of blobs the camera is reading.<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        double blobs = _table.getNumber( "BLOB_COUNT" );<a name="line.50"></a>
+<span class="sourceLineNo">051</span>        <a name="line.51"></a>
+<span class="sourceLineNo">052</span>        //Returns the number of blobs.<a name="line.52"></a>
+<span class="sourceLineNo">053</span>        return blobs;<a name="line.53"></a>
+<span class="sourceLineNo">054</span>    }<a name="line.54"></a>
+<span class="sourceLineNo">055</span>}<a name="line.55"></a>
 
 
 

@@ -24,22 +24,38 @@ public class AutoCenter extends AutoCommand
      */
     public void runAutoCommand()
     {
-        //Moves the chassis forward 12 feet at 0.75 speed.
-        _chassis.move( 144, 0.75 );
+        //Creates and starts the timer that counts to when the hotgoal is active.
+        Timer timer = new Timer();
+        timer.start();
         
-        //Tunrs the robot 20 degrees at 0.75 speed.
-        _chassis.turn( 20, 0.75 );
+        //Counts the number of blobs from the camera.
+        double blobs = getNumBlobs();
         
-        //Set the arm to the correct orientation.
-        setArm();
+        //Drives forward for 2.7 seconds.
+        _chassis.holoDrive( 0.50, 0.0, 0.0 );
+        Timer.delay( 2.7 );
         
-        //Shoots the mechanism.
+        //Stops the robot.
+        _chassis.stop();
+        
+        //If the left side was hot, turn right to the hot goal
+        if( blobs < 2 )
+        {
+            _chassis.turn( 15, 0.45 );
+        }
+        else//Else turn left to the hot goal
+        {
+            _chassis.turn( -15, 0.45 );
+        }
+        
+        //Wait until a least 6 seconds have passed in Auto
+        while( timer.get() < 6.00 )
+        {
+            //Do Nothing.
+            ;
+        }
+        
+        //Then shoot the mechanism.
         _mechanism.shoot();
-        
-        // Delays the program. 
-        Timer.delay( 1.0 );
-        
-        //Turns the robot back 20 degrees at 0.75 speed.
-        _chassis.square( 0.75 );
     }
 }

@@ -2,7 +2,8 @@ package com.cc.autonomous;
 
 import com.cc.systems.Chassis;
 import com.cc.systems.Mechanism;
-import edu.wpi.first.wpilibj.Timer;
+
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  * The abstract class which represents any command that is called for Autonomous
@@ -16,6 +17,9 @@ public abstract class AutoCommand
     //The mechanism that is used in autonomous.
     protected Mechanism _mechanism;
     
+    //The network table to get the number of blobs from the camera.
+    protected NetworkTable _table;
+    
     /**
      * Default constructor for an AutoCommand that will get the singleton objects
      * of the chassis and the mechanism.
@@ -25,6 +29,9 @@ public abstract class AutoCommand
         //Gets the singleton of the chassis and the mechanism.
         _chassis = Chassis.getInstance();
         _mechanism = Mechanism.getInstance();
+        
+        //Sets the network table to the one from RoboRealm.
+        _table = NetworkTable.getTable( "" );
     }
     
     /**
@@ -33,15 +40,16 @@ public abstract class AutoCommand
     public abstract void runAutoCommand();
     
     /**
-     * Raises the arm to the correct orientation to shoot in autonomous.
+     * Finds the number of blobs from the camera.
+     * 
+     * @return The number of blobs from RoboRealm.
      */
-    protected void setArm()
+    protected double getNumBlobs()
     {
-        //Raise the arm at 0.5 speed for 1.5 seconds.
-        _mechanism.raiseArm( 0.5 );      
-        Timer.delay( 1.5 );
+        //The number of blobs the camera is reading.
+        double blobs = _table.getNumber( "BLOB_COUNT" );
         
-        //Stop raising the arm.
-        _mechanism.stopArm();
+        //Returns the number of blobs.
+        return blobs;
     }
 }

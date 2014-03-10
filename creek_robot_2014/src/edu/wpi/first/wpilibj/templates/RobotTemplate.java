@@ -63,6 +63,7 @@ public class RobotTemplate extends IterativeRobot
         //Get the mechanism object.
         _mechanism = Mechanism.getInstance();
         
+        //Puts the minimum and maximum arm extremes into the SmartDashboard.
         SmartDashboard.putNumber( " Arm Maximum Extreme: " , _MAX_ARM_EXTREME );
         SmartDashboard.putNumber( " Arm Minimum Extreme: " , _MIN_ARM_EXTREME );
         
@@ -257,6 +258,6 @@ public class RobotTemplate extends IterativeRobot
     public void testPeriodic() 
     {
         //Does nothing in test.
-        System.out.println( _mechanism.getPotentValue() );
+        System.out.println( _chassis.getEncoder() );
     }
 }

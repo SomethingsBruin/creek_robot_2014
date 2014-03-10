@@ -5,6 +5,7 @@ import com.cc.utility.Utility;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -33,7 +34,7 @@ public class Chassis
     
     //Initializes the original PID constants for the chassis. These are dynamically changable in the Smart Dashboard.
     private final double _KP = 0.7;
-    private final double _KI = 0.006;
+    private final double _KI = 0.008;
     private final double _KD = 0.04;
     
     private Chassis()
@@ -49,7 +50,7 @@ public class Chassis
         _gyro.reset();
         
         //Initializes the encoder of the robot.
-        _encoder = new Encoder( 4, 5, true );
+        _encoder = new Encoder( 4, 5 );
         _encoder.reset();
         
         //Puts the PID constants into the Smart Dashboard so they are dynamicly changable.
@@ -171,6 +172,13 @@ public class Chassis
         return gyroValue;
     }
     
+    public double getEncoder()
+    {
+        double value = _encoder.get();
+        
+        return value;
+    }
+    
     /**
      * Resets the gyro on the robot to 0 degrees.
      */
@@ -201,6 +209,7 @@ public class Chassis
         while( _encoder.get() < distance )
         {    
             //Waits until the encoder reads the appropriate distance.
+            System.out.println( _encoder.get() );
         }
         
         //After the robot has moved the appropriate distance, stop the robot.
@@ -243,6 +252,10 @@ public class Chassis
         //The sum of the p, i, and d parts which is inputed into the motors.
         double output = 0.0;
         
+        //Create and start a timer for the time limit.
+        Timer timer = new Timer();
+        timer.start();
+        
         //While the turn is not done...
         while( !done )
         {
@@ -268,8 +281,8 @@ public class Chassis
             //Turns the robot based on the output of the PID loop.
             holoDrive( 0, 0, output );
             
-            //If the error is below 5 percent, then end the loop.
-            if( Math.abs( error ) < 0.01 )
+            //If the error is below 5 percent or if it has been over 4 seconds, then end the loop.
+            if( Math.abs( error ) < 0.01 || timer.get() > 4.0 )
             {
                 //Raise the flag to end the loop.
                 done = true;       

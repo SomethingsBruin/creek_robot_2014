@@ -9,12 +9,13 @@ import edu.wpi.first.wpilibj.Timer;
 public class ShooterReset extends Thread
 {
     //The shooter object in the thread.
-    Shooter _shooter;
+    private Shooter _shooter;
     
     //The mechanism object in the thread.
-    Mechanism _mechanism;
+    private Mechanism _mechanism;
     
-    double _delay;
+    //The delay between running the intake and shooting.
+    private double _delay;
     
     /**
      * Creates the thread which shoots the shooter and then resets the shooter.
@@ -51,8 +52,9 @@ public class ShooterReset extends Thread
         //Run motor until limit switch is pressed
         while ( _shooter.getLimit() == false )
         {
-            //Do nothing.
+            //Do nothing and wait 1/20 of a second.
             ShooterReset.yield();
+            Timer.delay( 0.05 );
         }
         
         //Turn off the shooter when the limit switch is pressed.

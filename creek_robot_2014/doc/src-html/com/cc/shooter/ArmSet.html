@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package com.cc.shooter;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>import com.cc.systems.Mechanism;<a name="line.3"></a>
+<span class="sourceLineNo">004</span><a name="line.4"></a>
+<span class="sourceLineNo">005</span>/**<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * Sets the arm to the given state, either the bottom extreme, the upper extreme,<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * or in the middle.<a name="line.7"></a>
+<span class="sourceLineNo">008</span> */<a name="line.8"></a>
+<span class="sourceLineNo">009</span>public class ArmSet extends Thread<a name="line.9"></a>
+<span class="sourceLineNo">010</span>{<a name="line.10"></a>
+<span class="sourceLineNo">011</span>    //The mechanism object in the the thread.<a name="line.11"></a>
+<span class="sourceLineNo">012</span>    private Mechanism _mechanism;<a name="line.12"></a>
+<span class="sourceLineNo">013</span>    <a name="line.13"></a>
+<span class="sourceLineNo">014</span>    //The state that the arm will be set to.<a name="line.14"></a>
+<span class="sourceLineNo">015</span>    //0 = bottom ; 1 = top ; 2 = middle.<a name="line.15"></a>
+<span class="sourceLineNo">016</span>    private int _state;<a name="line.16"></a>
+<span class="sourceLineNo">017</span>    <a name="line.17"></a>
+<span class="sourceLineNo">018</span>    /**<a name="line.18"></a>
+<span class="sourceLineNo">019</span>     * Creates the thread that sets the mechanism to the given arm.<a name="line.19"></a>
+<span class="sourceLineNo">020</span>     * <a name="line.20"></a>
+<span class="sourceLineNo">021</span>     * @param state <a name="line.21"></a>
+<span class="sourceLineNo">022</span>     */<a name="line.22"></a>
+<span class="sourceLineNo">023</span>    public ArmSet( int state )<a name="line.23"></a>
+<span class="sourceLineNo">024</span>    {<a name="line.24"></a>
+<span class="sourceLineNo">025</span>        //Sets the state to the given state.<a name="line.25"></a>
+<span class="sourceLineNo">026</span>        _state = state;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>        <a name="line.27"></a>
+<span class="sourceLineNo">028</span>        //Gets the singleton version of the Mechanism.<a name="line.28"></a>
+<span class="sourceLineNo">029</span>        _mechanism = Mechanism.getInstance();<a name="line.29"></a>
+<span class="sourceLineNo">030</span>    }<a name="line.30"></a>
+<span class="sourceLineNo">031</span>    <a name="line.31"></a>
+<span class="sourceLineNo">032</span>    /**<a name="line.32"></a>
+<span class="sourceLineNo">033</span>     * Sets the arm to the given state.<a name="line.33"></a>
+<span class="sourceLineNo">034</span>     */<a name="line.34"></a>
+<span class="sourceLineNo">035</span>    public void run()<a name="line.35"></a>
+<span class="sourceLineNo">036</span>    {<a name="line.36"></a>
+<span class="sourceLineNo">037</span>        //Change the operation of the thread based off the given state.<a name="line.37"></a>
+<span class="sourceLineNo">038</span>        switch( _state )<a name="line.38"></a>
+<span class="sourceLineNo">039</span>        {<a name="line.39"></a>
+<span class="sourceLineNo">040</span>            case 0://The state to set the arm to the bottom extreme.<a name="line.40"></a>
+<span class="sourceLineNo">041</span>                <a name="line.41"></a>
+<span class="sourceLineNo">042</span>                break;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>                <a name="line.43"></a>
+<span class="sourceLineNo">044</span>            case 1://The state to set the arm to the top extreme.<a name="line.44"></a>
+<span class="sourceLineNo">045</span>                <a name="line.45"></a>
+<span class="sourceLineNo">046</span>                break;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>                <a name="line.47"></a>
+<span class="sourceLineNo">048</span>            case 2://The state to set the arm to the middle.<a name="line.48"></a>
+<span class="sourceLineNo">049</span>                <a name="line.49"></a>
+<span class="sourceLineNo">050</span>                break;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>            <a name="line.51"></a>
+<span class="sourceLineNo">052</span>        }<a name="line.52"></a>
+<span class="sourceLineNo">053</span>    }<a name="line.53"></a>
+<span class="sourceLineNo">054</span>}<a name="line.54"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

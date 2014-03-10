@@ -180,14 +180,14 @@ public class AirplaneController extends Driver
     }
     
     /**
-     * Gets the third (yellow) button state on the x-box controller.
+     * Gets the third (blue) button state on the x-box controller.
      * 
      * @return Returns the third button state.
      */
     public boolean getThirdButton()
     {
-        //Returns state of the yellow button.
-        boolean state = _joyTwo.getRawButton( 4 );
+        //Returns state of the blue button.
+        boolean state = _joyTwo.getRawButton( 3 );
         return state;
     }
 
