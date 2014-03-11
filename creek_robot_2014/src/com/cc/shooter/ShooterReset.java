@@ -1,6 +1,7 @@
 package com.cc.shooter;
 
 import com.cc.systems.Mechanism;
+
 import edu.wpi.first.wpilibj.Timer;
 
 /**

@@ -2,6 +2,8 @@ package com.cc.shooter;
 
 import com.cc.systems.Mechanism;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * Sets the arm to the given state, either the bottom extreme, the upper extreme,
  * or in the middle.
@@ -39,9 +41,21 @@ public class ArmSet extends Thread
         {
             case 0://The state to set the arm to the bottom extreme.
                 
+                //Lowers the arm until the potentiometer reads the lowest state.
+                while( _mechanism.getPotentValue() <= SmartDashboard.getNumber( " Arm Minimum Extreme: " ) )
+                {
+                    _mechanism.lowerArm( SmartDashboard.getNumber( " Arm Down-Speed: " ) );
+                }
+                
                 break;
                 
             case 1://The state to set the arm to the top extreme.
+                
+                //Raises the arm until the potentimenter reades the highest state.
+                while( _mechanism.getPotentValue() >= SmartDashboard.getNumber( " Arm Maximum Extreme: " ) )
+                {
+                    _mechanism.raiseArm( -SmartDashboard.getNumber( " Arm Up-Speed: " ) );
+                }
                 
                 break;
                 

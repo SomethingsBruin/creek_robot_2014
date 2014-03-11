@@ -1,6 +1,7 @@
 package com.cc.inputs.driver;
 
 import com.cc.utility.Utility;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -202,13 +203,25 @@ public class AirplaneController extends Driver
         boolean state = _joyTwo.getRawButton( 2 );
         return state;
     }
-
+    
     /**
-     * Gets the fifth (right) button state on the x-box controller.
+     * Gets the fifth (yellow) button state on the x-box controller.
      * 
-     * @return Returns the fifth button state.
+     * @return Returns the fifth the button state.
      */
     public boolean getFifthButton()
+    {
+        //Returns state of the yellow.
+        boolean state = _joyTwo.getRawButton( 4 );
+        return state;
+    }
+
+    /**
+     * Gets the sixth (right) button state on the x-box controller.
+     * 
+     * @return Returns the sixth button state.
+     */
+    public boolean getSixthButton()
     {
         //Returns state of the right button.
         boolean state = _joyTwo.getRawButton( 6 );
@@ -216,11 +229,11 @@ public class AirplaneController extends Driver
     }
 
     /**
-     * Gets the sixth (left) button state on the x-box controller.
+     * Gets the seventh (left) button state on the x-box controller.
      * 
-     * @return Returns the sixth button state.
+     * @return Returns the seventh button state.
      */
-    public boolean getSixthButton()
+    public boolean getSeventhButton()
     {
         //Returns state of the left button.
         boolean state = _joyTwo.getRawButton( 5 );

@@ -1,6 +1,7 @@
 package com.cc.inputs.driver;
 
 import com.cc.utility.Utility;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -180,7 +181,7 @@ public class AttackThree extends Driver
     }
     
     /**
-     * Gets the third (green) button state.
+     * Gets the third button state.
      * 
      * @return Returns the third button state.
      */
@@ -192,7 +193,7 @@ public class AttackThree extends Driver
     }
 
     /**
-     * Gets the fourth (red) button state.
+     * Gets the fourth button state.
      * 
      * @return Returns the fourth button state.
      */
@@ -202,7 +203,7 @@ public class AttackThree extends Driver
         boolean state = _attackTwo.getRawButton( 2 );
         return state;
     }
-
+    
     /**
      * Gets the fifth button state.
      * 
@@ -211,7 +212,7 @@ public class AttackThree extends Driver
     public boolean getFifthButton()
     {
         //Returns state of the fifth button.
-        boolean state = _attackOne.getRawButton( 3 );
+        boolean state = _attackOne.getRawButton( 4 );
         return state;
     }
 
@@ -221,6 +222,18 @@ public class AttackThree extends Driver
      * @return Returns the sixth button state.
      */
     public boolean getSixthButton()
+    {
+        //Returns state of the fifth button.
+        boolean state = _attackOne.getRawButton( 3 );
+        return state;
+    }
+
+    /**
+     * Gets the seventh button state.
+     * 
+     * @return Returns the seventh button state.
+     */
+    public boolean getSeventhButton()
     {
         //Returns state of the sixth button.
         boolean state = _attackTwo.getRawButton( 3 );

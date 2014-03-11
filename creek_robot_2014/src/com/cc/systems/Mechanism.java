@@ -28,11 +28,11 @@ public class Mechanism
     private Shooter _shooter;
     private ShooterReset _shooterReset;
     
+    //The thread that sets the state of the arm.
+    private ArmSet _armSet;
+    
     //The potentiometer object of the mechanism. 
     private AnalogChannel _potent;
-    
-    //The delay between ejecting the ball and shooting the ball.
-    private final double _DELAY = 0.1;
 
     private Mechanism() 
     {
@@ -49,9 +49,6 @@ public class Mechanism
         
         //Initializes the potentiometer on channel 1.
         _potent = new AnalogChannel( 1 );
-        
-        //Puts the arm shooting delay into the smartdashboard.
-        SmartDashboard.putNumber( " Arm Shooting Delay: " , _DELAY );
     }
 
     /**
@@ -166,6 +163,18 @@ public class Mechanism
     }
     
     /**
+     * Returns whether the mechanism is shooting.
+     * 
+     * @return Whether the arm is shooting or not.
+     */
+    public boolean isSettingArm()
+    {
+        //Gets whether the mechanism is shooting and returns it.
+        boolean isAlive = _armSet != null && _armSet.isAlive();
+        return isAlive;
+    }
+    
+    /**
      * Gets the current value of the potentiometer on the arm.
      * 
      * @return The value of the potentiometer.
@@ -175,5 +184,28 @@ public class Mechanism
         //Finds the potentiometer value and returns it.
         double value = _potent.getValue();
         return value;
+    }
+    
+    /**
+     * Sets the state of the arm to the given place.
+     * 
+     * @param state The given place of the arm.
+     */
+    public void setArm( int state )
+    {
+        //If the thread has not been created...
+        if( _armSet == null )
+        {
+            //Create a new thread.
+            _armSet = new ArmSet( state );
+        }
+        
+        //If we are not already shooting...
+        if( !_armSet.isAlive() ) 
+        {
+            //Create a new thread and then run that thread.
+            _armSet = new ArmSet( state );
+            _armSet.start();
+        }
     }
 }

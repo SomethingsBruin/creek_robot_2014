@@ -177,14 +177,14 @@ public class XBoxController extends Driver
     }     
 
     /**
-     * Gets the third (Yellow) button state.
+     * Gets the third (Blue) button state.
      * 
      * @return Returns the third button state.
      */
     public boolean getThirdButton()
     {
-        //Returns state of the yellow button.
-        boolean state = _joy.getRawButton( 4 );
+        //Returns state of the blue button.
+        boolean state = _joy.getRawButton( 3 );
         return state;
     }
 
@@ -199,13 +199,25 @@ public class XBoxController extends Driver
         boolean state = _joy.getRawButton( 2 );
         return state;
     }
-
+    
     /**
-     * Gets the fifth (Right Trigger) button state.
+     * Gets the fifth button state.
      * 
      * @return Returns the fifth button state.
      */
     public boolean getFifthButton()
+    {
+        //Returns state of the fifth button.
+        boolean state = _joy.getRawButton( 7 );
+        return state;
+    }
+
+    /**
+     * Gets the sixth (Right Trigger) button state.
+     * 
+     * @return Returns the sixth button state.
+     */
+    public boolean getSixthButton()
     {
         //Returns state of the right trigger.
         boolean state = _joy.getRawButton( 6 );
@@ -213,11 +225,11 @@ public class XBoxController extends Driver
     }
 
     /**
-     * Gets the sixth (Left Trigger) button state.
+     * Gets the seventh (Left Trigger) button state.
      * 
-     * @return Returns the sixth button state.
+     * @return Returns the seventh button state.
      */
-    public boolean getSixthButton()
+    public boolean getSeventhButton()
     {
         //Returns state of the left trigger.
         boolean state = _joy.getRawButton( 5 );

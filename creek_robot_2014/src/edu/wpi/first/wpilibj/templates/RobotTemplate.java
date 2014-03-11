@@ -31,12 +31,24 @@ public class RobotTemplate extends IterativeRobot
     //The robot chassis.
     private Chassis _chassis;
     
+    //Initializes the original PID constants for the chassis. These are dynamically changable in the Smart Dashboard.
+    private final double _KP = 0.7;
+    private final double _KI = 0.008;
+    private final double _KD = 0.04;
+    
     //The robot mechanism.
     private Mechanism _mechanism;
     
     //The maximum and minimum extremes for the position of the arm
     private final double _MAX_ARM_EXTREME = 450.0;
     private final double _MIN_ARM_EXTREME = 980.0;
+    
+    //The maximum up and down speed of the arm.
+    private final double _ARM_UP_SPEED = 0.7;
+    private final double _ARM_DOWN_SPEED = -0.6;
+          
+    //The delay between ejecting the ball and shooting the ball.
+    private final double _DELAY = 0.1;
     
     //The AutoCommand to be run in autonomous.
     private AutoCommand _autoCommand;
@@ -60,12 +72,24 @@ public class RobotTemplate extends IterativeRobot
         //Get the chassis object.
         _chassis = Chassis.getInstance();
         
+        //Puts the PID constants into the Smart Dashboard so they are dynamicly changable.
+        SmartDashboard.putNumber( " P-Constant: ", _KP );
+        SmartDashboard.putNumber( " I-Constant: ", _KI );
+        SmartDashboard.putNumber( " D-Constant: ", _KD );
+        
         //Get the mechanism object.
         _mechanism = Mechanism.getInstance();
+        
+        //Puts the maximum arm up and down speeds into the SmartDashboard
+        SmartDashboard.putNumber( " Arm Up-Speed: " , _ARM_UP_SPEED );
+        SmartDashboard.putNumber( " Arm Down-Speed: " , _ARM_DOWN_SPEED );
         
         //Puts the minimum and maximum arm extremes into the SmartDashboard.
         SmartDashboard.putNumber( " Arm Maximum Extreme: " , _MAX_ARM_EXTREME );
         SmartDashboard.putNumber( " Arm Minimum Extreme: " , _MIN_ARM_EXTREME );
+        
+        //Puts the arm shooting delay into the SmartDashboard.
+        SmartDashboard.putNumber( " Arm Shooting Delay: " , _DELAY );
         
         //Initializes the chooser devices.
         _driverChooser = new SendableChooser();
@@ -77,9 +101,9 @@ public class RobotTemplate extends IterativeRobot
         _driverChooser.addObject( "Attack Three" , new Integer( 1 ) );//1 for the Attack Three joysticks.
         _driverChooser.addObject( "XBox Controller" , new Integer( 2 ) );//2 for the XBox Controller.
         
-        //Assigns a index number to each drive type. The Relative Holo Drive is the default selection.
-        _driveTypeChooser.addDefault( "Relative Holo Drive" , new Integer( 0 ) );//0 for the Relative Holo Drive.
-        _driveTypeChooser.addObject( "Normal Holo Driver" , new Integer( 1 ) );//1 for the Normal Holo Dirve.
+        //Assigns a index number to each drive type. The Normal Holo Drive is the default selection.
+        _driveTypeChooser.addDefault( "Normal Holo Driver" , new Integer( 1 ) );//1 for the Normal Holo Dirve.
+        _driveTypeChooser.addObject( "Relative Holo Drive" , new Integer( 0 ) );//0 for the Relative Holo Drive.
         
         //Adds each AutoCommand into the Smart Dashboard.
         _autoCommandChooser.addDefault( "Do Nothing" , new AutoNothing() );
@@ -90,6 +114,29 @@ public class RobotTemplate extends IterativeRobot
         SmartDashboard.putData( "Driver Controller" , _driverChooser );
         SmartDashboard.putData( "Drive Type" , _driveTypeChooser );
         SmartDashboard.putData( "Auto Command" , _autoCommandChooser );
+        
+        //Finds the assigned index value of the driver type choosen
+        int index = ( (Integer) _driverChooser.getSelected() ).intValue();
+        
+        //The type of the driver will be choosen from the given index value from the Smart Dashboard.
+        switch( index )
+        {
+            //The XBox Controller if the index is 2.
+            case 2:
+                _driver = XBoxController.getInstance();
+                break;
+                
+            //The Attack Three joysticks if the index is 1.
+            case 1:
+                _driver = AttackThree.getInstance();
+                break;
+            
+            //The Airplane Controller if the index is 0 (or anything else).
+            default:
+            case 0:
+                _driver = AirplaneController.getInstance();
+                break;
+        }
     }
     
     /**
@@ -196,27 +243,13 @@ public class RobotTemplate extends IterativeRobot
                 break;
         }
         
-        //If the primary button is pressed...
-        if( _driver.getPriButton() )
-        {
-            //Square the robot back to the wall.
-            _chassis.square( 0.8 );
-        }
-        
-        //If the secondary button is pressed...
-        if( _driver.getSecButton() )
-        {
-            //Shoot the mechanism.
-            _mechanism.shoot();
-        }
-        
         //If the analog button's sum is negative and the arm is below the minimum extreme...
-        if( _driver.getArm() < 0.0 && _mechanism.getPotentValue() < SmartDashboard.getNumber( " Arm Minimum Extreme: " ) )
+        if( !_mechanism.isSettingArm() && _driver.getArm() < 0.0 && _mechanism.getPotentValue() < SmartDashboard.getNumber( " Arm Minimum Extreme: " ) )
         {
             //The arm on the mechanism will raise at the analog speed.
             _mechanism.lowerArm( _driver.getArm() );
         }
-        else if( _driver.getArm() > 0.0 && _mechanism.getPotentValue() > SmartDashboard.getNumber( " Arm Maximum Extreme: " ) )//Else if the analog button's sum is positive and the arm is above the minimum extreme...
+        else if( !_mechanism.isSettingArm() && _driver.getArm() > 0.0 && _mechanism.getPotentValue() > SmartDashboard.getNumber( " Arm Maximum Extreme: " ) )//Else if the analog button's sum is positive and the arm is above the minimum extreme...
         {
             //The arm on the mechanism will lower at analog speed.
             _mechanism.raiseArm( -1 * _driver.getArm() );
@@ -226,13 +259,48 @@ public class RobotTemplate extends IterativeRobot
             _mechanism.stopArm();
         }
         
+        //If the primary button is pressed...
+        if( _driver.getPriButton() )
+        {
+            //Square the robot back to the wall.
+            _chassis.square( 0.8 );
+        }
+        
+        //If the secondary button is pressed and the arm isn't being set...
+        if( _driver.getSecButton() && !_mechanism.isSettingArm() )
+        {
+            //Shoot the mechanism.
+            _mechanism.shoot();
+        }
+        
+        //If the arm is currently not being set.
+        if( !_mechanism.isSettingArm() )
+        {
+            //If the third button is pressed...
+            if( _driver.getThirdButton() )
+            {
+                //Set the arm to the bottom state.
+                _mechanism.setArm( 0 );
+            }
+            else if( _driver.getFourthButton() )//If the fourth button is pressed...
+            {
+                //Set the arm to the top state.
+                _mechanism.setArm( 1 );
+            }
+            else if( _driver.getFifthButton() )//If the fifth button is pressed...
+            {
+                //Set the arm to the middle state.
+                _mechanism.setArm( 2 );
+            }
+        }
+        
         //If the fifth button is pressed...
-        if( _driver.getFifthButton() )
+        if( _driver.getSixthButton() )
         {
             //The mechanism will eject the ball.
             _mechanism.eject();
         }
-        else if( _driver.getSixthButton() )//Else if the sixth button is pressed...
+        else if( _driver.getSeventhButton() )//Else if the sixth button is pressed...
         {
             //The mechanism will intake the ball.
             _mechanism.intake();
@@ -250,6 +318,8 @@ public class RobotTemplate extends IterativeRobot
     public void testInit()
     {
         //Does nothing in test.
+        _chassis.resetEncoder();
+        _chassis.move( 200 , 0.33 );
     }
     
     /**
@@ -258,6 +328,5 @@ public class RobotTemplate extends IterativeRobot
     public void testPeriodic() 
     {
         //Does nothing in test.
-        System.out.println( _chassis.getEncoder() );
     }
 }

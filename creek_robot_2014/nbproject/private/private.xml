@@ -4,11 +4,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ursa/workspace/creek_robot_2014/creek_robot_2014/src/com/cc/systems/Mechanism.java</file>
-            <file>file:/C:/Users/Ursa/workspace/creek_robot_2014/creek_robot_2014/src/com/cc/shooter/ArmSet.java</file>
-            <file>file:/C:/Users/Ursa/workspace/creek_robot_2014/creek_robot_2014/src/com/cc/inputs/driver/AirplaneController.java</file>
-            <file>file:/C:/Users/Ursa/workspace/creek_robot_2014/creek_robot_2014/src/com/cc/shooter/ShooterReset.java</file>
-            <file>file:/C:/Users/Ursa/workspace/creek_robot_2014/creek_robot_2014/src/com/cc/inputs/driver/Driver.java</file>
+            <file>file:/C:/Users/Ursa/workspace/creek_robot_2014/creek_robot_2014/src/com/cc/systems/Chassis.java</file>
             <file>file:/C:/Users/Ursa/workspace/creek_robot_2014/creek_robot_2014/src/edu/wpi/first/wpilibj/templates/RobotTemplate.java</file>
         </group>
     </open-files>

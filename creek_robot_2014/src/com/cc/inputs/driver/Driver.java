@@ -1,7 +1,6 @@
 package com.cc.inputs.driver;
 
 import com.cc.utility.Utility;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** 
  * Driver provides an interface for the three controller types to implement.
@@ -12,19 +11,13 @@ public abstract class Driver
 {
     //The object where the singleton is stored.
     protected static Driver _instance = null;
-    
-    //The maximum up and down speed of the arm.
-    protected final double _ARM_UP_SPEED = 0.7;
-    protected final double _ARM_DOWN_SPEED = -0.6;
    
     /**
      * A default constructor that does nothing but makes it protected.
      */
     protected Driver()
     {                            
-        //Puts the arm speeds into the Smart Dashboard so they are dynamicly changable.
-        SmartDashboard.putNumber( " Arm Up-Speed: " , _ARM_UP_SPEED );
-        SmartDashboard.putNumber( " Arm Down-Speed: " , _ARM_DOWN_SPEED );
+        //Just here to make the constructor protected.
     }
     
     /**
@@ -108,6 +101,13 @@ public abstract class Driver
     public abstract boolean getSixthButton();
     
     /**
+     * Gets the seventh button state.
+     * 
+     * @return  Returns the seventh button state.
+     */
+    public abstract boolean getSeventhButton();
+    
+    /**
      * Prints the x, y, rotation, primary button, and secondary button values.
      */
     public void print()
@@ -126,8 +126,7 @@ public abstract class Driver
      * @return Returns the normalized value.
      */
     public double normalize( double inValue, double minValue, double maxValue, double cValue )
-    {
-      
+    {  
         //Subtracts the center constant from the given value.
         inValue -= cValue;
         

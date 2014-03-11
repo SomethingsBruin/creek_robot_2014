@@ -30,12 +30,7 @@ public class Chassis
     private Encoder _encoder;
     
     //The ticks per inch of the encoder
-    private final double TICKS_PER_INCH = 46.443;
-    
-    //Initializes the original PID constants for the chassis. These are dynamically changable in the Smart Dashboard.
-    private final double _KP = 0.7;
-    private final double _KI = 0.008;
-    private final double _KD = 0.04;
+    private final double TICKS_PER_INCH = -53.199;
     
     private Chassis()
     {
@@ -50,13 +45,8 @@ public class Chassis
         _gyro.reset();
         
         //Initializes the encoder of the robot.
-        _encoder = new Encoder( 4, 5 );
+        _encoder = new Encoder( 1, 2 );
         _encoder.reset();
-        
-        //Puts the PID constants into the Smart Dashboard so they are dynamicly changable.
-        SmartDashboard.putNumber( " P-Constant: ", _KP );
-        SmartDashboard.putNumber( " I-Constant: ", _KI );
-        SmartDashboard.putNumber( " D-Constant: ", _KD );
     }
     
     /**
@@ -172,13 +162,6 @@ public class Chassis
         return gyroValue;
     }
     
-    public double getEncoder()
-    {
-        double value = _encoder.get();
-        
-        return value;
-    }
-    
     /**
      * Resets the gyro on the robot to 0 degrees.
      */
@@ -186,6 +169,45 @@ public class Chassis
     {
         //Resets the gyro on the robot to 0 degrees.
         _gyro.reset();
+    }
+    
+    /**
+     * Starts the encoder on the chassis.
+     */
+    public void startEncoder()
+    {
+        //Starts the encoder.
+        _encoder.start();
+    }
+    
+    /**
+     * Gets the current encoder value on the chassis.
+     * 
+     * @return The current value read from the encoder.
+     */
+    public double getEncoder()
+    {
+        //Gets the encoder value and returns it.
+        double value = _encoder.get();
+        return value;
+    }
+    
+    /**
+     * Stops the encoder on the chassis
+     */
+    public void stopEncoder()
+    {
+        //Stops the encoder.
+        _encoder.stop();
+    }
+    
+    /**
+     * Resets the encoder on the chassis.
+     */
+    public void resetEncoder()
+    {
+        //Resets the encoder.
+        _encoder.reset();
     }
     
     /**
@@ -206,7 +228,7 @@ public class Chassis
         holoDrive( speed, 0.0, 0.0 );
         
         //While the encoder reading is less than the calculated distance...
-        while( _encoder.get() < distance )
+        while( _encoder.get() > distance )
         {    
             //Waits until the encoder reads the appropriate distance.
             System.out.println( _encoder.get() );
