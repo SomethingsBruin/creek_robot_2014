@@ -131,7 +131,6 @@ public class XBoxController extends Driver
     {
         //Finds the normalized rotation value of the controller, and then expos it.
         double rValue = normalize( _joy.getRawAxis( 1 ), _ROTMIN, _ROTMAX, _ROTCENTER );
-        //rValue = rValue * rValue * rValue;
         
         //Returns the rotation value.
         return rValue;
@@ -177,14 +176,14 @@ public class XBoxController extends Driver
     }     
 
     /**
-     * Gets the third (Blue) button state.
+     * Gets the third (Yellow) button state.
      * 
      * @return Returns the third button state.
      */
     public boolean getThirdButton()
     {
-        //Returns state of the blue button.
-        boolean state = _joy.getRawButton( 3 );
+        //Returns state of the yellow button.
+        boolean state = _joy.getRawButton( 4 );
         return state;
     }
 

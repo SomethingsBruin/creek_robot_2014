@@ -231,7 +231,6 @@ public class Chassis
         while( _encoder.get() > distance )
         {    
             //Waits until the encoder reads the appropriate distance.
-            System.out.println( _encoder.get() );
         }
         
         //After the robot has moved the appropriate distance, stop the robot.

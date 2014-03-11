@@ -318,8 +318,6 @@ public class RobotTemplate extends IterativeRobot
     public void testInit()
     {
         //Does nothing in test.
-        _chassis.resetEncoder();
-        _chassis.move( 200 , 0.33 );
     }
     
     /**
