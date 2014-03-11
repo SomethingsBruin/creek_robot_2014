@@ -31,9 +31,8 @@ public class AutoCenter extends AutoCommand
         //Counts the number of blobs from the camera.
         double blobs = getNumBlobs();
         
-        //Drives forward for 2.7 seconds.
-        _chassis.holoDrive( 0.50, 0.0, 0.0 );
-        Timer.delay( 2.7 );
+        //Moves 12 feet forward at 0.55 speed. Equivalent is 2.7 seconds at same speed.
+        _chassis.move( 144, 0.55 );
         
         //Stops the robot.
         _chassis.stop();

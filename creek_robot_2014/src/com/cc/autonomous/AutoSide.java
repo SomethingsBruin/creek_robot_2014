@@ -29,9 +29,8 @@ public class AutoSide extends AutoCommand
         //Counts the number of blobs from the camera.
         double blobs = getNumBlobs();
         
-        //Drives forward for 1.8 seconds.
-        _chassis.holoDrive( 0.75, 0.0, 0.0 );
-        Timer.delay( 1.8 );
+        //Moves 12 feet forward at 0.75 speed. Equivalent is 1.8 seconds at same speed.
+        _chassis.move( 144, 0.75 );
         
         //Stops the robot.
         _chassis.stop();
