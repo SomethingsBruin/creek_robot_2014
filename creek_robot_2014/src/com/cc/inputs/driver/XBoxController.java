@@ -132,6 +132,13 @@ public class XBoxController extends Driver
         //Finds the normalized rotation value of the controller, and then expos it.
         double rValue = normalize( _joy.getRawAxis( 1 ), _ROTMIN, _ROTMAX, _ROTCENTER );
         
+        //If going backwards...
+        if( getY() < 0.0 )
+        {
+            //Then reverse the rotation value.
+            rValue *= -1;
+        }
+        
         //Returns the rotation value.
         return rValue;
     }

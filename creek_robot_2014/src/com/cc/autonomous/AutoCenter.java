@@ -32,7 +32,7 @@ public class AutoCenter extends AutoCommand
         double blobs = getNumBlobs();
         
         //Moves 12 feet forward at 0.55 speed. Equivalent is 2.7 seconds at same speed.
-        _chassis.move( 144, 0.55 );
+        _chassis.move( 125, 0.55 );
         
         //Stops the robot.
         _chassis.stop();

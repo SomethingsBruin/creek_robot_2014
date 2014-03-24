@@ -52,5 +52,29 @@ public class Utility
         
         //Returns the limited number.
         return val;
-    } 
+    }
+    
+    /**
+     * Returns a number that is equal to the given value to the power of the given exponent.
+     * If the number is negative going into the method, it will still be negative coming 
+     * out of the method.
+     * 
+     * @param value The value that will be put to the power of the given exponent.
+     * @param expo The exponent that the value is to the power to.
+     * 
+     * @return Returns the value to the power of the given exponent.
+     */
+    public static double expo( double value, double expo )
+    {
+        boolean negative = value < 0.0;
+        
+//        value = Math.pow( value, expo );
+        
+        if( negative && value > 0.0 )
+        {
+            value *= -1;
+        }
+        
+        return value;
+    }
 }

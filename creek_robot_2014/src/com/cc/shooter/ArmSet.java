@@ -42,7 +42,7 @@ public class ArmSet extends Thread
             case 0://The state to set the arm to the bottom extreme.
                 
                 //Lowers the arm until the potentiometer reads the lowest state.
-                while( _mechanism.getPotentValue() <= SmartDashboard.getNumber( " Arm Minimum Extreme: " ) )
+                while( _mechanism.getPotent() <= SmartDashboard.getNumber( " Arm Minimum Extreme: " ) )
                 {
                     _mechanism.lowerArm( SmartDashboard.getNumber( " Arm Down-Speed: " ) );
                 }
@@ -52,7 +52,7 @@ public class ArmSet extends Thread
             case 1://The state to set the arm to the top extreme.
                 
                 //Raises the arm until the potentimenter reades the highest state.
-                while( _mechanism.getPotentValue() >= SmartDashboard.getNumber( " Arm Maximum Extreme: " ) )
+                while( _mechanism.getPotent() >= SmartDashboard.getNumber( " Arm Maximum Extreme: " ) )
                 {
                     _mechanism.raiseArm( -SmartDashboard.getNumber( " Arm Up-Speed: " ) );
                 }
@@ -60,6 +60,24 @@ public class ArmSet extends Thread
                 break;
                 
             case 2://The state to set the arm to the middle.
+                
+                //If the arm is currently above the middle position...
+                if( _mechanism.getPotent() < SmartDashboard.getNumber( " Arm Middle Position: " ) )
+                {
+                    //Lower the arm until in reaches the middle position.
+                    while( _mechanism.getPotent() < SmartDashboard.getNumber( " Arm Middle Position: " ) )
+                    {
+                        _mechanism.lowerArm( SmartDashboard.getNumber( " Arm Middle Down Speed: " ) );
+                    }
+                }
+                else//Else if the arm is lower than the middle position.
+                {
+                    //Raise the are until in reaches the middle position.
+                    while( _mechanism.getPotent() > SmartDashboard.getNumber( " Arm Middle Position: " ) )
+                    {
+                        _mechanism.raiseArm( -SmartDashboard.getNumber( " Arm Middle Up Speed: " ) );
+                    }
+                }
                 
                 break;
             

@@ -47,7 +47,8 @@ public abstract class AutoCommand
     protected double getNumBlobs()
     {
         //The number of blobs the camera is reading.
-        double blobs = _table.getNumber( "BLOB_COUNT" );
+        //double blobs = _table.getNumber( "BLOB_COUNT" );
+        double blobs = 2;
         
         //Returns the number of blobs.
         return blobs;

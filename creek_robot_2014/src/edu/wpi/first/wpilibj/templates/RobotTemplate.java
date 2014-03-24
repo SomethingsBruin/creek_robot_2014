@@ -40,12 +40,17 @@ public class RobotTemplate extends IterativeRobot
     private Mechanism _mechanism;
     
     //The maximum and minimum extremes for the position of the arm
-    private final double _MAX_ARM_EXTREME = 450.0;
-    private final double _MIN_ARM_EXTREME = 980.0;
+    private final double _MAX_ARM_EXTREME = 250.0;
+    private final double _MIN_ARM_EXTREME = 905.0;
     
     //The maximum up and down speed of the arm.
-    private final double _ARM_UP_SPEED = 0.7;
-    private final double _ARM_DOWN_SPEED = -0.6;
+    private final double _ARM_UP_SPEED = 0.8;
+    private final double _ARM_DOWN_SPEED = -1.0;
+    
+    //The constants for the middle position of the arm.
+    private final double _ARM_MIDDLE_POSITION = 0.0;
+    private final double _ARM_MIDDLE_UP_SPEED = 0.0;
+    private final double _ARM_MIDDLE_DOWN_SPEED = 0.0;
           
     //The delay between ejecting the ball and shooting the ball.
     private final double _DELAY = 0.1;
@@ -80,6 +85,9 @@ public class RobotTemplate extends IterativeRobot
         //Get the mechanism object.
         _mechanism = Mechanism.getInstance();
         
+        //Turns the camera light on.
+        _mechanism.lightOn();
+        
         //Puts the maximum arm up and down speeds into the SmartDashboard
         SmartDashboard.putNumber( " Arm Up-Speed: " , _ARM_UP_SPEED );
         SmartDashboard.putNumber( " Arm Down-Speed: " , _ARM_DOWN_SPEED );
@@ -87,6 +95,11 @@ public class RobotTemplate extends IterativeRobot
         //Puts the minimum and maximum arm extremes into the SmartDashboard.
         SmartDashboard.putNumber( " Arm Maximum Extreme: " , _MAX_ARM_EXTREME );
         SmartDashboard.putNumber( " Arm Minimum Extreme: " , _MIN_ARM_EXTREME );
+        
+        //Puts the middle arm position constants into the SmartDashboard.
+        SmartDashboard.putNumber( " Arm Middle Position: " , _ARM_MIDDLE_POSITION );
+        SmartDashboard.putNumber( " Arm Middle Up Speed: " , _ARM_MIDDLE_UP_SPEED );
+        SmartDashboard.putNumber( " Arm Middle Down Speed: " , _ARM_MIDDLE_DOWN_SPEED );
         
         //Puts the arm shooting delay into the SmartDashboard.
         SmartDashboard.putNumber( " Arm Shooting Delay: " , _DELAY );
@@ -153,6 +166,9 @@ public class RobotTemplate extends IterativeRobot
         
         //Resets the gyro to 0 degrees.
         _chassis.resetGyro();
+        
+        //Turns the camera light on.
+        _mechanism.lightOn();     
     }
     
     /**
@@ -166,6 +182,9 @@ public class RobotTemplate extends IterativeRobot
         
         //Resets the gyro
         _chassis.resetGyro();
+        
+        //Turns the light of the camera on.
+        _mechanism.lightOn();
     }
 
     /**
@@ -174,11 +193,15 @@ public class RobotTemplate extends IterativeRobot
      */
     public void autonomousPeriodic() 
     {
+        //Turns the camera light on.
+        _mechanism.lightOn();
+        
         //If the flag hasn't been raised...
         if( !_autoFlag )
         {
             //Runs the given AutoCommand and set the auto flag to be true.
             _autoCommand.runAutoCommand();
+        
             _autoFlag = true;
         }
     }
@@ -188,7 +211,7 @@ public class RobotTemplate extends IterativeRobot
      * driver type is wanted, resets the gyro, and cocks the mechanism.
      */
     public void teleopInit()
-    {
+    {   
         //Finds the assigned index value of the driver type choosen
         int index = ( (Integer) _driverChooser.getSelected() ).intValue();
         
@@ -244,12 +267,12 @@ public class RobotTemplate extends IterativeRobot
         }
         
         //If the analog button's sum is negative and the arm is below the minimum extreme...
-        if( !_mechanism.isSettingArm() && _driver.getArm() < 0.0 && _mechanism.getPotentValue() < SmartDashboard.getNumber( " Arm Minimum Extreme: " ) )
+        if( !_mechanism.isSettingArm() && _driver.getArm() < 0.0 && _mechanism.getPotent() < SmartDashboard.getNumber( " Arm Minimum Extreme: " ) )
         {
             //The arm on the mechanism will raise at the analog speed.
             _mechanism.lowerArm( _driver.getArm() );
         }
-        else if( !_mechanism.isSettingArm() && _driver.getArm() > 0.0 && _mechanism.getPotentValue() > SmartDashboard.getNumber( " Arm Maximum Extreme: " ) )//Else if the analog button's sum is positive and the arm is above the minimum extreme...
+        else if( !_mechanism.isSettingArm() && _driver.getArm() > 0.0 && _mechanism.getPotent() > SmartDashboard.getNumber( " Arm Maximum Extreme: " ) )//Else if the analog button's sum is positive and the arm is above the minimum extreme...
         {
             //The arm on the mechanism will lower at analog speed.
             _mechanism.raiseArm( -1 * _driver.getArm() );

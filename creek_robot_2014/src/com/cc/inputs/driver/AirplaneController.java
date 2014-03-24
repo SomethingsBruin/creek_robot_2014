@@ -137,6 +137,13 @@ public class AirplaneController extends Driver
         double rValue = normalize( _joyOne.getRawAxis( 5 ), _ROTMIN, _ROTMAX, _ROTCENTER );
         rValue = rValue * rValue * rValue;
         
+        //If going backwards...
+        if( getY() < 0.0 )
+        {
+            //Then reverse the rotation value.
+            rValue *= -1;
+        }
+        
         //Returns the rotation value.
         return rValue;
     }

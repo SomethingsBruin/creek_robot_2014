@@ -5,6 +5,7 @@ import com.cc.outputs.motors.CCVictor;
 import com.cc.shooter.*;
 
 import edu.wpi.first.wpilibj.AnalogChannel;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -23,6 +24,9 @@ public class Mechanism
     //The victors which represent the motors which intake the balls into the mechanism.
     private CCVictor _intakeOne;
     private CCVictor _intakeTwo;
+    
+    //The spike that controls the light of the camera.
+    private Relay _cameraLight;
 
     //The actual shooter mechanism and the thread which cocks the shooter.
     private Shooter _shooter;
@@ -43,6 +47,10 @@ public class Mechanism
         //Initializes the victors for the intake.
         _intakeOne = new CCVictor( 6, false );
         _intakeTwo = new CCVictor( 7, false );
+        
+        //Initializes the spike for the camera.
+        _cameraLight = new Relay( 2 );
+        _cameraLight.setDirection( Relay.Direction.kBoth );
         
         //Gets singleton of the shooter obejct.
         _shooter = Shooter.getInstance();
@@ -179,7 +187,7 @@ public class Mechanism
      * 
      * @return The value of the potentiometer.
      */
-    public double getPotentValue()
+    public double getPotent()
     {
         //Finds the potentiometer value and returns it.
         double value = _potent.getValue();
@@ -207,5 +215,23 @@ public class Mechanism
             _armSet = new ArmSet( state );
             _armSet.start();
         }
+    }
+    
+    /**
+     * Turns the light of the camera on.
+     */
+    public void lightOn()
+    {
+        //Turns the camera light on.
+        _cameraLight.set( Relay.Value.kForward );
+    }
+    
+    /**
+     * Turns the light of the camera off.
+     */
+    public void lightOff()
+    {
+        //Turns the camera light off.
+        _cameraLight.set( Relay.Value.kOff );
     }
 }

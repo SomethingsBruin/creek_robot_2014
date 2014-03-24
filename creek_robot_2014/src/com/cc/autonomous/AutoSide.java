@@ -30,7 +30,7 @@ public class AutoSide extends AutoCommand
         double blobs = getNumBlobs();
         
         //Moves 12 feet forward at 0.75 speed. Equivalent is 1.8 seconds at same speed.
-        _chassis.move( 144, 0.75 );
+        _chassis.move( 115, 0.75 );
         
         //Stops the robot.
         _chassis.stop();
