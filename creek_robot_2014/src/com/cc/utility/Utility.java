@@ -1,5 +1,7 @@
 package com.cc.utility;
 
+import com.sun.squawk.util.MathUtils;
+
 /**
  * This class is used for all math that limits a number between to numbers.
  * The most common instance of this is when you are limiting a number between
@@ -66,15 +68,20 @@ public class Utility
      */
     public static double expo( double value, double expo )
     {
+        //A boolean which represents whether the original value was negative or not.
         boolean negative = value < 0.0;
         
-//        value = Math.pow( value, expo );
+        //Does the math for finding the new value.
+        value = MathUtils.pow( value, expo );
         
+        //If the value was originally negative and the value is now positive...
         if( negative && value > 0.0 )
         {
+            //Make the value negative.
             value *= -1;
         }
         
+        //Return the new value.
         return value;
     }
 }
