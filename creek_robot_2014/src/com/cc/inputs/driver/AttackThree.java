@@ -105,7 +105,7 @@ public class AttackThree extends Driver
     {
         //Finds the normalized x value of the controller, and then expos it.
         double xValue = normalize( _attackOne.getRawAxis( 1 ), _XMIN, _XMAX, _XCENTER );
-        xValue = xValue * xValue * xValue;
+        xValue = Utility.expo( xValue, SmartDashboard.getNumber( " Driver Expo: " ) );
         
         //Returns the x value.
         return xValue;
@@ -120,7 +120,7 @@ public class AttackThree extends Driver
     {
         //Finds the normalized y value of the controller, and then expos it.
         double yValue = -1 * normalize( _attackOne.getRawAxis( 2 ), _YMIN, _YMAX, _YCENTER );//Multiplies by -1 because the y-axis is inverted.
-        yValue = yValue * yValue * yValue;
+        yValue = Utility.expo( yValue, SmartDashboard.getNumber( " Driver Expo: " ) );
         
         //Returns the y value.
         return yValue;
@@ -135,10 +135,10 @@ public class AttackThree extends Driver
     {
         //Finds the normalized rotation value of the controller, and then expos it.
         double rValue = normalize( _attackTwo.getRawAxis( 1 ), _ROTMIN, _ROTMAX, _ROTCENTER );
-        rValue = rValue * rValue * rValue;
+        rValue = Utility.expo( rValue, SmartDashboard.getNumber( " Driver Expo: " ) );
         
         //If going backwards...
-        if( getY() < 0.0 )
+        if( getY() < -SmartDashboard.getNumber( " Rot Dead-Zone: " ) )
         {
             //Then reverse the rotation value.
             rValue *= -1;

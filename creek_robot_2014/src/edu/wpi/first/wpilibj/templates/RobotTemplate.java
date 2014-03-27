@@ -40,20 +40,27 @@ public class RobotTemplate extends IterativeRobot
     private Mechanism _mechanism;
     
     //The maximum and minimum extremes for the position of the arm
-    private final double _MAX_ARM_EXTREME = 250.0;
-    private final double _MIN_ARM_EXTREME = 905.0;
+    private final double _MAX_ARM_EXTREME = 185.0;
+    private final double _MIN_ARM_EXTREME = 800.0;
     
     //The maximum up and down speed of the arm.
     private final double _ARM_UP_SPEED = 0.8;
     private final double _ARM_DOWN_SPEED = -1.0;
     
     //The constants for the middle position of the arm.
-    private final double _ARM_MIDDLE_POSITION = 0.0;
-    private final double _ARM_MIDDLE_UP_SPEED = 0.0;
-    private final double _ARM_MIDDLE_DOWN_SPEED = 0.0;
+    private final double _ARM_MIDDLE_UP_POSITION = 280.0;
+    private final double _ARM_MIDDLE_DOWN_POSITION = 250.0;
+    private final double _ARM_MIDDLE_UP_SPEED = 0.700;
+    private final double _ARM_MIDDLE_DOWN_SPEED = 0.350;
           
     //The delay between ejecting the ball and shooting the ball.
     private final double _DELAY = 0.1;
+    
+    //The exponential constant for the driver.
+    private final double _DRIVEREXPO = 2.0;
+    
+    //The rotational exponential deadzone for the driver.
+    private final double _ROT_DEADZONE = 0.05;
     
     //The AutoCommand to be run in autonomous.
     private AutoCommand _autoCommand;
@@ -97,12 +104,19 @@ public class RobotTemplate extends IterativeRobot
         SmartDashboard.putNumber( " Arm Minimum Extreme: " , _MIN_ARM_EXTREME );
         
         //Puts the middle arm position constants into the SmartDashboard.
-        SmartDashboard.putNumber( " Arm Middle Position: " , _ARM_MIDDLE_POSITION );
+        SmartDashboard.putNumber( " Arm Middle Up Position: " , _ARM_MIDDLE_UP_POSITION );
+        SmartDashboard.putNumber( " Arm Middle Down Position: " , _ARM_MIDDLE_DOWN_POSITION );
         SmartDashboard.putNumber( " Arm Middle Up Speed: " , _ARM_MIDDLE_UP_SPEED );
         SmartDashboard.putNumber( " Arm Middle Down Speed: " , _ARM_MIDDLE_DOWN_SPEED );
         
         //Puts the arm shooting delay into the SmartDashboard.
         SmartDashboard.putNumber( " Arm Shooting Delay: " , _DELAY );
+        
+        //Puts the expo of the driver into the SmartDashboard.
+        SmartDashboard.putNumber( " Driver Expo: " , _DRIVEREXPO );
+        
+        //Puts the rotational exponential deadzone into the SmartDashboard.
+        SmartDashboard.putNumber( " Rot Dead-Zone: " , _ROT_DEADZONE );
         
         //Initializes the chooser devices.
         _driverChooser = new SendableChooser();
@@ -266,6 +280,8 @@ public class RobotTemplate extends IterativeRobot
                 break;
         }
         
+        System.out.println( _mechanism.getPotent() );
+        
         //If the analog button's sum is negative and the arm is below the minimum extreme...
         if( !_mechanism.isSettingArm() && _driver.getArm() < 0.0 && _mechanism.getPotent() < SmartDashboard.getNumber( " Arm Minimum Extreme: " ) )
         {
@@ -280,13 +296,6 @@ public class RobotTemplate extends IterativeRobot
         else//Else stop the arm.
         {
             _mechanism.stopArm();
-        }
-        
-        //If the primary button is pressed...
-        if( _driver.getPriButton() )
-        {
-            //Square the robot back to the wall.
-            _chassis.square( 0.8 );
         }
         
         //If the secondary button is pressed and the arm isn't being set...

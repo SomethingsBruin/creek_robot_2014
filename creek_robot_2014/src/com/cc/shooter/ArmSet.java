@@ -62,25 +62,24 @@ public class ArmSet extends Thread
             case 2://The state to set the arm to the middle.
                 
                 //If the arm is currently above the middle position...
-                if( _mechanism.getPotent() < SmartDashboard.getNumber( " Arm Middle Position: " ) )
+                if( _mechanism.getPotent() < SmartDashboard.getNumber( " Arm Middle Up Position: " ) )
                 {
                     //Lower the arm until in reaches the middle position.
-                    while( _mechanism.getPotent() < SmartDashboard.getNumber( " Arm Middle Position: " ) )
+                    while( _mechanism.getPotent() < SmartDashboard.getNumber( " Arm Middle Down Position: " ) )
                     {
-                        _mechanism.lowerArm( SmartDashboard.getNumber( " Arm Middle Down Speed: " ) );
+                        _mechanism.lowerArm( -SmartDashboard.getNumber( " Arm Middle Down Speed: " ) );
                     }
                 }
                 else//Else if the arm is lower than the middle position.
                 {
                     //Raise the are until in reaches the middle position.
-                    while( _mechanism.getPotent() > SmartDashboard.getNumber( " Arm Middle Position: " ) )
+                    while( _mechanism.getPotent() > SmartDashboard.getNumber( " Arm Middle Up Position: " ) )
                     {
                         _mechanism.raiseArm( -SmartDashboard.getNumber( " Arm Middle Up Speed: " ) );
                     }
                 }
                 
-                break;
-            
+                break;           
         }
     }
 }
