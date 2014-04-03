@@ -1,6 +1,7 @@
 package com.cc.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The class which represents the AutoCommand which starts in the center position
@@ -32,7 +33,7 @@ public class AutoCenter extends AutoCommand
         double blobs = getNumBlobs();
         
         //Moves 12 feet forward at 0.55 speed. Equivalent is 2.7 seconds at same speed.
-        _chassis.move( 125, 0.55 );
+        _chassis.move( SmartDashboard.getNumber( " Auto-Center Forward Distance: " ), SmartDashboard.getNumber( " Auto-Center Forward Speed: " ) );
         
         //Stops the robot.
         _chassis.stop();
@@ -40,21 +41,39 @@ public class AutoCenter extends AutoCommand
         //If the left side was hot, turn right to the hot goal
         if( blobs < 2 )
         {
-            _chassis.turn( 15, 0.45 );
+            //Turn right at 0.3 speed for 0.3 seconds
+            _chassis.holoDrive( 0.0, 0.0, SmartDashboard.getNumber( " Auto-Center Turn Speed: " ) );
+            Timer.delay( SmartDashboard.getNumber( " Auto-Center Turn Time: " ) );
+            _chassis.stop();
         }
         else//Else turn left to the hot goal
         {
-            _chassis.turn( -15, 0.45 );
+            //Turn left at 0.3 speed for 0.3 seconds.
+            _chassis.holoDrive( 0.0, 0.0, -SmartDashboard.getNumber( " Auto-Center Turn Speed: " ) );
+            Timer.delay( SmartDashboard.getNumber( " Auto-Center Turn Time: " ) );
+            _chassis.stop();
         }
         
-        //Wait until a least 6 seconds have passed in Auto
-        while( timer.get() < 6.00 )
+//        //Wait until a least 6 seconds have passed in Auto
+//        while( timer.get() < 6.00 )
+//        {
+//            //Do Nothing.
+//            ;
+//        }
+        
+        //Sets the arm to the top position.
+        _mechanism.setArm( 1 );
+        
+        //Waits until arm is done setting.
+        while( _mechanism.isSettingArm() )
         {
-            //Do Nothing.
             ;
         }
         
         //Then shoot the mechanism.
         _mechanism.shoot();
+        
+        //Stops the timer.
+        timer.stop();
     }
 }

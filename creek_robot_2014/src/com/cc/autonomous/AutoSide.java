@@ -1,6 +1,7 @@
 package com.cc.autonomous;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The class which represents the AutoCommand which goes forward and then shoots
@@ -30,7 +31,7 @@ public class AutoSide extends AutoCommand
         double blobs = getNumBlobs();
         
         //Moves 12 feet forward at 0.75 speed. Equivalent is 1.8 seconds at same speed.
-        _chassis.move( 115, 0.75 );
+        _chassis.move( SmartDashboard.getNumber( " Auto-Side Forward Distance: " ), SmartDashboard.getNumber( " Auto-Side Forward Speed: " ) );
         
         //Stops the robot.
         _chassis.stop();
@@ -38,19 +39,41 @@ public class AutoSide extends AutoCommand
         //If the goal is not hot.
         if( blobs < 2 )
         {
-            //Wait until the goal is a hot goal.
-            while( timer.get() < 6.0 )
+//            //Wait until the goal is a hot goal.
+//            while( timer.get() < 6.0 )
+//            {
+//                //Do nothing.
+//                ;
+//            }
+            
+            //Sets the arm to the top position.
+            _mechanism.setArm( 1 );
+            
+            //Waits until arm is done setting.
+            while( _mechanism.isSettingArm() )
             {
-                //Do nothing.
                 ;
             }
             
-            //Then shoot the mechanism.
+            //Shoots the mechanism.
             _mechanism.shoot();
         }
         else//Else shoot immeadiatly.
         {
+            //Sets the arm to the top position.
+            _mechanism.setArm( 1 );
+            
+            //Waits until arm is done setting.
+            while( _mechanism.isSettingArm() )
+            {
+                ;
+            }
+            
+            //Shoots the mechanism.
             _mechanism.shoot();
         }
+        
+        //Stops the timer.
+        timer.stop();
     }
 }
